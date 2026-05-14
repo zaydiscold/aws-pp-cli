@@ -1,0 +1,51 @@
+version: 2
+project_name: aws-quotas-pp-cli
+changelog:
+  disable: true
+builds:
+  - id: aws-quotas-pp-cli
+    main: ./cmd/aws-quotas-pp-cli
+    binary: aws-quotas-pp-cli
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X aws-quotas-pp-cli/internal/cli.version={{ .Version }}
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+  - id: aws-quotas-pp-mcp
+    main: ./cmd/aws-quotas-pp-mcp
+    binary: aws-quotas-pp-mcp
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_amd64
+      - linux_arm64
+      - windows_amd64
+      - windows_arm64
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+checksum:
+  name_template: checksums.txt
+brews:
+  - name: aws-quotas-pp-cli
+    repository:
+      owner: zaydiscold
+      name: homebrew-tap
+    homepage: "https://github.com/zaydiscold/aws-quotas-pp-cli"
+    description: "CLI for aws-quotas"
+    install: |
+      bin.install "aws-quotas-pp-cli"
+      bin.install "aws-quotas-pp-mcp"

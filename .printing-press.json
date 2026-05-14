@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-14T19:15:21.987515Z",
+  "printing_press_version": "4.5.1",
+  "api_name": "aws-quotas",
+  "display_name": "Aws Quotas",
+  "cli_name": "aws-quotas-pp-cli",
+  "owner": "zaydiscold",
+  "printer": "zaydiscold",
+  "printer_name": "zayd",
+  "spec_url": "https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/Welcome.html",
+  "spec_format": "docs",
+  "mcp_binary": "aws-quotas-pp-mcp",
+  "mcp_tool_count": 19,
+  "mcp_ready": "full",
+  "api_version": "1.0.0",
+  "auth_type": "bearer_token",
+  "auth_env_vars": [
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY"
+  ]
+}
