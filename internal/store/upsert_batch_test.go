@@ -257,3 +257,297 @@ func TestUpsertBatch_ExtractFailuresReturnedForPerItemMisses(t *testing.T) {
 		t.Fatalf("extractFailures = %d, want 2 (two items have no extractable PK)", extractFailures)
 	}
 }
+
+// TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetCostCategoriesTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_awsinsights_index_service_get_cost_categories table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetCostCategoriesTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-awsinsights-index-service-get-cost-categories", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-awsinsights-index-service-get-cost-categories").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_awsinsights_index_service_get_cost_categories")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_awsinsights_index_service_get_cost_categories: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_awsinsights_index_service_get_cost_categories count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}
+
+// TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetReservationPurchaseRecommendationTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_awsinsights_index_service_get_reservation_purchase_recommendation table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetReservationPurchaseRecommendationTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_awsinsights_index_service_get_reservation_purchase_recommendation")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_awsinsights_index_service_get_reservation_purchase_recommendation: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_awsinsights_index_service_get_reservation_purchase_recommendation count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}
+
+// TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetRightsizingRecommendationTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_awsinsights_index_service_get_rightsizing_recommendation table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetRightsizingRecommendationTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-awsinsights-index-service-get-rightsizing-recommendation", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-awsinsights-index-service-get-rightsizing-recommendation").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_awsinsights_index_service_get_rightsizing_recommendation")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_awsinsights_index_service_get_rightsizing_recommendation: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_awsinsights_index_service_get_rightsizing_recommendation count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}
+
+// TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetSavingsPlansPurchaseRecommendationTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_awsinsights_index_service_get_savings_plans_purchase_recommendation table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetSavingsPlansPurchaseRecommendationTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-awsinsights-index-service-get-savings-plans-purchase-recommendation", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-awsinsights-index-service-get-savings-plans-purchase-recommendation").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_awsinsights_index_service_get_savings_plans_purchase_recommendation")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_awsinsights_index_service_get_savings_plans_purchase_recommendation: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_awsinsights_index_service_get_savings_plans_purchase_recommendation count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}
+
+// TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetTagsTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_awsinsights_index_service_get_tags table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceGetTagsTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-awsinsights-index-service-get-tags", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-awsinsights-index-service-get-tags").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_awsinsights_index_service_get_tags")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_awsinsights_index_service_get_tags: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_awsinsights_index_service_get_tags count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}
+
+// TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceListTagsForResourceTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_awsinsights_index_service_list_tags_for_resource table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetAwsinsightsIndexServiceListTagsForResourceTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-awsinsights-index-service-list-tags-for-resource", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-awsinsights-index-service-list-tags-for-resource").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_awsinsights_index_service_list_tags_for_resource")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_awsinsights_index_service_list_tags_for_resource: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_awsinsights_index_service_list_tags_for_resource count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}
+
+// TestUpsertBatch_PopulatesXAmzTargetServiceQuotasV20190624ListTagsForResourceTable verifies that UpsertBatch
+// dispatches paginated items into both the generic resources table AND the
+// typed x_amz_target_service_quotas_v20190624_list_tags_for_resource table. Regression for issue #268: before the fix, paginated
+// syncs only filled the generic resources table, so domain commands that
+// query the typed table saw zero rows.
+func TestUpsertBatch_PopulatesXAmzTargetServiceQuotasV20190624ListTagsForResourceTable(t *testing.T) {
+	dbPath := filepath.Join(t.TempDir(), "data.db")
+	s, err := Open(dbPath)
+	if err != nil {
+		t.Fatalf("open: %v", err)
+	}
+	defer s.Close()
+
+	items := []json.RawMessage{
+		json.RawMessage(`{"id": "test-001"}`),
+		json.RawMessage(`{"id": "test-002"}`),
+		json.RawMessage(`{"id": "test-003"}`),
+	}
+	if _, _, err := s.UpsertBatch("x-amz-target-service-quotas-v20190624-list-tags-for-resource", items); err != nil {
+		t.Fatalf("UpsertBatch: %v", err)
+	}
+
+	db := s.DB()
+
+	var generic int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM resources WHERE resource_type = ?`, "x-amz-target-service-quotas-v20190624-list-tags-for-resource").Scan(&generic); err != nil {
+		t.Fatalf("count resources: %v", err)
+	}
+	if generic != len(items) {
+		t.Fatalf("resources count = %d, want %d", generic, len(items))
+	}
+
+	var typed int
+	typedQuery := fmt.Sprintf(`SELECT COUNT(*) FROM "%s"`, "x_amz_target_service_quotas_v20190624_list_tags_for_resource")
+	if err := db.QueryRow(typedQuery).Scan(&typed); err != nil {
+		t.Fatalf("count x_amz_target_service_quotas_v20190624_list_tags_for_resource: %v", err)
+	}
+	if typed != len(items) {
+		t.Fatalf("x_amz_target_service_quotas_v20190624_list_tags_for_resource count = %d, want %d (typed table not populated by UpsertBatch)", typed, len(items))
+	}
+}

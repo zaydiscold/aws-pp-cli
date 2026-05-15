@@ -30,13 +30,13 @@ Gracefully shuts down on SIGTERM/SIGINT.
 Note: For APIs with WebSocket or SSE support, a future version will use
 native streaming instead of polling.`,
 		Example: `  # Tail all changes every 10 seconds
-  aws-quotas-pp-cli tail --interval 10s
+  aws-pp-pp-cli tail --interval 10s
 
   # Tail a specific resource
-  aws-quotas-pp-cli tail messages --interval 5s
+  aws-pp-pp-cli tail messages --interval 5s
 
   # Pipe to jq for filtering
-  aws-quotas-pp-cli tail events --interval 30s | jq 'select(.type == "error")'`,
+  aws-pp-pp-cli tail events --interval 30s | jq 'select(.type == "error")'`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) > 0 {
 				resource = args[0]
@@ -104,12 +104,76 @@ native streaming instead of polling.`,
 // defaultSyncResources (which only exists when sync is generated).
 func tailKnownResources() []string {
 	return []string{
-		"requested_service_quota_change",
-		"service",
-		"service_quota",
-		"service_quota_increase_template",
-		"service_quota_template",
-		"tag",
+		"x-amz-target-awsinsights-index-service-create-anomaly-monitor",
+		"x-amz-target-awsinsights-index-service-create-anomaly-subscription",
+		"x-amz-target-awsinsights-index-service-create-cost-category-definition",
+		"x-amz-target-awsinsights-index-service-delete-anomaly-monitor",
+		"x-amz-target-awsinsights-index-service-delete-anomaly-subscription",
+		"x-amz-target-awsinsights-index-service-delete-cost-category-definition",
+		"x-amz-target-awsinsights-index-service-describe-cost-category-definition",
+		"x-amz-target-awsinsights-index-service-get-anomalies",
+		"x-amz-target-awsinsights-index-service-get-anomaly-monitors",
+		"x-amz-target-awsinsights-index-service-get-anomaly-subscriptions",
+		"x-amz-target-awsinsights-index-service-get-cost-and-usage",
+		"x-amz-target-awsinsights-index-service-get-cost-and-usage-with-resources",
+		"x-amz-target-awsinsights-index-service-get-cost-categories",
+		"x-amz-target-awsinsights-index-service-get-cost-forecast",
+		"x-amz-target-awsinsights-index-service-get-dimension-values",
+		"x-amz-target-awsinsights-index-service-get-reservation-coverage",
+		"x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation",
+		"x-amz-target-awsinsights-index-service-get-reservation-utilization",
+		"x-amz-target-awsinsights-index-service-get-rightsizing-recommendation",
+		"x-amz-target-awsinsights-index-service-get-savings-plans-coverage",
+		"x-amz-target-awsinsights-index-service-get-savings-plans-purchase-recommendation",
+		"x-amz-target-awsinsights-index-service-get-savings-plans-utilization",
+		"x-amz-target-awsinsights-index-service-get-savings-plans-utilization-details",
+		"x-amz-target-awsinsights-index-service-get-tags",
+		"x-amz-target-awsinsights-index-service-get-usage-forecast",
+		"x-amz-target-awsinsights-index-service-list-cost-allocation-tags",
+		"x-amz-target-awsinsights-index-service-list-cost-category-definitions",
+		"x-amz-target-awsinsights-index-service-list-savings-plans-purchase-recommendation-generation",
+		"x-amz-target-awsinsights-index-service-list-tags-for-resource",
+		"x-amz-target-awsinsights-index-service-provide-anomaly-feedback",
+		"x-amz-target-awsinsights-index-service-start-savings-plans-purchase-recommendation-generation",
+		"x-amz-target-awsinsights-index-service-tag-resource",
+		"x-amz-target-awsinsights-index-service-untag-resource",
+		"x-amz-target-awsinsights-index-service-update-anomaly-monitor",
+		"x-amz-target-awsinsights-index-service-update-anomaly-subscription",
+		"x-amz-target-awsinsights-index-service-update-cost-allocation-tags-status",
+		"x-amz-target-awsinsights-index-service-update-cost-category-definition",
+		"x-amz-target-awssupport-20130415-add-attachments-to-set",
+		"x-amz-target-awssupport-20130415-add-communication-to-case",
+		"x-amz-target-awssupport-20130415-create-case",
+		"x-amz-target-awssupport-20130415-describe-attachment",
+		"x-amz-target-awssupport-20130415-describe-cases",
+		"x-amz-target-awssupport-20130415-describe-communications",
+		"x-amz-target-awssupport-20130415-describe-services",
+		"x-amz-target-awssupport-20130415-describe-severity-levels",
+		"x-amz-target-awssupport-20130415-describe-trusted-advisor-check-refresh-statuses",
+		"x-amz-target-awssupport-20130415-describe-trusted-advisor-check-result",
+		"x-amz-target-awssupport-20130415-describe-trusted-advisor-check-summaries",
+		"x-amz-target-awssupport-20130415-describe-trusted-advisor-checks",
+		"x-amz-target-awssupport-20130415-refresh-trusted-advisor-check",
+		"x-amz-target-awssupport-20130415-resolve-case",
+		"x-amz-target-service-quotas-v20190624-associate-service-quota-template",
+		"x-amz-target-service-quotas-v20190624-delete-service-quota-increase-request-from-template",
+		"x-amz-target-service-quotas-v20190624-disassociate-service-quota-template",
+		"x-amz-target-service-quotas-v20190624-get-association-for-service-quota-template",
+		"x-amz-target-service-quotas-v20190624-get-awsdefault-service-quota",
+		"x-amz-target-service-quotas-v20190624-get-requested-service-quota-change",
+		"x-amz-target-service-quotas-v20190624-get-service-quota",
+		"x-amz-target-service-quotas-v20190624-get-service-quota-increase-request-from-template",
+		"x-amz-target-service-quotas-v20190624-list-awsdefault-service-quotas",
+		"x-amz-target-service-quotas-v20190624-list-requested-service-quota-change-history",
+		"x-amz-target-service-quotas-v20190624-list-requested-service-quota-change-history-by-quota",
+		"x-amz-target-service-quotas-v20190624-list-service-quota-increase-requests-in-template",
+		"x-amz-target-service-quotas-v20190624-list-service-quotas",
+		"x-amz-target-service-quotas-v20190624-list-services",
+		"x-amz-target-service-quotas-v20190624-list-tags-for-resource",
+		"x-amz-target-service-quotas-v20190624-put-service-quota-increase-request-into-template",
+		"x-amz-target-service-quotas-v20190624-request-service-quota-increase",
+		"x-amz-target-service-quotas-v20190624-tag-resource",
+		"x-amz-target-service-quotas-v20190624-untag-resource",
 	}
 }
 

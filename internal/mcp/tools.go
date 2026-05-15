@@ -12,12 +12,12 @@ import (
 	"strings"
 	"time"
 
-	"aws-quotas-pp-cli/internal/cli"
-	"aws-quotas-pp-cli/internal/client"
-	"aws-quotas-pp-cli/internal/cliutil"
-	"aws-quotas-pp-cli/internal/config"
-	"aws-quotas-pp-cli/internal/mcp/cobratree"
-	"aws-quotas-pp-cli/internal/store"
+	"aws-pp-pp-cli/internal/cli"
+	"aws-pp-pp-cli/internal/client"
+	"aws-pp-pp-cli/internal/cliutil"
+	"aws-pp-pp-cli/internal/config"
+	"aws-pp-pp-cli/internal/mcp/cobratree"
+	"aws-pp-pp-cli/internal/store"
 	mcplib "github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 )
@@ -25,207 +25,812 @@ import (
 // RegisterTools registers all API operations as MCP tools.
 func RegisterTools(s *server.MCPServer) {
 	s.AddTool(
-		mcplib.NewTool("requested_service_quota_change_get",
-			mcplib.WithDescription("Retrieve information about the specified quota increase request. Optional: RequestId."),
-			mcplib.WithString("RequestId", mcplib.Description("Request identifier")),
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-create-anomaly-monitor_create-anomaly-monitor",
+			mcplib.WithDescription("Creates a new cost anomaly detection monitor with the requested type and monitor specification. Required: AnomalyMonitor. Optional: ResourceTags. Returns the new CreateAnomalyMonitorResponse."),
+			mcplib.WithString("AnomalyMonitor", mcplib.Required(), mcplib.Description("This object continuously inspects your account's cost data for anomalies. It's based on <code>MonitorType</code> and...")),
+			mcplib.WithString("ResourceTags", mcplib.Description("Resource tags")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/GetRequestedServiceQuotaChange", []mcpParamBinding{{PublicName: "RequestId", WireName: "RequestId", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.CreateAnomalyMonitor", []mcpParamBinding{{PublicName: "AnomalyMonitor", WireName: "AnomalyMonitor", Location: "body"}, {PublicName: "ResourceTags", WireName: "ResourceTags", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("requested_service_quota_change_list_history",
-			mcplib.WithDescription("Retrieve the quota increase requests for the specified service. Optional: ServiceCode, Status, MaxResults (plus 2 more)."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("Status", mcplib.Description("Request status filter")),
-			mcplib.WithNumber("MaxResults", mcplib.Description("Maximum number of results")),
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-create-anomaly-subscription_create-anomaly-subscription",
+			mcplib.WithDescription("Adds an alert subscription to a cost anomaly detection monitor. You can use each subscription to define subscribers with email or SNS notifications. Email subscribers can set an absolute or percentage threshold and a time frequency for receiving notifications. Required: AnomalySubscription. Optional: ResourceTags. Returns the new CreateAnomalySubscriptionResponse."),
+			mcplib.WithString("AnomalySubscription", mcplib.Required(), mcplib.Description("The association between a monitor, threshold, and list of subscribers used to deliver notifications about anomalies...")),
+			mcplib.WithString("ResourceTags", mcplib.Description("Resource tags")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.CreateAnomalySubscription", []mcpParamBinding{{PublicName: "AnomalySubscription", WireName: "AnomalySubscription", Location: "body"}, {PublicName: "ResourceTags", WireName: "ResourceTags", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-create-cost-category-definition_create-cost-category-definition",
+			mcplib.WithDescription("Creates a new Cost Category with the requested name and rules. Required: Name, RuleVersion, Rules. Optional: DefaultValue, EffectiveStart, ResourceTags (plus 1 more). Returns the new CreateCostCategoryDefinitionResponse."),
+			mcplib.WithString("DefaultValue", mcplib.Description("The default value for the cost category.")),
+			mcplib.WithString("EffectiveStart", mcplib.Description("The period of time that you want the usage and costs for.")),
+			mcplib.WithString("Name", mcplib.Required(), mcplib.Description("The unique name of the Cost Category.")),
+			mcplib.WithString("ResourceTags", mcplib.Description("Resource tags")),
+			mcplib.WithString("RuleVersion", mcplib.Required(), mcplib.Description("The rule schema version in this particular Cost Category.")),
+			mcplib.WithString("Rules", mcplib.Required(), mcplib.Description("Rules")),
+			mcplib.WithString("SplitChargeRules", mcplib.Description("Split charge rules")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.CreateCostCategoryDefinition", []mcpParamBinding{{PublicName: "DefaultValue", WireName: "DefaultValue", Location: "body"}, {PublicName: "EffectiveStart", WireName: "EffectiveStart", Location: "body"}, {PublicName: "Name", WireName: "Name", Location: "body"}, {PublicName: "ResourceTags", WireName: "ResourceTags", Location: "body"}, {PublicName: "RuleVersion", WireName: "RuleVersion", Location: "body"}, {PublicName: "Rules", WireName: "Rules", Location: "body"}, {PublicName: "SplitChargeRules", WireName: "SplitChargeRules", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-delete-anomaly-monitor_delete-anomaly-monitor",
+			mcplib.WithDescription("Deletes a cost anomaly monitor. Required: MonitorArn. Returns the new DeleteAnomalyMonitorResponse."),
+			mcplib.WithString("MonitorArn", mcplib.Required(), mcplib.Description("Monitor arn")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.DeleteAnomalyMonitor", []mcpParamBinding{{PublicName: "MonitorArn", WireName: "MonitorArn", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-delete-anomaly-subscription_delete-anomaly-subscription",
+			mcplib.WithDescription("Deletes a cost anomaly subscription. Required: SubscriptionArn. Returns the new DeleteAnomalySubscriptionResponse."),
+			mcplib.WithString("SubscriptionArn", mcplib.Required(), mcplib.Description("Subscription arn")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.DeleteAnomalySubscription", []mcpParamBinding{{PublicName: "SubscriptionArn", WireName: "SubscriptionArn", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-delete-cost-category-definition_delete-cost-category-definition",
+			mcplib.WithDescription("Deletes a Cost Category. Expenses from this month going forward will no longer be categorized with this Cost Category. Required: CostCategoryArn. Returns the new DeleteCostCategoryDefinitionResponse."),
+			mcplib.WithString("CostCategoryArn", mcplib.Required(), mcplib.Description("Cost category arn")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.DeleteCostCategoryDefinition", []mcpParamBinding{{PublicName: "CostCategoryArn", WireName: "CostCategoryArn", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-describe-cost-category-definition_describe-cost-category-definition",
+			mcplib.WithDescription("<p>Returns the name, Amazon Resource Name (ARN), rules, definition, and effective dates of a Cost Category that's defined in the account.</p> <p>You have the option to use <code>EffectiveOn</code> to return a Cost Category that's active on a specific date. If there's no <code>EffectiveOn</code> specified, you see a Cost Category that's effective on the current date. If Cost Category is still effective, <code>EffectiveEnd</code> is omitted in the response. </p>. Required: CostCategoryArn. Optional: EffectiveOn."),
+			mcplib.WithString("CostCategoryArn", mcplib.Required(), mcplib.Description("Cost category arn")),
+			mcplib.WithString("EffectiveOn", mcplib.Description("The period of time that you want the usage and costs for.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.DescribeCostCategoryDefinition", []mcpParamBinding{{PublicName: "CostCategoryArn", WireName: "CostCategoryArn", Location: "body"}, {PublicName: "EffectiveOn", WireName: "EffectiveOn", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-anomalies_get-anomalies",
+			mcplib.WithDescription("Retrieves all of the cost anomalies detected on your account during the time period that's specified by the <code>DateInterval</code> object. Anomalies are available for up to 90 days. Required: DateInterval. Optional: Feedback, MaxResults, MonitorArn (plus 2 more). Returns the new GetAnomaliesResponse."),
+			mcplib.WithString("DateInterval", mcplib.Required(), mcplib.Description("The time period for an anomaly.")),
+			mcplib.WithString("Feedback", mcplib.Description("Feedback")),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("MonitorArn", mcplib.Description("Monitor arn")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("TotalImpact", mcplib.Description("Filters cost anomalies based on the total impact.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetAnomalies", []mcpParamBinding{{PublicName: "DateInterval", WireName: "DateInterval", Location: "body"}, {PublicName: "Feedback", WireName: "Feedback", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "MonitorArn", WireName: "MonitorArn", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "TotalImpact", WireName: "TotalImpact", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-anomaly-monitors_get-anomaly-monitors",
+			mcplib.WithDescription("Retrieves the cost anomaly monitor definitions for your account. You can filter using a list of cost anomaly monitor Amazon Resource Names (ARNs). Optional: MaxResults, MonitorArnList, NextPageToken. Returns the new GetAnomalyMonitorsResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("MonitorArnList", mcplib.Description("Monitor arn list")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetAnomalyMonitors", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "MonitorArnList", WireName: "MonitorArnList", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-anomaly-subscriptions_get-anomaly-subscriptions",
+			mcplib.WithDescription("Retrieves the cost anomaly subscription objects for your account. You can filter using a list of cost anomaly monitor Amazon Resource Names (ARNs). Optional: MaxResults, MonitorArn, NextPageToken (plus 1 more). Returns the new GetAnomalySubscriptionsResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("MonitorArn", mcplib.Description("Monitor arn")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("SubscriptionArnList", mcplib.Description("Subscription arn list")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetAnomalySubscriptions", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "MonitorArn", WireName: "MonitorArn", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "SubscriptionArnList", WireName: "SubscriptionArnList", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-cost-and-usage_get-cost-and-usage",
+			mcplib.WithDescription("<p>Retrieves cost and usage metrics for your account. You can specify which cost and usage-related metric that you want the request to return. For example, you can specify <code>BlendedCosts</code> or <code>UsageQuantity</code>. You can also filter and group your data by various dimensions, such as <code>SERVICE</code> or <code>AZ</code>, in a specific time range. For a complete list of valid dimensions, see the <a href='https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html'>GetDimensionValues</a> operation. Management account in an organization in Organizations have access to all member accounts.</p> <p>For information about filter limitations, see <a href='https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-limits.html'>Quotas and restrictions</a> in the <i>Billing and Cost Management User Guide</i>.</p>. Required: Granularity, Metrics, TimePeriod. Optional: Filter, GroupBy, NextPageToken. Returns the new GetCostAndUsageResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Required(), mcplib.Description("Granularity")),
+			mcplib.WithString("GroupBy", mcplib.Description("Group by")),
+			mcplib.WithString("Metrics", mcplib.Required(), mcplib.Description("Metrics")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetCostAndUsage", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "GroupBy", WireName: "GroupBy", Location: "body"}, {PublicName: "Metrics", WireName: "Metrics", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-cost-and-usage-with-resources_get-cost-and-usage-with-resources",
+			mcplib.WithDescription("<p>Retrieves cost and usage metrics with resources for your account. You can specify which cost and usage-related metric, such as <code>BlendedCosts</code> or <code>UsageQuantity</code>, that you want the request to return. You can also filter and group your data by various dimensions, such as <code>SERVICE</code> or <code>AZ</code>, in a specific time range. For a complete list of valid dimensions, see the <a href='https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html'>GetDimensionValues</a> operation. Management account in an organization in Organizations have access to all member accounts. This API is currently available for the Amazon Elastic Compute Cloud – Compute service only.</p> <note> <p>This is an opt-in only feature. You can enable this feature from the Cost Explorer Settings page. For information about how to access the Settings page, see <a href='https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html'>Controlling Access for Cost Explorer</a> in the <i>Billing and Cost Management User Guide</i>.</p> </note>. Required: Filter, Granularity, TimePeriod. Optional: GroupBy, Metrics, NextPageToken. Returns the new GetCostAndUsageWithResourcesResponse."),
+			mcplib.WithString("Filter", mcplib.Required(), mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Required(), mcplib.Description("Granularity")),
+			mcplib.WithString("GroupBy", mcplib.Description("Group by")),
+			mcplib.WithString("Metrics", mcplib.Description("Metrics")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetCostAndUsageWithResources", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "GroupBy", WireName: "GroupBy", Location: "body"}, {PublicName: "Metrics", WireName: "Metrics", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-cost-categories_get-cost-categories",
+			mcplib.WithDescription("<p>Retrieves an array of Cost Category names and values incurred cost.</p> <note> <p>If some Cost Category names and values are not associated with any cost, they will not be returned by this API.</p> </note>. Required: TimePeriod. Optional: CostCategoryName, Filter, MaxResults (plus 3 more). Returns the new GetCostCategoriesResponse."),
+			mcplib.WithString("CostCategoryName", mcplib.Description("The unique name of the Cost Category.")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("SearchString", mcplib.Description("Search string")),
+			mcplib.WithString("SortBy", mcplib.Description("Sort by")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetCostCategories", []mcpParamBinding{{PublicName: "CostCategoryName", WireName: "CostCategoryName", Location: "body"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "SearchString", WireName: "SearchString", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-cost-forecast_get-cost-forecast",
+			mcplib.WithDescription("Retrieves a forecast for how much Amazon Web Services predicts that you will spend over the forecast time period that you select, based on your past costs. Required: Granularity, Metric, TimePeriod. Optional: Filter, PredictionIntervalLevel. Returns the new GetCostForecastResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Required(), mcplib.Description("Granularity")),
+			mcplib.WithString("Metric", mcplib.Required(), mcplib.Description("Metric")),
+			mcplib.WithString("PredictionIntervalLevel", mcplib.Description("Prediction interval level")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetCostForecast", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "Metric", WireName: "Metric", Location: "body"}, {PublicName: "PredictionIntervalLevel", WireName: "PredictionIntervalLevel", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-dimension-values_get-dimension-values",
+			mcplib.WithDescription("Retrieves all available filter values for a specified filter over a period of time. You can search the dimension values for an arbitrary string. Required: Dimension, TimePeriod. Optional: Context, Filter, MaxResults (plus 3 more). Returns the new GetDimensionValuesResponse."),
+			mcplib.WithString("Context", mcplib.Description("Context")),
+			mcplib.WithString("Dimension", mcplib.Required(), mcplib.Description("Dimension")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("SearchString", mcplib.Description("Search string")),
+			mcplib.WithString("SortBy", mcplib.Description("Sort by")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetDimensionValues", []mcpParamBinding{{PublicName: "Context", WireName: "Context", Location: "body"}, {PublicName: "Dimension", WireName: "Dimension", Location: "body"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "SearchString", WireName: "SearchString", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-reservation-coverage_get-reservation-coverage",
+			mcplib.WithDescription("<p>Retrieves the reservation coverage for your account, which you can use to see how much of your Amazon Elastic Compute Cloud, Amazon ElastiCache, Amazon Relational Database Service, or Amazon Redshift usage is covered by a reservation. An organization's management account can see the coverage of the associated member accounts. This supports dimensions, Cost Categories, and nested expressions. For any time period, you can filter data about reservation usage by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DATABASE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> </li> <li> <p>TAG</p> </li> <li> <p>TENANCY</p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation. </p>. Required: TimePeriod. Optional: Filter, Granularity, GroupBy (plus 4 more). Returns the new GetReservationCoverageResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Description("Granularity")),
+			mcplib.WithString("GroupBy", mcplib.Description("Group by")),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("Metrics", mcplib.Description("Metrics")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("SortBy", mcplib.Description("The details for how to sort the data.")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetReservationCoverage", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "GroupBy", WireName: "GroupBy", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "Metrics", WireName: "Metrics", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation_get-reservation-purchase-recommendation",
+			mcplib.WithDescription("<p>Gets recommendations for reservation purchases. These recommendations might help you to reduce your costs. Reservations provide a discounted hourly rate (up to 75%) compared to On-Demand pricing.</p> <p>Amazon Web Services generates your recommendations by identifying your On-Demand usage during a specific time period and collecting your usage into categories that are eligible for a reservation. After Amazon Web Services has these categories, it simulates every combination of reservations in each category of usage to identify the best number of each type of Reserved Instance (RI) to purchase to maximize your estimated savings. </p> <p>For example, Amazon Web Services automatically aggregates your Amazon EC2 Linux, shared tenancy, and c4 family usage in the US West (Oregon) Region and recommends that you buy size-flexible regional reservations to apply to the c4 family usage. Amazon Web Services recommends the smallest size instance in an instance family. This makes it easier to purchase a size-flexible Reserved Instance (RI). Amazon Web Services also shows the equal number of normalized units. This way, you can purchase any instance size that you want. For this example, your RI recommendation is for <code>c4.large</code> because that is the smallest size instance in the c4 instance family.</p>. Required: Service. Optional: AccountId, AccountScope, Filter (plus 6 more). Returns the new GetReservationPurchaseRecommendationResponse."),
+			mcplib.WithString("AccountId", mcplib.Description("Account id")),
+			mcplib.WithString("AccountScope", mcplib.Description("Account scope")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("LookbackPeriodInDays", mcplib.Description("Lookback period in days")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("PageSize", mcplib.Description("Page size")),
+			mcplib.WithString("PaymentOption", mcplib.Description("Payment option")),
+			mcplib.WithString("Service", mcplib.Required(), mcplib.Description("Service")),
+			mcplib.WithString("ServiceSpecification", mcplib.Description("Hardware specifications for the service that you want recommendations for.")),
+			mcplib.WithString("TermInYears", mcplib.Description("Term in years")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetReservationPurchaseRecommendation", []mcpParamBinding{{PublicName: "AccountId", WireName: "AccountId", Location: "body"}, {PublicName: "AccountScope", WireName: "AccountScope", Location: "body"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "LookbackPeriodInDays", WireName: "LookbackPeriodInDays", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "PageSize", WireName: "PageSize", Location: "body"}, {PublicName: "PaymentOption", WireName: "PaymentOption", Location: "body"}, {PublicName: "Service", WireName: "Service", Location: "body"}, {PublicName: "ServiceSpecification", WireName: "ServiceSpecification", Location: "body"}, {PublicName: "TermInYears", WireName: "TermInYears", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-reservation-utilization_get-reservation-utilization",
+			mcplib.WithDescription("Retrieves the reservation utilization for your account. Management account in an organization have access to member accounts. You can filter data by dimensions in a time period. You can use <code>GetDimensionValues</code> to determine the possible dimension values. Currently, you can group only by <code>SUBSCRIPTION_ID</code>. Required: TimePeriod. Optional: Filter, Granularity, GroupBy (plus 3 more). Returns the new GetReservationUtilizationResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Description("Granularity")),
+			mcplib.WithString("GroupBy", mcplib.Description("Group by")),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("SortBy", mcplib.Description("The details for how to sort the data.")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetReservationUtilization", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "GroupBy", WireName: "GroupBy", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-rightsizing-recommendation_get-rightsizing-recommendation",
+			mcplib.WithDescription("<p>Creates recommendations that help you save cost by identifying idle and underutilized Amazon EC2 instances.</p> <p>Recommendations are generated to either downsize or terminate instances, along with providing savings detail and metrics. For more information about calculation and function, see <a href='https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-rightsizing.html'>Optimizing Your Cost with Rightsizing Recommendations</a> in the <i>Billing and Cost Management User Guide</i>.</p>. Required: Service. Optional: Configuration, Filter, NextPageToken (plus 1 more). Returns the new GetRightsizingRecommendationResponse."),
+			mcplib.WithString("Configuration", mcplib.Description("You can use <code>RightsizingRecommendationConfiguration</code> to customize recommendations across two attributes....")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("PageSize", mcplib.Description("Page size")),
+			mcplib.WithString("Service", mcplib.Required(), mcplib.Description("Service")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetRightsizingRecommendation", []mcpParamBinding{{PublicName: "Configuration", WireName: "Configuration", Location: "body"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "PageSize", WireName: "PageSize", Location: "body"}, {PublicName: "Service", WireName: "Service", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-savings-plans-coverage_get-savings-plans-coverage",
+			mcplib.WithDescription("<p>Retrieves the Savings Plans covered for your account. This enables you to see how much of your cost is covered by a Savings Plan. An organization’s management account can see the coverage of the associated member accounts. This supports dimensions, Cost Categories, and nested expressions. For any time period, you can filter data for Savings Plans usage with the following dimensions:</p> <ul> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>INSTANCE_FAMILY</code> </p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation.</p>. Required: TimePeriod. Optional: MaxResults, NextToken, Filter (plus 4 more). Returns the new GetSavingsPlansCoverageResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
 			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
-			mcplib.WithString("QuotaRequestedAtLevel", mcplib.Description("Level at which quota change was requested")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Description("Granularity")),
+			mcplib.WithString("GroupBy", mcplib.Description("Group by")),
+			mcplib.WithString("Metrics", mcplib.Description("Metrics")),
+			mcplib.WithString("SortBy", mcplib.Description("The details for how to sort the data.")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/ListRequestedServiceQuotaChangeHistory", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "Status", WireName: "Status", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextToken", WireName: "NextToken", Location: "body"}, {PublicName: "QuotaRequestedAtLevel", WireName: "QuotaRequestedAtLevel", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetSavingsPlansCoverage", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "GroupBy", WireName: "GroupBy", Location: "body"}, {PublicName: "Metrics", WireName: "Metrics", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("requested_service_quota_change_list_history_by_quota",
-			mcplib.WithDescription("Retrieve the quota increase requests for the specified quota. Optional: ServiceCode, QuotaCode, Status (plus 3 more)."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
-			mcplib.WithString("Status", mcplib.Description("Request status filter")),
-			mcplib.WithNumber("MaxResults", mcplib.Description("Maximum number of results")),
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-savings-plans-purchase-recommendation_get-savings-plans-purchase-recommendation",
+			mcplib.WithDescription("Retrieves the Savings Plans recommendations for your account. First use <code>StartSavingsPlansPurchaseRecommendationGeneration</code> to generate a new set of recommendations, and then use <code>GetSavingsPlansPurchaseRecommendation</code> to retrieve them. Required: LookbackPeriodInDays, PaymentOption, SavingsPlansType, TermInYears. Optional: AccountScope, Filter, NextPageToken (plus 1 more). Returns the new GetSavingsPlansPurchaseRecommendationResponse."),
+			mcplib.WithString("AccountScope", mcplib.Description("Account scope")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("LookbackPeriodInDays", mcplib.Required(), mcplib.Description("Lookback period in days")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("PageSize", mcplib.Description("Page size")),
+			mcplib.WithString("PaymentOption", mcplib.Required(), mcplib.Description("Payment option")),
+			mcplib.WithString("SavingsPlansType", mcplib.Required(), mcplib.Description("Savings plans type")),
+			mcplib.WithString("TermInYears", mcplib.Required(), mcplib.Description("Term in years")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetSavingsPlansPurchaseRecommendation", []mcpParamBinding{{PublicName: "AccountScope", WireName: "AccountScope", Location: "body"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "LookbackPeriodInDays", WireName: "LookbackPeriodInDays", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "PageSize", WireName: "PageSize", Location: "body"}, {PublicName: "PaymentOption", WireName: "PaymentOption", Location: "body"}, {PublicName: "SavingsPlansType", WireName: "SavingsPlansType", Location: "body"}, {PublicName: "TermInYears", WireName: "TermInYears", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-savings-plans-utilization_get-savings-plans-utilization",
+			mcplib.WithDescription("<p>Retrieves the Savings Plans utilization for your account across date ranges with daily or monthly granularity. Management account in an organization have access to member accounts. You can use <code>GetDimensionValues</code> in <code>SAVINGS_PLANS</code> to determine the possible dimension values.</p> <note> <p>You can't group by any dimension values for <code>GetSavingsPlansUtilization</code>.</p> </note>. Required: TimePeriod. Optional: Filter, Granularity, SortBy. Returns the new GetSavingsPlansUtilizationResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Description("Granularity")),
+			mcplib.WithString("SortBy", mcplib.Description("The details for how to sort the data.")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetSavingsPlansUtilization", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-savings-plans-utilization-details_get-savings-plans-utilization-details",
+			mcplib.WithDescription("<p>Retrieves attribute data along with aggregate utilization and savings data for a given time period. This doesn't support granular or grouped data (daily/monthly) in response. You can't retrieve data by dates in a single response similar to <code>GetSavingsPlanUtilization</code>, but you have the option to make multiple calls to <code>GetSavingsPlanUtilizationDetails</code> by providing individual dates. You can use <code>GetDimensionValues</code> in <code>SAVINGS_PLANS</code> to determine the possible dimension values.</p> <note> <p> <code>GetSavingsPlanUtilizationDetails</code> internally groups data by <code>SavingsPlansArn</code>.</p> </note>. Required: TimePeriod. Optional: MaxResults, NextToken, DataType (plus 2 more). Returns the new GetSavingsPlansUtilizationDetailsResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
 			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
-			mcplib.WithString("QuotaRequestedAtLevel", mcplib.Description("Level at which quota change was requested")),
+			mcplib.WithString("DataType", mcplib.Description("Data type")),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("SortBy", mcplib.Description("The details for how to sort the data.")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/ListRequestedServiceQuotaChangeHistoryByQuota", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "Status", WireName: "Status", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextToken", WireName: "NextToken", Location: "body"}, {PublicName: "QuotaRequestedAtLevel", WireName: "QuotaRequestedAtLevel", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetSavingsPlansUtilizationDetails", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "DataType", WireName: "DataType", Location: "body"}, {PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("requested_service_quota_change_request",
-			mcplib.WithDescription("Submit a quota increase request for the specified quota. Optional: ServiceCode, QuotaCode, DesiredValue (plus 2 more)."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
-			mcplib.WithString("DesiredValue", mcplib.Description("Desired new value")),
-			mcplib.WithString("ContextId", mcplib.Description("Resource context identifier")),
-			mcplib.WithBoolean("SupportCaseAllowed", mcplib.Description("Allow opening a support case")),
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-tags_get-tags",
+			mcplib.WithDescription("Queries for available tag keys and tag values for a specified period. You can search the tag values for an arbitrary string. Required: TimePeriod. Optional: Filter, MaxResults, NextPageToken (plus 3 more). Returns the new GetTagsResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("MaxResults", mcplib.Description("Max results")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("SearchString", mcplib.Description("Search string")),
+			mcplib.WithString("SortBy", mcplib.Description("Sort by")),
+			mcplib.WithString("TagKey", mcplib.Description("Tag key")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/RequestServiceQuotaIncrease", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "DesiredValue", WireName: "DesiredValue", Location: "body"}, {PublicName: "ContextId", WireName: "ContextId", Location: "body"}, {PublicName: "SupportCaseAllowed", WireName: "SupportCaseAllowed", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetTags", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "SearchString", WireName: "SearchString", Location: "body"}, {PublicName: "SortBy", WireName: "SortBy", Location: "body"}, {PublicName: "TagKey", WireName: "TagKey", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("service_list",
-			mcplib.WithDescription("List the names and codes for the AWS services integrated with Service Quotas. Optional: MaxResults, NextToken."),
-			mcplib.WithNumber("MaxResults", mcplib.Description("Maximum number of results")),
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-get-usage-forecast_get-usage-forecast",
+			mcplib.WithDescription("Retrieves a forecast for how much Amazon Web Services predicts that you will use over the forecast time period that you select, based on your past usage. Required: Granularity, Metric, TimePeriod. Optional: Filter, PredictionIntervalLevel. Returns the new GetUsageForecastResponse."),
+			mcplib.WithString("Filter", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.")),
+			mcplib.WithString("Granularity", mcplib.Required(), mcplib.Description("Granularity")),
+			mcplib.WithString("Metric", mcplib.Required(), mcplib.Description("Metric")),
+			mcplib.WithString("PredictionIntervalLevel", mcplib.Description("Prediction interval level")),
+			mcplib.WithString("TimePeriod", mcplib.Required(), mcplib.Description("The time period of the request.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.GetUsageForecast", []mcpParamBinding{{PublicName: "Filter", WireName: "Filter", Location: "body"}, {PublicName: "Granularity", WireName: "Granularity", Location: "body"}, {PublicName: "Metric", WireName: "Metric", Location: "body"}, {PublicName: "PredictionIntervalLevel", WireName: "PredictionIntervalLevel", Location: "body"}, {PublicName: "TimePeriod", WireName: "TimePeriod", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-list-cost-allocation-tags_list-cost-allocation-tags",
+			mcplib.WithDescription("Get a list of cost allocation tags. All inputs in the API are optional and serve as filters. By default, all cost allocation tags are returned. Optional: MaxResults, NextToken, Status (plus 2 more). Returns the new ListCostAllocationTagsResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("Status", mcplib.Description("Status")),
+			mcplib.WithString("TagKeys", mcplib.Description("Tag keys")),
+			mcplib.WithString("Type", mcplib.Description("Type")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.ListCostAllocationTags", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "Status", WireName: "Status", Location: "body"}, {PublicName: "TagKeys", WireName: "TagKeys", Location: "body"}, {PublicName: "Type", WireName: "Type", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-list-cost-category-definitions_list-cost-category-definitions",
+			mcplib.WithDescription("Returns the name, Amazon Resource Name (ARN), <code>NumberOfRules</code> and effective dates of all Cost Categories defined in the account. You have the option to use <code>EffectiveOn</code> to return a list of Cost Categories that were active on a specific date. If there is no <code>EffectiveOn</code> specified, you’ll see Cost Categories that are effective on the current date. If Cost Category is still effective, <code>EffectiveEnd</code> is omitted in the response. <code>ListCostCategoryDefinitions</code> supports pagination. The request can have a <code>MaxResults</code> range up to 100. Optional: MaxResults, NextToken, EffectiveOn."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("EffectiveOn", mcplib.Description("The period of time that you want the usage and costs for.")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.ListCostCategoryDefinitions", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "EffectiveOn", WireName: "EffectiveOn", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-list-savings-plans-purchase-recommendation-generation_list-savings-plans-purchase-recommendation-generation",
+			mcplib.WithDescription("Retrieves a list of your historical recommendation generations within the past 30 days. Optional: GenerationStatus, NextPageToken, PageSize (plus 1 more). Returns the new ListSavingsPlansPurchaseRecommendationGenerationResponse."),
+			mcplib.WithString("GenerationStatus", mcplib.Description("Generation status")),
+			mcplib.WithString("NextPageToken", mcplib.Description("Next page token")),
+			mcplib.WithString("PageSize", mcplib.Description("Page size")),
+			mcplib.WithString("RecommendationIds", mcplib.Description("Recommendation ids")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.ListSavingsPlansPurchaseRecommendationGeneration", []mcpParamBinding{{PublicName: "GenerationStatus", WireName: "GenerationStatus", Location: "body"}, {PublicName: "NextPageToken", WireName: "NextPageToken", Location: "body"}, {PublicName: "PageSize", WireName: "PageSize", Location: "body"}, {PublicName: "RecommendationIds", WireName: "RecommendationIds", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-list-tags-for-resource_list-tags-for-resource",
+			mcplib.WithDescription("Returns a list of resource tags associated with the resource specified by the Amazon Resource Name (ARN). Required: ResourceArn."),
+			mcplib.WithString("ResourceArn", mcplib.Required(), mcplib.Description("Resource arn")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.ListTagsForResource", []mcpParamBinding{{PublicName: "ResourceArn", WireName: "ResourceArn", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-provide-anomaly-feedback_provide-anomaly-feedback",
+			mcplib.WithDescription("Modifies the feedback property of a given cost anomaly. Required: AnomalyId, Feedback. Returns the new ProvideAnomalyFeedbackResponse."),
+			mcplib.WithString("AnomalyId", mcplib.Required(), mcplib.Description("Anomaly id")),
+			mcplib.WithString("Feedback", mcplib.Required(), mcplib.Description("Feedback")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.ProvideAnomalyFeedback", []mcpParamBinding{{PublicName: "AnomalyId", WireName: "AnomalyId", Location: "body"}, {PublicName: "Feedback", WireName: "Feedback", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-start-savings-plans-purchase-recommendation-generation_start-savings-plans-purchase-recommendation-generation",
+			mcplib.WithDescription("<p>Requests a Savings Plans recommendation generation. This enables you to calculate a fresh set of Savings Plans recommendations that takes your latest usage data and current Savings Plans inventory into account. You can refresh Savings Plans recommendations up to three times daily for a consolidated billing family.</p> <note> <p> <code>StartSavingsPlansPurchaseRecommendationGeneration</code> has no request syntax because no input parameters are needed to support this operation.</p> </note>. Returns the new StartSavingsPlansPurchaseRecommendationGenerationResponse."),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.StartSavingsPlansPurchaseRecommendationGeneration", []mcpParamBinding{}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-tag-resource_tag-resource",
+			mcplib.WithDescription("<p>An API operation for adding one or more tags (key-value pairs) to a resource.</p> <p>You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value you specify replaces the previous value for that tag.</p> <p>Although the maximum number of array members is 200, user-tag maximum is 50. The remaining are reserved for Amazon Web Services use.</p>. Required: ResourceArn, ResourceTags. Returns the new TagResourceResponse."),
+			mcplib.WithString("ResourceArn", mcplib.Required(), mcplib.Description("Resource arn")),
+			mcplib.WithString("ResourceTags", mcplib.Required(), mcplib.Description("Resource tags")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.TagResource", []mcpParamBinding{{PublicName: "ResourceArn", WireName: "ResourceArn", Location: "body"}, {PublicName: "ResourceTags", WireName: "ResourceTags", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-untag-resource_untag-resource",
+			mcplib.WithDescription("Removes one or more tags from a resource. Specify only tag keys in your request. Don't specify the value. Required: ResourceArn, ResourceTagKeys. Returns the new UntagResourceResponse."),
+			mcplib.WithString("ResourceArn", mcplib.Required(), mcplib.Description("Resource arn")),
+			mcplib.WithString("ResourceTagKeys", mcplib.Required(), mcplib.Description("Resource tag keys")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.UntagResource", []mcpParamBinding{{PublicName: "ResourceArn", WireName: "ResourceArn", Location: "body"}, {PublicName: "ResourceTagKeys", WireName: "ResourceTagKeys", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-update-anomaly-monitor_update-anomaly-monitor",
+			mcplib.WithDescription("Updates an existing cost anomaly monitor. The changes made are applied going forward, and doesn't change anomalies detected in the past. Required: MonitorArn. Optional: MonitorName. Returns the new UpdateAnomalyMonitorResponse."),
+			mcplib.WithString("MonitorArn", mcplib.Required(), mcplib.Description("Monitor arn")),
+			mcplib.WithString("MonitorName", mcplib.Description("Monitor name")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.UpdateAnomalyMonitor", []mcpParamBinding{{PublicName: "MonitorArn", WireName: "MonitorArn", Location: "body"}, {PublicName: "MonitorName", WireName: "MonitorName", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-update-anomaly-subscription_update-anomaly-subscription",
+			mcplib.WithDescription("Updates an existing cost anomaly monitor subscription. Required: SubscriptionArn. Optional: Frequency, MonitorArnList, Subscribers (plus 3 more). Returns the new UpdateAnomalySubscriptionResponse."),
+			mcplib.WithString("Frequency", mcplib.Description("Frequency")),
+			mcplib.WithString("MonitorArnList", mcplib.Description("Monitor arn list")),
+			mcplib.WithString("Subscribers", mcplib.Description("Subscribers")),
+			mcplib.WithString("SubscriptionArn", mcplib.Required(), mcplib.Description("Subscription arn")),
+			mcplib.WithString("SubscriptionName", mcplib.Description("Subscription name")),
+			mcplib.WithString("Threshold", mcplib.Description("Threshold")),
+			mcplib.WithString("ThresholdExpression", mcplib.Description("<p>Use <code>Expression</code> to filter in various Cost Explorer APIs.</p> <p>Not all <code>Expression</code> types...")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.UpdateAnomalySubscription", []mcpParamBinding{{PublicName: "Frequency", WireName: "Frequency", Location: "body"}, {PublicName: "MonitorArnList", WireName: "MonitorArnList", Location: "body"}, {PublicName: "Subscribers", WireName: "Subscribers", Location: "body"}, {PublicName: "SubscriptionArn", WireName: "SubscriptionArn", Location: "body"}, {PublicName: "SubscriptionName", WireName: "SubscriptionName", Location: "body"}, {PublicName: "Threshold", WireName: "Threshold", Location: "body"}, {PublicName: "ThresholdExpression", WireName: "ThresholdExpression", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-update-cost-allocation-tags-status_update-cost-allocation-tags-status",
+			mcplib.WithDescription("Updates status for cost allocation tags in bulk, with maximum batch size of 20. If the tag status that's updated is the same as the existing tag status, the request doesn't fail. Instead, it doesn't have any effect on the tag status (for example, activating the active tag). Required: CostAllocationTagsStatus. Returns the new UpdateCostAllocationTagsStatusResponse."),
+			mcplib.WithString("CostAllocationTagsStatus", mcplib.Required(), mcplib.Description("Cost allocation tags status")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.UpdateCostAllocationTagsStatus", []mcpParamBinding{{PublicName: "CostAllocationTagsStatus", WireName: "CostAllocationTagsStatus", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awsinsights-index-service-update-cost-category-definition_update-cost-category-definition",
+			mcplib.WithDescription("Updates an existing Cost Category. Changes made to the Cost Category rules will be used to categorize the current month’s expenses and future expenses. This won’t change categorization for the previous months. Required: CostCategoryArn, RuleVersion, Rules. Optional: DefaultValue, EffectiveStart, SplitChargeRules. Returns the new UpdateCostCategoryDefinitionResponse."),
+			mcplib.WithString("CostCategoryArn", mcplib.Required(), mcplib.Description("Cost category arn")),
+			mcplib.WithString("DefaultValue", mcplib.Description("The default value for the cost category.")),
+			mcplib.WithString("EffectiveStart", mcplib.Description("The period of time that you want the usage and costs for.")),
+			mcplib.WithString("RuleVersion", mcplib.Required(), mcplib.Description("The rule schema version in this particular Cost Category.")),
+			mcplib.WithString("Rules", mcplib.Required(), mcplib.Description("Rules")),
+			mcplib.WithString("SplitChargeRules", mcplib.Description("Split charge rules")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "http://ce.us-east-1.amazonaws.com/#X-Amz-Target=AWSInsightsIndexService.UpdateCostCategoryDefinition", []mcpParamBinding{{PublicName: "CostCategoryArn", WireName: "CostCategoryArn", Location: "body"}, {PublicName: "DefaultValue", WireName: "DefaultValue", Location: "body"}, {PublicName: "EffectiveStart", WireName: "EffectiveStart", Location: "body"}, {PublicName: "RuleVersion", WireName: "RuleVersion", Location: "body"}, {PublicName: "Rules", WireName: "Rules", Location: "body"}, {PublicName: "SplitChargeRules", WireName: "SplitChargeRules", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-add-attachments-to-set_add-attachments-to-set",
+			mcplib.WithDescription("<p>Adds one or more attachments to an attachment set. </p> <p>An attachment set is a temporary container for attachments that you add to a case or case communication. The set is available for 1 hour after it's created. The <code>expiryTime</code> returned in the response is when the set expires. </p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Required: attachments. Optional: attachmentSetId. Returns the new AddAttachmentsToSetResponse."),
+			mcplib.WithString("attachmentSetId", mcplib.Description("Attachment set id")),
+			mcplib.WithString("attachments", mcplib.Required(), mcplib.Description("Attachments")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.AddAttachmentsToSet", []mcpParamBinding{{PublicName: "attachmentSetId", WireName: "attachmentSetId", Location: "body"}, {PublicName: "attachments", WireName: "attachments", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-add-communication-to-case_add-communication-to-case",
+			mcplib.WithDescription("<p>Adds additional customer communication to an Amazon Web Services Support case. Use the <code>caseId</code> parameter to identify the case to which to add communication. You can list a set of email addresses to copy on the communication by using the <code>ccEmailAddresses</code> parameter. The <code>communicationBody</code> value contains the text of the communication.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Required: communicationBody. Optional: attachmentSetId, caseId, ccEmailAddresses. Returns the new AddCommunicationToCaseResponse."),
+			mcplib.WithString("attachmentSetId", mcplib.Description("Attachment set id")),
+			mcplib.WithString("caseId", mcplib.Description("Case id")),
+			mcplib.WithString("ccEmailAddresses", mcplib.Description("Cc email addresses")),
+			mcplib.WithString("communicationBody", mcplib.Required(), mcplib.Description("Communication body")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.AddCommunicationToCase", []mcpParamBinding{{PublicName: "attachmentSetId", WireName: "attachmentSetId", Location: "body"}, {PublicName: "caseId", WireName: "caseId", Location: "body"}, {PublicName: "ccEmailAddresses", WireName: "ccEmailAddresses", Location: "body"}, {PublicName: "communicationBody", WireName: "communicationBody", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-create-case_create-case",
+			mcplib.WithDescription("<p>Creates a case in the Amazon Web Services Support Center. This operation is similar to how you create a case in the Amazon Web Services Support Center <a href='https://console.aws.amazon.com/support/home#/case/create'>Create Case</a> page.</p> <p>The Amazon Web Services Support API doesn't support requesting service limit increases. You can submit a service limit increase in the following ways: </p> <ul> <li> <p>Submit a request from the Amazon Web Services Support Center <a href='https://console.aws.amazon.com/support/home#/case/create'>Create Case</a> page.</p> </li> <li> <p>Use the Service Quotas <a href='https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/API_RequestServiceQuotaIncrease.html'>RequestServiceQuotaIncrease</a> operation.</p> </li> </ul> <p>A successful <code>CreateCase</code> request returns an Amazon Web Services Support case number. You can use the <a>DescribeCases</a> operation and specify the case number to get existing Amazon Web Services Support cases. After you create a case, use the <a>AddCommunicationToCase</a> operation to add additional communication or attachments to an existing case.</p> <p>The <code>caseId</code> is separate from the <code>displayId</code> that appears in the <a href='https://console.aws.amazon.com/support'>Amazon Web Services Support Center</a>. Use the <a>DescribeCases</a> operation to get the <code>displayId</code>.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Required: communicationBody, subject. Optional: attachmentSetId, categoryCode, ccEmailAddresses (plus 4 more)."),
+			mcplib.WithString("attachmentSetId", mcplib.Description("Attachment set id")),
+			mcplib.WithString("categoryCode", mcplib.Description("Category code")),
+			mcplib.WithString("ccEmailAddresses", mcplib.Description("Cc email addresses")),
+			mcplib.WithString("communicationBody", mcplib.Required(), mcplib.Description("Communication body")),
+			mcplib.WithString("issueType", mcplib.Description("Issue type")),
+			mcplib.WithString("language", mcplib.Description("Language")),
+			mcplib.WithString("serviceCode", mcplib.Description("Service code")),
+			mcplib.WithString("severityCode", mcplib.Description("Severity code")),
+			mcplib.WithString("subject", mcplib.Required(), mcplib.Description("Subject")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.CreateCase", []mcpParamBinding{{PublicName: "attachmentSetId", WireName: "attachmentSetId", Location: "body"}, {PublicName: "categoryCode", WireName: "categoryCode", Location: "body"}, {PublicName: "ccEmailAddresses", WireName: "ccEmailAddresses", Location: "body"}, {PublicName: "communicationBody", WireName: "communicationBody", Location: "body"}, {PublicName: "issueType", WireName: "issueType", Location: "body"}, {PublicName: "language", WireName: "language", Location: "body"}, {PublicName: "serviceCode", WireName: "serviceCode", Location: "body"}, {PublicName: "severityCode", WireName: "severityCode", Location: "body"}, {PublicName: "subject", WireName: "subject", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-attachment_describe-attachment",
+			mcplib.WithDescription("<p>Returns the attachment that has the specified ID. Attachments can include screenshots, error logs, or other files that describe your issue. Attachment IDs are generated by the case management system when you add an attachment to a case or case communication. Attachment IDs are returned in the <a>AttachmentDetails</a> objects that are returned by the <a>DescribeCommunications</a> operation.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Required: attachmentId."),
+			mcplib.WithString("attachmentId", mcplib.Required(), mcplib.Description("Attachment id")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeAttachment", []mcpParamBinding{{PublicName: "attachmentId", WireName: "attachmentId", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-cases_describe-cases",
+			mcplib.WithDescription("<p>Returns a list of cases that you specify by passing one or more case IDs. You can use the <code>afterTime</code> and <code>beforeTime</code> parameters to filter the cases by date. You can set values for the <code>includeResolvedCases</code> and <code>includeCommunications</code> parameters to specify how much information to return.</p> <p>The response returns the following in JSON format:</p> <ul> <li> <p>One or more <a href='https://docs.aws.amazon.com/awssupport/latest/APIReference/API_CaseDetails.html'>CaseDetails</a> data types.</p> </li> <li> <p>One or more <code>nextToken</code> values, which specify where to paginate the returned records represented by the <code>CaseDetails</code> objects.</p> </li> </ul> <p>Case data is available for 12 months after creation. If a case was created more than 12 months ago, a request might return an error.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Optional: maxResults, nextToken, afterTime (plus 6 more)."),
+			mcplib.WithString("maxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("nextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("afterTime", mcplib.Description("After time")),
+			mcplib.WithString("beforeTime", mcplib.Description("Before time")),
+			mcplib.WithString("caseIdList", mcplib.Description("Case id list")),
+			mcplib.WithString("displayId", mcplib.Description("Display id")),
+			mcplib.WithString("includeCommunications", mcplib.Description("Include communications")),
+			mcplib.WithString("includeResolvedCases", mcplib.Description("Include resolved cases")),
+			mcplib.WithString("language", mcplib.Description("Language")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeCases", []mcpParamBinding{{PublicName: "maxResults", WireName: "maxResults", Location: "query"}, {PublicName: "nextToken", WireName: "nextToken", Location: "query"}, {PublicName: "afterTime", WireName: "afterTime", Location: "body"}, {PublicName: "beforeTime", WireName: "beforeTime", Location: "body"}, {PublicName: "caseIdList", WireName: "caseIdList", Location: "body"}, {PublicName: "displayId", WireName: "displayId", Location: "body"}, {PublicName: "includeCommunications", WireName: "includeCommunications", Location: "body"}, {PublicName: "includeResolvedCases", WireName: "includeResolvedCases", Location: "body"}, {PublicName: "language", WireName: "language", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-communications_describe-communications",
+			mcplib.WithDescription("<p>Returns communications and attachments for one or more support cases. Use the <code>afterTime</code> and <code>beforeTime</code> parameters to filter by date. You can use the <code>caseId</code> parameter to restrict the results to a specific case.</p> <p>Case data is available for 12 months after creation. If a case was created more than 12 months ago, a request for data might cause an error.</p> <p>You can use the <code>maxResults</code> and <code>nextToken</code> parameters to control the pagination of the results. Set <code>maxResults</code> to the number of cases that you want to display on each page, and use <code>nextToken</code> to specify the resumption of pagination.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Required: caseId. Optional: maxResults, nextToken, afterTime (plus 1 more)."),
+			mcplib.WithString("maxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("nextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("afterTime", mcplib.Description("After time")),
+			mcplib.WithString("beforeTime", mcplib.Description("Before time")),
+			mcplib.WithString("caseId", mcplib.Required(), mcplib.Description("Case id")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeCommunications", []mcpParamBinding{{PublicName: "maxResults", WireName: "maxResults", Location: "query"}, {PublicName: "nextToken", WireName: "nextToken", Location: "query"}, {PublicName: "afterTime", WireName: "afterTime", Location: "body"}, {PublicName: "beforeTime", WireName: "beforeTime", Location: "body"}, {PublicName: "caseId", WireName: "caseId", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-services_describe-services",
+			mcplib.WithDescription("<p>Returns the current list of Amazon Web Services services and a list of service categories for each service. You then use service names and categories in your <a>CreateCase</a> requests. Each Amazon Web Services service has its own set of categories.</p> <p>The service codes and category codes correspond to the values that appear in the <b>Service</b> and <b>Category</b> lists on the Amazon Web Services Support Center <a href='https://console.aws.amazon.com/support/home#/case/create'>Create Case</a> page. The values in those fields don't necessarily match the service codes and categories returned by the <code>DescribeServices</code> operation. Always use the service codes and categories that the <code>DescribeServices</code> operation returns, so that you have the most recent set of service and category codes.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Optional: language, serviceCodeList."),
+			mcplib.WithString("language", mcplib.Description("Language")),
+			mcplib.WithString("serviceCodeList", mcplib.Description("Service code list")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeServices", []mcpParamBinding{{PublicName: "language", WireName: "language", Location: "body"}, {PublicName: "serviceCodeList", WireName: "serviceCodeList", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-severity-levels_describe-severity-levels",
+			mcplib.WithDescription("<p>Returns the list of severity levels that you can assign to a support case. The severity level for a case is also a field in the <a>CaseDetails</a> data type that you include for a <a>CreateCase</a> request.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Optional: language."),
+			mcplib.WithString("language", mcplib.Description("Language")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeSeverityLevels", []mcpParamBinding{{PublicName: "language", WireName: "language", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-trusted-advisor-check-refresh-statuses_describe-trusted-advisor-check-refresh-statuses",
+			mcplib.WithDescription("<p>Returns the refresh status of the Trusted Advisor checks that have the specified check IDs. You can get the check IDs by calling the <a>DescribeTrustedAdvisorChecks</a> operation.</p> <p>Some checks are refreshed automatically, and you can't return their refresh statuses by using the <code>DescribeTrustedAdvisorCheckRefreshStatuses</code> operation. If you call this operation for these checks, you might see an <code>InvalidParameterValue</code> error.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note> <p>To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) endpoints don't support the Trusted Advisor operations. For more information, see <a href='https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint'>About the Amazon Web Services Support API</a> in the <i>Amazon Web Services Support User Guide</i>.</p>. Required: checkIds."),
+			mcplib.WithString("checkIds", mcplib.Required(), mcplib.Description("Check ids")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeTrustedAdvisorCheckRefreshStatuses", []mcpParamBinding{{PublicName: "checkIds", WireName: "checkIds", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-trusted-advisor-check-result_describe-trusted-advisor-check-result",
+			mcplib.WithDescription("<p>Returns the results of the Trusted Advisor check that has the specified check ID. You can get the check IDs by calling the <a>DescribeTrustedAdvisorChecks</a> operation.</p> <p>The response contains a <a>TrustedAdvisorCheckResult</a> object, which contains these three objects:</p> <ul> <li> <p> <a>TrustedAdvisorCategorySpecificSummary</a> </p> </li> <li> <p> <a>TrustedAdvisorResourceDetail</a> </p> </li> <li> <p> <a>TrustedAdvisorResourcesSummary</a> </p> </li> </ul> <p>In addition, the response contains these fields:</p> <ul> <li> <p> <b>status</b> - The alert status of the check can be <code>ok</code> (green), <code>warning</code> (yellow), <code>error</code> (red), or <code>not_available</code>.</p> </li> <li> <p> <b>timestamp</b> - The time of the last refresh of the check.</p> </li> <li> <p> <b>checkId</b> - The unique identifier for the check.</p> </li> </ul> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note> <p>To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) endpoints don't support the Trusted Advisor operations. For more information, see <a href='https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint'>About the Amazon Web Services Support API</a> in the <i>Amazon Web Services Support User Guide</i>.</p>. Required: checkId. Optional: language."),
+			mcplib.WithString("checkId", mcplib.Required(), mcplib.Description("Check id")),
+			mcplib.WithString("language", mcplib.Description("Language")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeTrustedAdvisorCheckResult", []mcpParamBinding{{PublicName: "checkId", WireName: "checkId", Location: "body"}, {PublicName: "language", WireName: "language", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-trusted-advisor-check-summaries_describe-trusted-advisor-check-summaries",
+			mcplib.WithDescription("<p>Returns the results for the Trusted Advisor check summaries for the check IDs that you specified. You can get the check IDs by calling the <a>DescribeTrustedAdvisorChecks</a> operation.</p> <p>The response contains an array of <a>TrustedAdvisorCheckSummary</a> objects.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note> <p>To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) endpoints don't support the Trusted Advisor operations. For more information, see <a href='https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint'>About the Amazon Web Services Support API</a> in the <i>Amazon Web Services Support User Guide</i>.</p>. Required: checkIds."),
+			mcplib.WithString("checkIds", mcplib.Required(), mcplib.Description("Check ids")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeTrustedAdvisorCheckSummaries", []mcpParamBinding{{PublicName: "checkIds", WireName: "checkIds", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-describe-trusted-advisor-checks_describe-trusted-advisor-checks",
+			mcplib.WithDescription("<p>Returns information about all available Trusted Advisor checks, including the name, ID, category, description, and metadata. You must specify a language code.</p> <p>The response contains a <a>TrustedAdvisorCheckDescription</a> object for each check. You must set the Amazon Web Services Region to us-east-1.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> <li> <p>The names and descriptions for Trusted Advisor checks are subject to change. We recommend that you specify the check ID in your code to uniquely identify a check.</p> </li> </ul> </note> <p>To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) endpoints don't support the Trusted Advisor operations. For more information, see <a href='https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint'>About the Amazon Web Services Support API</a> in the <i>Amazon Web Services Support User Guide</i>.</p>. Required: language."),
+			mcplib.WithString("language", mcplib.Required(), mcplib.Description("Language")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.DescribeTrustedAdvisorChecks", []mcpParamBinding{{PublicName: "language", WireName: "language", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-refresh-trusted-advisor-check_refresh-trusted-advisor-check",
+			mcplib.WithDescription("<p>Refreshes the Trusted Advisor check that you specify using the check ID. You can get the check IDs by calling the <a>DescribeTrustedAdvisorChecks</a> operation.</p> <p>Some checks are refreshed automatically. If you call the <code>RefreshTrustedAdvisorCheck</code> operation to refresh them, you might see the <code>InvalidParameterValue</code> error.</p> <p>The response contains a <a>TrustedAdvisorCheckRefreshStatus</a> object.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note> <p>To call the Trusted Advisor operations in the Amazon Web Services Support API, you must use the US East (N. Virginia) endpoint. Currently, the US West (Oregon) and Europe (Ireland) endpoints don't support the Trusted Advisor operations. For more information, see <a href='https://docs.aws.amazon.com/awssupport/latest/user/about-support-api.html#endpoint'>About the Amazon Web Services Support API</a> in the <i>Amazon Web Services Support User Guide</i>.</p>. Required: checkId. Returns the new RefreshTrustedAdvisorCheckResponse."),
+			mcplib.WithString("checkId", mcplib.Required(), mcplib.Description("Check id")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.RefreshTrustedAdvisorCheck", []mcpParamBinding{{PublicName: "checkId", WireName: "checkId", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-awssupport-20130415-resolve-case_resolve-case",
+			mcplib.WithDescription("<p>Resolves a support case. This operation takes a <code>caseId</code> and returns the initial and final state of the case.</p> <note> <ul> <li> <p>You must have a Business, Enterprise On-Ramp, or Enterprise Support plan to use the Amazon Web Services Support API. </p> </li> <li> <p>If you call the Amazon Web Services Support API from an account that doesn't have a Business, Enterprise On-Ramp, or Enterprise Support plan, the <code>SubscriptionRequiredException</code> error message appears. For information about changing your support plan, see <a href='http://aws.amazon.com/premiumsupport/'>Amazon Web Services Support</a>.</p> </li> </ul> </note>. Optional: caseId."),
+			mcplib.WithString("caseId", mcplib.Description("Case id")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "https://support.us-east-1.amazonaws.com/#X-Amz-Target=AWSSupport_20130415.ResolveCase", []mcpParamBinding{{PublicName: "caseId", WireName: "caseId", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-associate-service-quota-template_associate-service-quota-template",
+			mcplib.WithDescription("Associates your quota request template with your organization. When a new account is created in your organization, the quota increase requests in the template are automatically applied to the account. You can add a quota increase request for any adjustable quota to your template. Returns the new AssociateServiceQuotaTemplateResponse."),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.AssociateServiceQuotaTemplate", []mcpParamBinding{}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-delete-service-quota-increase-request-from-template_delete-service-quota-increase-request-from-template",
+			mcplib.WithDescription("Deletes the quota increase request for the specified quota from your quota request template. Required: AwsRegion, QuotaCode, ServiceCode. Returns the new DeleteServiceQuotaIncreaseRequestFromTemplateResponse."),
+			mcplib.WithString("AwsRegion", mcplib.Required(), mcplib.Description("Aws region")),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.DeleteServiceQuotaIncreaseRequestFromTemplate", []mcpParamBinding{{PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-disassociate-service-quota-template_disassociate-service-quota-template",
+			mcplib.WithDescription("Disables your quota request template. After a template is disabled, the quota increase requests in the template are not applied to new accounts in your organization. Disabling a quota request template does not apply its quota increase requests. Returns the new DisassociateServiceQuotaTemplateResponse."),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.DisassociateServiceQuotaTemplate", []mcpParamBinding{}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-get-association-for-service-quota-template_get-association-for-service-quota-template",
+			mcplib.WithDescription("Retrieves the status of the association for the quota request template. Returns the new GetAssociationForServiceQuotaTemplateResponse."),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.GetAssociationForServiceQuotaTemplate", []mcpParamBinding{}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-get-awsdefault-service-quota_get-awsdefault-service-quota",
+			mcplib.WithDescription("Retrieves the default value for the specified quota. The default value does not reflect any quota increases. Required: QuotaCode, ServiceCode. Returns the new GetAwsdefaultServiceQuotaResponse."),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.GetAWSDefaultServiceQuota", []mcpParamBinding{{PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-get-requested-service-quota-change_get-requested-service-quota-change",
+			mcplib.WithDescription("Retrieves information about the specified quota increase request. Required: RequestId. Returns the new GetRequestedServiceQuotaChangeResponse."),
+			mcplib.WithString("RequestId", mcplib.Required(), mcplib.Description("Request id")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.GetRequestedServiceQuotaChange", []mcpParamBinding{{PublicName: "RequestId", WireName: "RequestId", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-get-service-quota_get-service-quota",
+			mcplib.WithDescription("Retrieves the applied quota value for the specified quota. For some quotas, only the default values are available. If the applied quota value is not available for a quota, the quota is not retrieved. Required: QuotaCode, ServiceCode. Returns the new GetServiceQuotaResponse."),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.GetServiceQuota", []mcpParamBinding{{PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-get-service-quota-increase-request-from-template_get-service-quota-increase-request-from-template",
+			mcplib.WithDescription("Retrieves information about the specified quota increase request in your quota request template. Required: AwsRegion, QuotaCode, ServiceCode. Returns the new GetServiceQuotaIncreaseRequestFromTemplateResponse."),
+			mcplib.WithString("AwsRegion", mcplib.Required(), mcplib.Description("Aws region")),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.GetServiceQuotaIncreaseRequestFromTemplate", []mcpParamBinding{{PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-awsdefault-service-quotas_list-awsdefault-service-quotas",
+			mcplib.WithDescription("Lists the default values for the quotas for the specified AWS service. A default value does not reflect any quota increases. Required: ServiceCode. Optional: MaxResults, NextToken. Returns the new ListAwsdefaultServiceQuotasResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListAWSDefaultServiceQuotas", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-requested-service-quota-change-history_list-requested-service-quota-change-history",
+			mcplib.WithDescription("Retrieves the quota increase requests for the specified service. Optional: MaxResults, NextToken, ServiceCode (plus 1 more). Returns the new ListRequestedServiceQuotaChangeHistoryResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("ServiceCode", mcplib.Description("Service code")),
+			mcplib.WithString("Status", mcplib.Description("Status")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListRequestedServiceQuotaChangeHistory", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "Status", WireName: "Status", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-requested-service-quota-change-history-by-quota_list-requested-service-quota-change-history-by-quota",
+			mcplib.WithDescription("Retrieves the quota increase requests for the specified quota. Required: QuotaCode, ServiceCode. Optional: MaxResults, NextToken, Status. Returns the new ListRequestedServiceQuotaChangeHistoryByQuotaResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithString("Status", mcplib.Description("Status")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListRequestedServiceQuotaChangeHistoryByQuota", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "Status", WireName: "Status", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-service-quota-increase-requests-in-template_list-service-quota-increase-requests-in-template",
+			mcplib.WithDescription("Lists the quota increase requests in the specified quota request template. Optional: MaxResults, NextToken, AwsRegion (plus 1 more). Returns the new ListServiceQuotaIncreaseRequestsInTemplateResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("AwsRegion", mcplib.Description("Aws region")),
+			mcplib.WithString("ServiceCode", mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListServiceQuotaIncreaseRequestsInTemplate", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-service-quotas_list-service-quotas",
+			mcplib.WithDescription("Lists the applied quota values for the specified AWS service. For some quotas, only the default values are available. If the applied quota value is not available for a quota, the quota is not retrieved. Required: ServiceCode. Optional: MaxResults, NextToken. Returns the new ListServiceQuotasResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
+			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
+			mcplib.WithDestructiveHintAnnotation(false),
+			mcplib.WithOpenWorldHintAnnotation(true),
+		),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListServiceQuotas", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
+	)
+	s.AddTool(
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-services_list-services",
+			mcplib.WithDescription("Lists the names and codes for the services integrated with Service Quotas. Optional: MaxResults, NextToken. Returns the new ListServicesResponse."),
+			mcplib.WithString("MaxResults", mcplib.Description("Pagination limit")),
 			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/ListServices", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextToken", WireName: "NextToken", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListServices", []mcpParamBinding{{PublicName: "MaxResults", WireName: "MaxResults", Location: "query"}, {PublicName: "NextToken", WireName: "NextToken", Location: "query"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("service_quota_get",
-			mcplib.WithDescription("Retrieve the applied quota value for the specified quota. Optional: ServiceCode, QuotaCode, ContextId."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
-			mcplib.WithString("ContextId", mcplib.Description("Resource context identifier")),
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-list-tags-for-resource_list-tags-for-resource",
+			mcplib.WithDescription("Returns a list of the tags assigned to the specified applied quota. Required: ResourceARN."),
+			mcplib.WithString("ResourceARN", mcplib.Required(), mcplib.Description("Resource arn")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/GetServiceQuota", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ContextId", WireName: "ContextId", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.ListTagsForResource", []mcpParamBinding{{PublicName: "ResourceARN", WireName: "ResourceARN", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("service_quota_get_default",
-			mcplib.WithDescription("Retrieve the default value for the specified quota. Optional: ServiceCode, QuotaCode."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-put-service-quota-increase-request-into-template_put-service-quota-increase-request-into-template",
+			mcplib.WithDescription("Adds a quota increase request to your quota request template. Required: AwsRegion, DesiredValue, QuotaCode, ServiceCode. Returns the new PutServiceQuotaIncreaseRequestIntoTemplateResponse."),
+			mcplib.WithString("AwsRegion", mcplib.Required(), mcplib.Description("Aws region")),
+			mcplib.WithString("DesiredValue", mcplib.Required(), mcplib.Description("Desired value")),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/GetAWSDefaultServiceQuota", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.PutServiceQuotaIncreaseRequestIntoTemplate", []mcpParamBinding{{PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}, {PublicName: "DesiredValue", WireName: "DesiredValue", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("service_quota_list",
-			mcplib.WithDescription("List the applied quota values for the specified AWS service. Optional: ServiceCode, QuotaCode, MaxResults (plus 2 more)."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier filter")),
-			mcplib.WithNumber("MaxResults", mcplib.Description("Maximum number of results")),
-			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
-			mcplib.WithString("QuotaAppliedAtLevel", mcplib.Description("Level at which quota is applied")),
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-request-service-quota-increase_request-service-quota-increase",
+			mcplib.WithDescription("Submits a quota increase request for the specified quota. Required: DesiredValue, QuotaCode, ServiceCode. Returns the new RequestServiceQuotaIncreaseResponse."),
+			mcplib.WithString("DesiredValue", mcplib.Required(), mcplib.Description("Desired value")),
+			mcplib.WithString("QuotaCode", mcplib.Required(), mcplib.Description("Quota code")),
+			mcplib.WithString("ServiceCode", mcplib.Required(), mcplib.Description("Service code")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/ListServiceQuotas", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextToken", WireName: "NextToken", Location: "body"}, {PublicName: "QuotaAppliedAtLevel", WireName: "QuotaAppliedAtLevel", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.RequestServiceQuotaIncrease", []mcpParamBinding{{PublicName: "DesiredValue", WireName: "DesiredValue", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("service_quota_list_default",
-			mcplib.WithDescription("List the default values for the quotas for the specified AWS service. Optional: ServiceCode, MaxResults, NextToken."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithNumber("MaxResults", mcplib.Description("Maximum number of results")),
-			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-tag-resource_tag-resource",
+			mcplib.WithDescription("Adds tags to the specified applied quota. You can include one or more tags to add to the quota. Required: ResourceARN, Tags. Returns the new TagResourceResponse."),
+			mcplib.WithString("ResourceARN", mcplib.Required(), mcplib.Description("Resource arn")),
+			mcplib.WithString("Tags", mcplib.Required(), mcplib.Description("Tags")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/ListAWSDefaultServiceQuotas", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextToken", WireName: "NextToken", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.TagResource", []mcpParamBinding{{PublicName: "ResourceARN", WireName: "ResourceARN", Location: "body"}, {PublicName: "Tags", WireName: "Tags", Location: "body"}}, []string{}),
 	)
 	s.AddTool(
-		mcplib.NewTool("service_quota_increase_template_delete",
-			mcplib.WithDescription("Delete the quota increase request for the specified quota from your template. Optional: ServiceCode, QuotaCode, AwsRegion."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
-			mcplib.WithString("AwsRegion", mcplib.Description("AWS Region")),
+		mcplib.NewTool("x-amz-target-service-quotas-v20190624-untag-resource_untag-resource",
+			mcplib.WithDescription("Removes tags from the specified applied quota. You can specify one or more tags to remove. Required: ResourceARN, TagKeys. Returns the new UntagResourceResponse."),
+			mcplib.WithString("ResourceARN", mcplib.Required(), mcplib.Description("Resource arn")),
+			mcplib.WithString("TagKeys", mcplib.Required(), mcplib.Description("Tag keys")),
 			mcplib.WithDestructiveHintAnnotation(false),
 			mcplib.WithOpenWorldHintAnnotation(true),
 		),
-		makeAPIHandler("POST", "/DeleteServiceQuotaIncreaseRequestFromTemplate", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("service_quota_increase_template_get",
-			mcplib.WithDescription("Retrieve the quota increase request for the specified quota from the template. Optional: ServiceCode, QuotaCode, AwsRegion."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
-			mcplib.WithString("AwsRegion", mcplib.Description("AWS Region")),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/GetServiceQuotaIncreaseRequestFromTemplate", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("service_quota_increase_template_list",
-			mcplib.WithDescription("List the quota increase requests in the template. Optional: ServiceCode, AwsRegion, MaxResults (plus 1 more)."),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("AwsRegion", mcplib.Description("AWS Region")),
-			mcplib.WithNumber("MaxResults", mcplib.Description("Maximum number of results")),
-			mcplib.WithString("NextToken", mcplib.Description("Pagination token")),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/ListServiceQuotaIncreaseRequestsInTemplate", []mcpParamBinding{{PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}, {PublicName: "MaxResults", WireName: "MaxResults", Location: "body"}, {PublicName: "NextToken", WireName: "NextToken", Location: "body"}}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("service_quota_increase_template_put",
-			mcplib.WithDescription("Add a quota increase request to your quota request template. Optional: QuotaCode, ServiceCode, AwsRegion (plus 1 more)."),
-			mcplib.WithString("QuotaCode", mcplib.Description("Quota identifier")),
-			mcplib.WithString("ServiceCode", mcplib.Description("Service identifier")),
-			mcplib.WithString("AwsRegion", mcplib.Description("AWS Region")),
-			mcplib.WithString("DesiredValue", mcplib.Description("Desired quota value")),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/PutServiceQuotaIncreaseRequestIntoTemplate", []mcpParamBinding{{PublicName: "QuotaCode", WireName: "QuotaCode", Location: "body"}, {PublicName: "ServiceCode", WireName: "ServiceCode", Location: "body"}, {PublicName: "AwsRegion", WireName: "AwsRegion", Location: "body"}, {PublicName: "DesiredValue", WireName: "DesiredValue", Location: "body"}}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("service_quota_template_associate",
-			mcplib.WithDescription("Associate the quota request template with your organization."),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/AssociateServiceQuotaTemplate", []mcpParamBinding{}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("service_quota_template_disassociate",
-			mcplib.WithDescription("Disassociate the quota request template from your organization."),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/DisassociateServiceQuotaTemplate", []mcpParamBinding{}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("service_quota_template_get_association",
-			mcplib.WithDescription("Get the status of the association for the quota request template."),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/GetAssociationForServiceQuotaTemplate", []mcpParamBinding{}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("tag_list",
-			mcplib.WithDescription("Return a list of the tags assigned to the specified applied quota. Optional: ResourceARN."),
-			mcplib.WithString("ResourceARN", mcplib.Description("ARN of the applied quota")),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/ListTagsForResource", []mcpParamBinding{{PublicName: "ResourceARN", WireName: "ResourceARN", Location: "body"}}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("tag_tag",
-			mcplib.WithDescription("Add tags to the specified applied quota. Optional: ResourceARN, Tags."),
-			mcplib.WithString("ResourceARN", mcplib.Description("ARN of the applied quota")),
-			mcplib.WithString("Tags", mcplib.Description("Tags to apply")),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/TagResource", []mcpParamBinding{{PublicName: "ResourceARN", WireName: "ResourceARN", Location: "body"}, {PublicName: "Tags", WireName: "Tags", Location: "body"}}, []string{}),
-	)
-	s.AddTool(
-		mcplib.NewTool("tag_untag",
-			mcplib.WithDescription("Remove tags from the specified applied quota. Optional: ResourceARN, TagKeys."),
-			mcplib.WithString("ResourceARN", mcplib.Description("ARN of the applied quota")),
-			mcplib.WithString("TagKeys", mcplib.Description("Tag keys to remove")),
-			mcplib.WithDestructiveHintAnnotation(false),
-			mcplib.WithOpenWorldHintAnnotation(true),
-		),
-		makeAPIHandler("POST", "/UntagResource", []mcpParamBinding{{PublicName: "ResourceARN", WireName: "ResourceARN", Location: "body"}, {PublicName: "TagKeys", WireName: "TagKeys", Location: "body"}}, []string{}),
+		makeAPIHandler("POST", "/#X-Amz-Target=ServiceQuotasV20190624.UntagResource", []mcpParamBinding{{PublicName: "ResourceARN", WireName: "ResourceARN", Location: "body"}, {PublicName: "TagKeys", WireName: "TagKeys", Location: "body"}}, []string{}),
 	)
 	// SQL tool — ad-hoc analysis on synced data without API calls
 	s.AddTool(
@@ -348,18 +953,18 @@ func makeAPIHandler(method, pathTemplate string, bindings []mcpParamBinding, pos
 			case strings.Contains(msg, "HTTP 400") && cliutil.LooksLikeAuthError(msg):
 				return mcplib.NewToolResultError("authentication error: " + cliutil.SanitizeErrorBody(msg) +
 					"\nhint: the API rejected the request — this usually means auth is missing or invalid." +
-					"\n      Set your API key: export AWS_ACCESS_KEY_ID=<your-key>" +
-					"\n      Run 'aws-quotas-pp-cli doctor' to check auth status."), nil
+					"\n      Set your API key: export SERVICE_QUOTAS_HMAC=<your-key>" +
+					"\n      Run 'aws-pp-pp-cli doctor' to check auth status."), nil
 			case strings.Contains(msg, "HTTP 401"):
 				return mcplib.NewToolResultError("authentication failed: " + cliutil.SanitizeErrorBody(msg) +
-					"\nhint: check your token." +
-					"\n      Set it with: export AWS_ACCESS_KEY_ID=<your-key>" +
-					"\n      Run 'aws-quotas-pp-cli doctor' to check auth status."), nil
+					"\nhint: check your API key." +
+					"\n      Set it with: export SERVICE_QUOTAS_HMAC=<your-key>" +
+					"\n      Run 'aws-pp-pp-cli doctor' to check auth status."), nil
 			case strings.Contains(msg, "HTTP 403"):
 				return mcplib.NewToolResultError("permission denied: " + cliutil.SanitizeErrorBody(msg) +
 					"\nhint: your credentials are valid but lack access to this resource." +
-					"\n      Set it with: export AWS_ACCESS_KEY_ID=<your-key>" +
-					"\n      Run 'aws-quotas-pp-cli doctor' to check auth status."), nil
+					"\n      Set it with: export SERVICE_QUOTAS_HMAC=<your-key>" +
+					"\n      Run 'aws-pp-pp-cli doctor' to check auth status."), nil
 			case strings.Contains(msg, "HTTP 404"):
 				if method == "DELETE" {
 					return mcplib.NewToolResultText("already deleted (no-op)"), nil
@@ -393,7 +998,7 @@ func makeAPIHandler(method, pathTemplate string, bindings []mcpParamBinding, pos
 
 func newMCPClient() (*client.Client, error) {
 	home, _ := os.UserHomeDir()
-	cfgPath := filepath.Join(home, ".config", "aws-quotas-pp-cli", "config.toml")
+	cfgPath := filepath.Join(home, ".config", "aws-pp-pp-cli", "config.toml")
 	cfg, err := config.Load(cfgPath)
 	if err != nil {
 		return nil, fmt.Errorf("loading config: %w", err)
@@ -410,7 +1015,7 @@ func newMCPClient() (*client.Client, error) {
 
 func dbPath() string {
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".local", "share", "aws-quotas-pp-cli", "data.db")
+	return filepath.Join(home, ".local", "share", "aws-pp-pp-cli", "data.db")
 }
 
 // Note: MCP tools use their own dbPath() because they are in a separate package (main, not cli).
@@ -515,24 +1120,17 @@ func handleSQL(ctx context.Context, req mcplib.CallToolRequest) (*mcplib.CallToo
 
 func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToolResult, error) {
 	ctx := map[string]any{
-		"api":         "aws-quotas",
-		"description": "CLI for aws-quotas",
-		"archetype":   "generic",
-		"tool_count":  19,
+		"api":         "aws-pp",
+		"description": "Combined CLI for multiple API services",
+		"archetype":   "payments",
+		"tool_count":  70,
 		// tool_surface tells agents which surface a capability lives on.
-		"tool_surface": "MCP exposes typed endpoint tools plus a runtime mirror of user-facing CLI commands. Endpoint tools keep typed schemas; command-mirror tools shell out to the companion aws-quotas-pp-cli binary.",
+		"tool_surface": "MCP exposes typed endpoint tools plus a runtime mirror of user-facing CLI commands. Endpoint tools keep typed schemas; command-mirror tools shell out to the companion aws-pp-pp-cli binary.",
 		"auth": map[string]any{
-			"type": "bearer_token",
+			"type": "api_key",
 			"env_vars": []map[string]any{
 				{
-					"name":        "AWS_ACCESS_KEY_ID",
-					"kind":        "per_call",
-					"required":    true,
-					"sensitive":   true,
-					"description": "Set to your API credential.",
-				},
-				{
-					"name":        "AWS_SECRET_ACCESS_KEY",
+					"name":        "SERVICE_QUOTAS_HMAC",
 					"kind":        "per_call",
 					"required":    true,
 					"sensitive":   true,
@@ -542,38 +1140,415 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 		},
 		"resources": []map[string]any{
 			{
-				"name":        "requested_service_quota_change",
-				"description": "Operations on requested service quota changes",
-				"endpoints":   []string{"get", "list_history", "list_history_by_quota", "request"},
+				"name":        "x-amz-target-awsinsights-index-service-create-anomaly-monitor",
+				"description": "Manage x amz target awsinsights index service create anomaly monitor",
+				"endpoints":   []string{"create-anomaly-monitor"},
 				"searchable":  true,
 			},
 			{
-				"name":        "service",
-				"description": "Operations on AWS services with quotas",
-				"endpoints":   []string{"list"},
+				"name":        "x-amz-target-awsinsights-index-service-create-anomaly-subscription",
+				"description": "Manage x amz target awsinsights index service create anomaly subscription",
+				"endpoints":   []string{"create-anomaly-subscription"},
 				"searchable":  true,
 			},
 			{
-				"name":        "service_quota",
-				"description": "Operations on service quotas",
-				"endpoints":   []string{"get", "get_default", "list", "list_default"},
+				"name":        "x-amz-target-awsinsights-index-service-create-cost-category-definition",
+				"description": "Manage x amz target awsinsights index service create cost category definition",
+				"endpoints":   []string{"create-cost-category-definition"},
 				"searchable":  true,
 			},
 			{
-				"name":        "service_quota_increase_template",
-				"description": "Operations on quota increase requests in the template",
-				"endpoints":   []string{"delete", "get", "list", "put"},
+				"name":        "x-amz-target-awsinsights-index-service-delete-anomaly-monitor",
+				"description": "Manage x amz target awsinsights index service delete anomaly monitor",
+				"endpoints":   []string{"delete-anomaly-monitor"},
 				"searchable":  true,
 			},
 			{
-				"name":        "service_quota_template",
-				"description": "Operations on the service quota template association",
-				"endpoints":   []string{"associate", "disassociate", "get_association"},
+				"name":        "x-amz-target-awsinsights-index-service-delete-anomaly-subscription",
+				"description": "Manage x amz target awsinsights index service delete anomaly subscription",
+				"endpoints":   []string{"delete-anomaly-subscription"},
+				"searchable":  true,
 			},
 			{
-				"name":        "tag",
-				"description": "Operations on resource tags",
-				"endpoints":   []string{"list", "tag", "untag"},
+				"name":        "x-amz-target-awsinsights-index-service-delete-cost-category-definition",
+				"description": "Manage x amz target awsinsights index service delete cost category definition",
+				"endpoints":   []string{"delete-cost-category-definition"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-describe-cost-category-definition",
+				"description": "Manage x amz target awsinsights index service describe cost category definition",
+				"endpoints":   []string{"describe-cost-category-definition"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-anomalies",
+				"description": "Manage x amz target awsinsights index service get anomalies",
+				"endpoints":   []string{"get-anomalies"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-anomaly-monitors",
+				"description": "Manage x amz target awsinsights index service get anomaly monitors",
+				"endpoints":   []string{"get-anomaly-monitors"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-anomaly-subscriptions",
+				"description": "Manage x amz target awsinsights index service get anomaly subscriptions",
+				"endpoints":   []string{"get-anomaly-subscriptions"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-cost-and-usage",
+				"description": "Manage x amz target awsinsights index service get cost and usage",
+				"endpoints":   []string{"get-cost-and-usage"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-cost-and-usage-with-resources",
+				"description": "Manage x amz target awsinsights index service get cost and usage with resources",
+				"endpoints":   []string{"get-cost-and-usage-with-resources"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-cost-categories",
+				"description": "Manage x amz target awsinsights index service get cost categories",
+				"endpoints":   []string{"get-cost-categories"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-cost-forecast",
+				"description": "Manage x amz target awsinsights index service get cost forecast",
+				"endpoints":   []string{"get-cost-forecast"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-dimension-values",
+				"description": "Manage x amz target awsinsights index service get dimension values",
+				"endpoints":   []string{"get-dimension-values"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-reservation-coverage",
+				"description": "Manage x amz target awsinsights index service get reservation coverage",
+				"endpoints":   []string{"get-reservation-coverage"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation",
+				"description": "Manage x amz target awsinsights index service get reservation purchase recommendation",
+				"endpoints":   []string{"get-reservation-purchase-recommendation"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-reservation-utilization",
+				"description": "Manage x amz target awsinsights index service get reservation utilization",
+				"endpoints":   []string{"get-reservation-utilization"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-rightsizing-recommendation",
+				"description": "Manage x amz target awsinsights index service get rightsizing recommendation",
+				"endpoints":   []string{"get-rightsizing-recommendation"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-savings-plans-coverage",
+				"description": "Manage x amz target awsinsights index service get savings plans coverage",
+				"endpoints":   []string{"get-savings-plans-coverage"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-savings-plans-purchase-recommendation",
+				"description": "Manage x amz target awsinsights index service get savings plans purchase recommendation",
+				"endpoints":   []string{"get-savings-plans-purchase-recommendation"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-savings-plans-utilization",
+				"description": "Manage x amz target awsinsights index service get savings plans utilization",
+				"endpoints":   []string{"get-savings-plans-utilization"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-savings-plans-utilization-details",
+				"description": "Manage x amz target awsinsights index service get savings plans utilization details",
+				"endpoints":   []string{"get-savings-plans-utilization-details"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-tags",
+				"description": "Manage x amz target awsinsights index service get tags",
+				"endpoints":   []string{"get-tags"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-get-usage-forecast",
+				"description": "Manage x amz target awsinsights index service get usage forecast",
+				"endpoints":   []string{"get-usage-forecast"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-list-cost-allocation-tags",
+				"description": "Manage x amz target awsinsights index service list cost allocation tags",
+				"endpoints":   []string{"list-cost-allocation-tags"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-list-cost-category-definitions",
+				"description": "Manage x amz target awsinsights index service list cost category definitions",
+				"endpoints":   []string{"list-cost-category-definitions"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-list-savings-plans-purchase-recommendation-generation",
+				"description": "Manage x amz target awsinsights index service list savings plans purchase recommendation generation",
+				"endpoints":   []string{"list-savings-plans-purchase-recommendation-generation"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-list-tags-for-resource",
+				"description": "Manage x amz target awsinsights index service list tags for resource",
+				"endpoints":   []string{"list-tags-for-resource"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-provide-anomaly-feedback",
+				"description": "Manage x amz target awsinsights index service provide anomaly feedback",
+				"endpoints":   []string{"provide-anomaly-feedback"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-start-savings-plans-purchase-recommendation-generation",
+				"description": "Manage x amz target awsinsights index service start savings plans purchase recommendation generation",
+				"endpoints":   []string{"start-savings-plans-purchase-recommendation-generation"},
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-tag-resource",
+				"description": "Manage x amz target awsinsights index service tag resource",
+				"endpoints":   []string{"tag-resource"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-untag-resource",
+				"description": "Manage x amz target awsinsights index service untag resource",
+				"endpoints":   []string{"untag-resource"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-update-anomaly-monitor",
+				"description": "Manage x amz target awsinsights index service update anomaly monitor",
+				"endpoints":   []string{"update-anomaly-monitor"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-update-anomaly-subscription",
+				"description": "Manage x amz target awsinsights index service update anomaly subscription",
+				"endpoints":   []string{"update-anomaly-subscription"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-update-cost-allocation-tags-status",
+				"description": "Manage x amz target awsinsights index service update cost allocation tags status",
+				"endpoints":   []string{"update-cost-allocation-tags-status"},
+			},
+			{
+				"name":        "x-amz-target-awsinsights-index-service-update-cost-category-definition",
+				"description": "Manage x amz target awsinsights index service update cost category definition",
+				"endpoints":   []string{"update-cost-category-definition"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-add-attachments-to-set",
+				"description": "Manage x amz target awssupport 20130415 add attachments to set",
+				"endpoints":   []string{"add-attachments-to-set"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-add-communication-to-case",
+				"description": "Manage x amz target awssupport 20130415 add communication to case",
+				"endpoints":   []string{"add-communication-to-case"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-create-case",
+				"description": "Manage x amz target awssupport 20130415 create case",
+				"endpoints":   []string{"create-case"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-attachment",
+				"description": "Manage x amz target awssupport 20130415 describe attachment",
+				"endpoints":   []string{"describe-attachment"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-cases",
+				"description": "Manage x amz target awssupport 20130415 describe cases",
+				"endpoints":   []string{"describe-cases"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-communications",
+				"description": "Manage x amz target awssupport 20130415 describe communications",
+				"endpoints":   []string{"describe-communications"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-services",
+				"description": "Manage x amz target awssupport 20130415 describe services",
+				"endpoints":   []string{"describe-services"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-severity-levels",
+				"description": "Manage x amz target awssupport 20130415 describe severity levels",
+				"endpoints":   []string{"describe-severity-levels"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-trusted-advisor-check-refresh-statuses",
+				"description": "Manage x amz target awssupport 20130415 describe trusted advisor check refresh statuses",
+				"endpoints":   []string{"describe-trusted-advisor-check-refresh-statuses"},
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-trusted-advisor-check-result",
+				"description": "Manage x amz target awssupport 20130415 describe trusted advisor check result",
+				"endpoints":   []string{"describe-trusted-advisor-check-result"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-trusted-advisor-check-summaries",
+				"description": "Manage x amz target awssupport 20130415 describe trusted advisor check summaries",
+				"endpoints":   []string{"describe-trusted-advisor-check-summaries"},
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-describe-trusted-advisor-checks",
+				"description": "Manage x amz target awssupport 20130415 describe trusted advisor checks",
+				"endpoints":   []string{"describe-trusted-advisor-checks"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-refresh-trusted-advisor-check",
+				"description": "Manage x amz target awssupport 20130415 refresh trusted advisor check",
+				"endpoints":   []string{"refresh-trusted-advisor-check"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-awssupport-20130415-resolve-case",
+				"description": "Manage x amz target awssupport 20130415 resolve case",
+				"endpoints":   []string{"resolve-case"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-associate-service-quota-template",
+				"description": "Manage x amz target service quotas v20190624 associate service quota template",
+				"endpoints":   []string{"associate-service-quota-template"},
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-delete-service-quota-increase-request-from-template",
+				"description": "Manage x amz target service quotas v20190624 delete service quota increase request from template",
+				"endpoints":   []string{"delete-service-quota-increase-request-from-template"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-disassociate-service-quota-template",
+				"description": "Manage x amz target service quotas v20190624 disassociate service quota template",
+				"endpoints":   []string{"disassociate-service-quota-template"},
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-get-association-for-service-quota-template",
+				"description": "Manage x amz target service quotas v20190624 get association for service quota template",
+				"endpoints":   []string{"get-association-for-service-quota-template"},
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-get-awsdefault-service-quota",
+				"description": "Manage x amz target service quotas v20190624 get awsdefault service quota",
+				"endpoints":   []string{"get-awsdefault-service-quota"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-get-requested-service-quota-change",
+				"description": "Manage x amz target service quotas v20190624 get requested service quota change",
+				"endpoints":   []string{"get-requested-service-quota-change"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-get-service-quota",
+				"description": "Manage x amz target service quotas v20190624 get service quota",
+				"endpoints":   []string{"get-service-quota"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-get-service-quota-increase-request-from-template",
+				"description": "Manage x amz target service quotas v20190624 get service quota increase request from template",
+				"endpoints":   []string{"get-service-quota-increase-request-from-template"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-awsdefault-service-quotas",
+				"description": "Manage x amz target service quotas v20190624 list awsdefault service quotas",
+				"endpoints":   []string{"list-awsdefault-service-quotas"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-requested-service-quota-change-history",
+				"description": "Manage x amz target service quotas v20190624 list requested service quota change history",
+				"endpoints":   []string{"list-requested-service-quota-change-history"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-requested-service-quota-change-history-by-quota",
+				"description": "Manage x amz target service quotas v20190624 list requested service quota change history by quota",
+				"endpoints":   []string{"list-requested-service-quota-change-history-by-quota"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-service-quota-increase-requests-in-template",
+				"description": "Manage x amz target service quotas v20190624 list service quota increase requests in template",
+				"endpoints":   []string{"list-service-quota-increase-requests-in-template"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-service-quotas",
+				"description": "Manage x amz target service quotas v20190624 list service quotas",
+				"endpoints":   []string{"list-service-quotas"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-services",
+				"description": "Manage x amz target service quotas v20190624 list services",
+				"endpoints":   []string{"list-services"},
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-list-tags-for-resource",
+				"description": "Manage x amz target service quotas v20190624 list tags for resource",
+				"endpoints":   []string{"list-tags-for-resource"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-put-service-quota-increase-request-into-template",
+				"description": "Manage x amz target service quotas v20190624 put service quota increase request into template",
+				"endpoints":   []string{"put-service-quota-increase-request-into-template"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-request-service-quota-increase",
+				"description": "Manage x amz target service quotas v20190624 request service quota increase",
+				"endpoints":   []string{"request-service-quota-increase"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-tag-resource",
+				"description": "Manage x amz target service quotas v20190624 tag resource",
+				"endpoints":   []string{"tag-resource"},
+				"searchable":  true,
+			},
+			{
+				"name":        "x-amz-target-service-quotas-v20190624-untag-resource",
+				"description": "Manage x amz target service quotas v20190624 untag resource",
+				"endpoints":   []string{"untag-resource"},
 				"searchable":  true,
 			},
 		},
@@ -583,6 +1558,10 @@ func handleContext(_ context.Context, _ mcplib.CallToolRequest) (*mcplib.CallToo
 			"Use the sql tool for ad-hoc analysis on synced data. Run sync first to populate the local database.",
 			"Use the search tool for full-text search across all synced resources. Faster than iterating list endpoints.",
 			"Prefer sql/search over repeated API calls when the data is already synced.",
+		},
+		"playbook": []map[string]string{
+			{"topic": "Financial data", "insight": "Always use read-only operations for financial queries. Never use create/update tools for payment data without explicit user confirmation."},
+			{"topic": "Reconciliation", "insight": "For reconciliation tasks, sync first then use sql for cross-referencing. API pagination over financial records is slow and rate-limited."},
 		},
 	}
 	data, _ := json.MarshalIndent(ctx, "", "  ")

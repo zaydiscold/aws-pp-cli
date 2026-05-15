@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"time"
 
-	"aws-quotas-pp-cli/internal/store"
+	"aws-pp-pp-cli/internal/store"
 	"github.com/spf13/cobra"
 )
 
@@ -33,10 +33,10 @@ func newWorkflowArchiveCmd(flags *rootFlags) *cobra.Command {
 local SQLite database. Supports incremental sync (only new data since last run)
 and full resync. After archiving, use 'search' for instant full-text search.`,
 		Example: `  # Archive all resources
-  aws-quotas-pp-cli workflow archive
+  aws-pp-pp-cli workflow archive
 
   # Full re-archive (ignore previous sync state)
-  aws-quotas-pp-cli workflow archive --full`,
+  aws-pp-pp-cli workflow archive --full`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			c, err := flags.newClient()
 			if err != nil {
@@ -45,7 +45,7 @@ and full resync. After archiving, use 'search' for instant full-text search.`,
 			c.NoCache = true
 
 			if dbPath == "" {
-				dbPath = defaultDBPath("aws-quotas-pp-cli")
+				dbPath = defaultDBPath("aws-pp-pp-cli")
 			}
 			s, err := store.OpenWithContext(cmd.Context(), dbPath)
 			if err != nil {
@@ -95,7 +95,7 @@ and full resync. After archiving, use 'search' for instant full-text search.`,
 		},
 	}
 
-	cmd.Flags().StringVar(&dbPath, "db", "", "Database path (default: ~/.local/share/aws-quotas-pp-cli/data.db)")
+	cmd.Flags().StringVar(&dbPath, "db", "", "Database path (default: ~/.local/share/aws-pp-pp-cli/data.db)")
 	cmd.Flags().BoolVar(&full, "full", false, "Full re-archive (ignore previous sync state)")
 
 	return cmd
@@ -109,13 +109,13 @@ func newWorkflowStatusCmd(flags *rootFlags) *cobra.Command {
 		Short:       "Show local archive status and sync state for all resources",
 		Annotations: map[string]string{"mcp:read-only": "true"},
 		Example: `  # Show archive status
-  aws-quotas-pp-cli workflow status
+  aws-pp-pp-cli workflow status
 
   # Show status as JSON
-  aws-quotas-pp-cli workflow status --json`,
+  aws-pp-pp-cli workflow status --json`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if dbPath == "" {
-				dbPath = defaultDBPath("aws-quotas-pp-cli")
+				dbPath = defaultDBPath("aws-pp-pp-cli")
 			}
 			s, err := store.OpenWithContext(cmd.Context(), dbPath)
 			if err != nil {

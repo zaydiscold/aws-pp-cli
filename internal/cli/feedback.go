@@ -35,7 +35,7 @@ func feedbackFilePath() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("resolving home dir: %w", err)
 	}
-	dir := filepath.Join(home, ".aws-quotas-pp-cli")
+	dir := filepath.Join(home, ".aws-pp-pp-cli")
 	if err := os.MkdirAll(dir, 0o700); err != nil {
 		return "", fmt.Errorf("creating state dir: %w", err)
 	}
@@ -46,15 +46,15 @@ func feedbackFilePath() (string, error) {
 // is available. Surfaced via agent-context so introspecting agents know
 // whether their feedback will ship upstream.
 func FeedbackEndpointConfigured() bool {
-	return os.Getenv("AWS_QUOTAS_FEEDBACK_ENDPOINT") != ""
+	return os.Getenv("AWS_PP_FEEDBACK_ENDPOINT") != ""
 }
 
 func feedbackEndpoint() string {
-	return os.Getenv("AWS_QUOTAS_FEEDBACK_ENDPOINT")
+	return os.Getenv("AWS_PP_FEEDBACK_ENDPOINT")
 }
 
 func feedbackAutoSend() bool {
-	v := strings.ToLower(strings.TrimSpace(os.Getenv("AWS_QUOTAS_FEEDBACK_AUTO_SEND")))
+	v := strings.ToLower(strings.TrimSpace(os.Getenv("AWS_PP_FEEDBACK_AUTO_SEND")))
 	return v == "1" || v == "true" || v == "yes"
 }
 
@@ -81,7 +81,7 @@ func postFeedback(url string, entry FeedbackEntry) error {
 		return fmt.Errorf("building feedback request: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "aws-quotas-pp-cli/feedback")
+	req.Header.Set("User-Agent", "aws-pp-pp-cli/feedback")
 	client := &http.Client{Timeout: 15 * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -100,9 +100,9 @@ func newFeedbackCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "feedback [text]",
 		Short: "Record feedback about this CLI (local by default; upstream opt-in)",
-		Long: `Feedback is captured locally first at ~/.aws-quotas-pp-cli/feedback.jsonl.
-When ` + "`AWS_QUOTAS_FEEDBACK_ENDPOINT`" + ` is set and either --send is
-passed or ` + "`AWS_QUOTAS_FEEDBACK_AUTO_SEND=true`" + `, the entry is
+		Long: `Feedback is captured locally first at ~/.aws-pp-pp-cli/feedback.jsonl.
+When ` + "`AWS_PP_FEEDBACK_ENDPOINT`" + ` is set and either --send is
+passed or ` + "`AWS_PP_FEEDBACK_AUTO_SEND=true`" + `, the entry is
 POSTed as JSON after the local write.
 
 Write what surprised you or tripped you up, not a bug report. The
@@ -131,7 +131,7 @@ maintainer sees it.`,
 
 			entry := FeedbackEntry{
 				Text:      text,
-				CLI:       "aws-quotas-pp-cli",
+				CLI:       "aws-pp-pp-cli",
 				Version:   version,
 				AgentID:   os.Getenv("AGENT_ID"),
 				Timestamp: time.Now().UTC(),
@@ -184,9 +184,9 @@ func newFeedbackListCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List recent feedback entries",
-		Example: `  aws-quotas-pp-cli feedback list
-  aws-quotas-pp-cli feedback list --limit 5
-  aws-quotas-pp-cli feedback list --json`,
+		Example: `  aws-pp-pp-cli feedback list
+  aws-pp-pp-cli feedback list --limit 5
+  aws-pp-pp-cli feedback list --json`,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			p, err := feedbackFilePath()
 			if err != nil {

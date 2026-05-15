@@ -1,37 +1,29 @@
 {
   "manifest_version": "0.3",
-  "name": "aws-quotas-pp-mcp",
-  "display_name": "Aws Quotas",
+  "name": "aws-pp-pp-mcp",
+  "display_name": "Aws Pp",
   "version": "4.5.1",
-  "description": "Aws Quotas API surface as MCP tools.",
+  "description": "Aws Pp API surface as MCP tools.",
   "author": {
     "name": "CLI Printing Press"
   },
   "license": "Apache-2.0",
   "server": {
     "type": "binary",
-    "entry_point": "bin/aws-quotas-pp-mcp",
+    "entry_point": "bin/aws-pp-pp-mcp",
     "mcp_config": {
-      "command": "${__dirname}/bin/aws-quotas-pp-mcp",
+      "command": "${__dirname}/bin/aws-pp-pp-mcp",
       "args": [],
       "env": {
-        "AWS_ACCESS_KEY_ID": "${user_config.aws_access_key_id}",
-        "AWS_SECRET_ACCESS_KEY": "${user_config.aws_secret_access_key}"
+        "SERVICE_QUOTAS_HMAC": "${user_config.service_quotas_hmac}"
       }
     }
   },
   "user_config": {
-    "aws_access_key_id": {
+    "service_quotas_hmac": {
       "type": "string",
-      "title": "AWS_ACCESS_KEY_ID",
-      "description": "Sets AWS_ACCESS_KEY_ID for the Aws Quotas MCP server.",
-      "sensitive": true,
-      "required": true
-    },
-    "aws_secret_access_key": {
-      "type": "string",
-      "title": "AWS_SECRET_ACCESS_KEY",
-      "description": "Sets AWS_SECRET_ACCESS_KEY for the Aws Quotas MCP server.",
+      "title": "SERVICE_QUOTAS_HMAC",
+      "description": "Sets SERVICE_QUOTAS_HMAC for the Aws Pp MCP server.",
       "sensitive": true,
       "required": true
     }

@@ -10,16 +10,16 @@ import (
 )
 
 // SiblingCLIPath resolves the companion CLI via sibling-of-executable,
-// AWS_QUOTAS_CLI_PATH env var, then PATH.
+// AWS_PP_CLI_PATH env var, then PATH.
 func SiblingCLIPath() (string, error) {
-	const cliName = "aws-quotas-pp-cli"
+	const cliName = "aws-pp-pp-cli"
 	if exe, err := os.Executable(); err == nil {
 		candidate := filepath.Join(filepath.Dir(exe), cliName)
 		if _, err := os.Stat(candidate); err == nil {
 			return candidate, nil
 		}
 	}
-	if v := os.Getenv("AWS_QUOTAS_CLI_PATH"); v != "" {
+	if v := os.Getenv("AWS_PP_CLI_PATH"); v != "" {
 		return v, nil
 	}
 	return exec.LookPath(cliName)

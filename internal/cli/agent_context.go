@@ -105,21 +105,14 @@ reading source. Schema is versioned via schema_version.`,
 func buildAgentContext(rootCmd *cobra.Command) agentContext {
 	envVars := []agentContextAuthEnvVar{
 		{
-			Name:        "AWS_ACCESS_KEY_ID",
-			Kind:        "per_call",
-			Required:    true,
-			Sensitive:   true,
-			Description: "Set to your API credential.",
-		},
-		{
-			Name:        "AWS_SECRET_ACCESS_KEY",
+			Name:        "SERVICE_QUOTAS_HMAC",
 			Kind:        "per_call",
 			Required:    true,
 			Sensitive:   true,
 			Description: "Set to your API credential.",
 		},
 	}
-	authMode := "bearer_token"
+	authMode := "api_key"
 	if authMode == "" {
 		authMode = "none"
 	}
@@ -130,8 +123,8 @@ func buildAgentContext(rootCmd *cobra.Command) agentContext {
 	return agentContext{
 		SchemaVersion: agentContextSchemaVersion,
 		CLI: agentContextCLI{
-			Name:        "aws-quotas-pp-cli",
-			Description: "CLI for aws-quotas",
+			Name:        "aws-pp-pp-cli",
+			Description: "Combined CLI for multiple API services",
 			Version:     rootCmd.Version,
 		},
 		Auth: agentContextAuth{

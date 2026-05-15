@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"aws-quotas-pp-cli/internal/client"
-	"aws-quotas-pp-cli/internal/config"
-	"aws-quotas-pp-cli/internal/store"
+	"aws-pp-pp-cli/internal/client"
+	"aws-pp-pp-cli/internal/config"
+	"aws-pp-pp-cli/internal/store"
 	"github.com/spf13/cobra"
 )
 
@@ -68,9 +68,9 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "doctor",
 		Short: "Check CLI health",
-		Example: `  aws-quotas-pp-cli doctor
-  aws-quotas-pp-cli doctor --json
-  aws-quotas-pp-cli doctor --fail-on warn`,
+		Example: `  aws-pp-pp-cli doctor
+  aws-pp-pp-cli doctor --json
+  aws-pp-pp-cli doctor --fail-on warn`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			report := map[string]any{}
 
@@ -90,7 +90,7 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 				header := cfg.AuthHeader()
 				if header == "" {
 					report["auth"] = "not configured"
-					report["auth_hint"] = "export AWS_ACCESS_KEY_ID=<your-key>"
+					report["auth_hint"] = "export SERVICE_QUOTAS_HMAC=<your-key>"
 				} else {
 					authConfigured = true
 					report["auth"] = "configured"
@@ -105,8 +105,8 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 			authEnvOptionalNames := []string{}
 			// Validation rejects multi-OR-group specs upstream, so the single optional-satisfied state is sufficient at runtime.
 			authEnvOptionalSatisfied := false
-			if os.Getenv("AWS_ACCESS_KEY_ID") != "" {
-				authEnvSet = append(authEnvSet, "AWS_ACCESS_KEY_ID")
+			if os.Getenv("SERVICE_QUOTAS_HMAC") != "" {
+				authEnvSet = append(authEnvSet, "SERVICE_QUOTAS_HMAC")
 			} else if authConfigured {
 				authSource, _ := report["auth_source"].(string)
 				if authSource == "" {
@@ -114,18 +114,7 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 				}
 				authEnvInfo = append(authEnvInfo, "credentials available from "+authSource)
 			} else {
-				authEnvRequiredMissing = append(authEnvRequiredMissing, "AWS_ACCESS_KEY_ID")
-			}
-			if os.Getenv("AWS_SECRET_ACCESS_KEY") != "" {
-				authEnvSet = append(authEnvSet, "AWS_SECRET_ACCESS_KEY")
-			} else if authConfigured {
-				authSource, _ := report["auth_source"].(string)
-				if authSource == "" {
-					authSource = "config"
-				}
-				authEnvInfo = append(authEnvInfo, "credentials available from "+authSource)
-			} else {
-				authEnvRequiredMissing = append(authEnvRequiredMissing, "AWS_SECRET_ACCESS_KEY")
+				authEnvRequiredMissing = append(authEnvRequiredMissing, "SERVICE_QUOTAS_HMAC")
 			}
 			switch {
 			case len(authEnvRequiredMissing) > 0:
@@ -137,7 +126,7 @@ func newDoctorCmd(flags *rootFlags) *cobra.Command {
 			case len(authEnvInfo) > 0:
 				report["env_vars"] = "INFO " + strings.Join(authEnvInfo, "; ")
 			default:
-				report["env_vars"] = fmt.Sprintf("OK %d/%d available", len(authEnvSet), 2)
+				report["env_vars"] = fmt.Sprintf("OK %d/%d available", len(authEnvSet), 1)
 			}
 
 			// Check API connectivity and validate credentials.
@@ -324,14 +313,14 @@ func doctorExitForFailOn(failOn string, report map[string]any) error {
 // because the alternative is no freshness story at all.
 func collectCacheReport(ctx context.Context, staleAfterSpec string) map[string]any {
 	report := map[string]any{}
-	dbPath := defaultDBPath("aws-quotas-pp-cli")
+	dbPath := defaultDBPath("aws-pp-pp-cli")
 	report["db_path"] = dbPath
 
 	fi, err := os.Stat(dbPath)
 	if err != nil {
 		if os.IsNotExist(err) {
 			report["status"] = "unknown"
-			report["hint"] = "Database not created yet; run 'aws-quotas-pp-cli sync' to hydrate."
+			report["hint"] = "Database not created yet; run 'aws-pp-pp-cli sync' to hydrate."
 			return report
 		}
 		report["status"] = "error"
@@ -364,7 +353,7 @@ func collectCacheReport(ctx context.Context, staleAfterSpec string) map[string]a
 		// sync_state may not exist on a fresh DB that has migrated but not
 		// yet had any sync runs — treat as unknown rather than error.
 		report["status"] = "unknown"
-		report["hint"] = "No sync state recorded; run 'aws-quotas-pp-cli sync' to populate."
+		report["hint"] = "No sync state recorded; run 'aws-pp-pp-cli sync' to populate."
 		return report
 	}
 	defer rows.Close()
@@ -404,13 +393,13 @@ func collectCacheReport(ctx context.Context, staleAfterSpec string) map[string]a
 	switch {
 	case !haveAny && len(resources) == 0:
 		report["status"] = "unknown"
-		report["hint"] = "sync_state is empty; run 'aws-quotas-pp-cli sync' to hydrate."
+		report["hint"] = "sync_state is empty; run 'aws-pp-pp-cli sync' to hydrate."
 	case fresh:
 		report["status"] = "fresh"
 	default:
 		report["status"] = "stale"
 		report["oldest_age"] = oldest.Round(time.Minute).String()
-		report["hint"] = "Some resources are older than stale_after; run 'aws-quotas-pp-cli sync' to refresh."
+		report["hint"] = "Some resources are older than stale_after; run 'aws-pp-pp-cli sync' to refresh."
 	}
 	return report
 }

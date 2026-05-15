@@ -9,7 +9,7 @@ import (
 	"os"
 	"sort"
 
-	"aws-quotas-pp-cli/internal/store"
+	"aws-pp-pp-cli/internal/store"
 	"github.com/spf13/cobra"
 )
 
@@ -26,21 +26,21 @@ func newAnalyticsCmd(flags *rootFlags) *cobra.Command {
 		Long: `Analyze locally synced data with count, group-by, and summary operations.
 Data must be synced first with the sync command.`,
 		Example: `  # Count records by type
-  aws-quotas-pp-cli analytics --type messages
+  aws-pp-pp-cli analytics --type messages
 
   # Group by a field
-  aws-quotas-pp-cli analytics --type messages --group-by author_id
+  aws-pp-pp-cli analytics --type messages --group-by author_id
 
   # Top 10 most frequent values
-  aws-quotas-pp-cli analytics --type messages --group-by channel_id --limit 10 --json`,
+  aws-pp-pp-cli analytics --type messages --group-by channel_id --limit 10 --json`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if dbPath == "" {
-				dbPath = defaultDBPath("aws-quotas-pp-cli")
+				dbPath = defaultDBPath("aws-pp-pp-cli")
 			}
 
 			db, err := store.OpenWithContext(cmd.Context(), dbPath)
 			if err != nil {
-				return fmt.Errorf("opening local database: %w\nRun 'aws-quotas-pp-cli sync' first.", err)
+				return fmt.Errorf("opening local database: %w\nRun 'aws-pp-pp-cli sync' first.", err)
 			}
 			defer db.Close()
 

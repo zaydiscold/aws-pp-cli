@@ -12,8 +12,8 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"aws-quotas-pp-cli/internal/client"
-	"aws-quotas-pp-cli/internal/config"
+	"aws-pp-pp-cli/internal/client"
+	"aws-pp-pp-cli/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -121,16 +121,16 @@ func isCobraUsageError(err error) bool {
 
 func newRootCmd(flags *rootFlags) *cobra.Command {
 	rootCmd := &cobra.Command{
-		Use:   "aws-quotas-pp-cli",
-		Short: "Manage aws-quotas resources via the aws-quotas API",
-		Long: `Manage aws-quotas resources via the aws-quotas API.
+		Use:   "aws-pp-pp-cli",
+		Short: "Manage aws-pp resources via the aws-pp API",
+		Long: `Manage aws-pp resources via the aws-pp API.
 
 Add --agent to any command for JSON output + non-interactive mode.
-Run 'aws-quotas-pp-cli doctor' to verify auth and connectivity.`,
+Run 'aws-pp-pp-cli doctor' to verify auth and connectivity.`,
 		SilenceUsage: true,
 		Version:      version,
 	}
-	rootCmd.SetVersionTemplate("aws-quotas-pp-cli {{ .Version }}\n")
+	rootCmd.SetVersionTemplate("aws-pp-pp-cli {{ .Version }}\n")
 
 	rootCmd.PersistentFlags().BoolVar(&flags.asJSON, "json", false, "Output as JSON")
 	rootCmd.PersistentFlags().BoolVar(&flags.compact, "compact", false, "Return only key fields (id, name, status, timestamps) for minimal token usage")
@@ -149,7 +149,7 @@ Run 'aws-quotas-pp-cli doctor' to verify auth and connectivity.`,
 	rootCmd.PersistentFlags().BoolVar(&humanFriendly, "human-friendly", false, "Enable colored output and rich formatting")
 	rootCmd.PersistentFlags().BoolVar(&flags.agent, "agent", false, "Set all agent-friendly defaults (--json --compact --no-input --no-color --yes)")
 	rootCmd.PersistentFlags().StringVar(&flags.dataSource, "data-source", "auto", "Data source for read commands: auto (live with local fallback), live (API only), local (synced data only)")
-	rootCmd.PersistentFlags().StringVar(&flags.profileName, "profile", "", "Apply values from a saved profile (see 'aws-quotas-pp-cli profile list')")
+	rootCmd.PersistentFlags().StringVar(&flags.profileName, "profile", "", "Apply values from a saved profile (see 'aws-pp-pp-cli profile list')")
 	rootCmd.PersistentFlags().StringVar(&flags.deliverSpec, "deliver", "", "Route output to a sink: stdout (default), file:<path>, webhook:<url>")
 	rootCmd.PersistentFlags().Float64Var(&flags.rateLimit, "rate-limit", 0, "Max requests per second (0 to disable)")
 
@@ -206,11 +206,6 @@ Run 'aws-quotas-pp-cli doctor' to verify auth and connectivity.`,
 		}
 		return nil
 	}
-	rootCmd.AddCommand(newRequestedServiceQuotaChangeCmd(flags))
-	rootCmd.AddCommand(newServiceQuotaCmd(flags))
-	rootCmd.AddCommand(newServiceQuotaIncreaseTemplateCmd(flags))
-	rootCmd.AddCommand(newServiceQuotaTemplateCmd(flags))
-	rootCmd.AddCommand(newTagCmd(flags))
 	rootCmd.AddCommand(newDoctorCmd(flags))
 	rootCmd.AddCommand(newAuthCmd(flags))
 	rootCmd.AddCommand(newAgentContextCmd(rootCmd))
@@ -223,7 +218,76 @@ Run 'aws-quotas-pp-cli doctor' to verify auth and connectivity.`,
 	rootCmd.AddCommand(newAnalyticsCmd(flags))
 	rootCmd.AddCommand(newWorkflowCmd(flags))
 	rootCmd.AddCommand(newAPICmd(flags))
-	rootCmd.AddCommand(newServicePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceCreateAnomalyMonitorPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceCreateAnomalySubscriptionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceCreateCostCategoryDefinitionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceDeleteAnomalyMonitorPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceDeleteAnomalySubscriptionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceDeleteCostCategoryDefinitionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceDescribeCostCategoryDefinitionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetAnomaliesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetAnomalyMonitorsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetAnomalySubscriptionsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetCostAndUsagePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetCostAndUsageWithResourcesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetCostCategoriesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetCostForecastPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetDimensionValuesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetReservationCoveragePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetReservationPurchaseRecommendationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetReservationUtilizationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetRightsizingRecommendationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetSavingsPlansCoveragePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetSavingsPlansPurchaseRecommendationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetSavingsPlansUtilizationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetSavingsPlansUtilizationDetailsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetTagsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceGetUsageForecastPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceListCostAllocationTagsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceListCostCategoryDefinitionsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceListSavingsPlansPurchaseRecommendationGenerationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceListTagsForResourcePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceProvideAnomalyFeedbackPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceStartSavingsPlansPurchaseRecommendationGenerationPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceTagResourcePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceUntagResourcePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceUpdateAnomalyMonitorPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceUpdateAnomalySubscriptionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceUpdateCostAllocationTagsStatusPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwsinsightsIndexServiceUpdateCostCategoryDefinitionPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415AddAttachmentsToSetPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415AddCommunicationToCasePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415CreateCasePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeAttachmentPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeCasesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeCommunicationsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeServicesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeSeverityLevelsPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeTrustedAdvisorCheckRefreshStatusesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeTrustedAdvisorCheckResultPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeTrustedAdvisorCheckSummariesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415DescribeTrustedAdvisorChecksPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415RefreshTrustedAdvisorCheckPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetAwssupport20130415ResolveCasePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624AssociateServiceQuotaTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624DeleteServiceQuotaIncreaseRequestFromTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624DisassociateServiceQuotaTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624GetAssociationForServiceQuotaTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624GetAwsdefaultServiceQuotaPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624GetRequestedServiceQuotaChangePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624GetServiceQuotaPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624GetServiceQuotaIncreaseRequestFromTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListAwsdefaultServiceQuotasPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListRequestedServiceQuotaChangeHistoryPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListRequestedServiceQuotaChangeHistoryByQuotaPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListServiceQuotaIncreaseRequestsInTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListServiceQuotasPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListServicesPromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624ListTagsForResourcePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624PutServiceQuotaIncreaseRequestIntoTemplatePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624RequestServiceQuotaIncreasePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624TagResourcePromotedCmd(flags))
+	rootCmd.AddCommand(newXAmzTargetServiceQuotasV20190624UntagResourcePromotedCmd(flags))
 	rootCmd.AddCommand(newVersionCliCmd())
 
 	return rootCmd
@@ -283,7 +347,7 @@ func newVersionCliCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Print version",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf("aws-quotas-pp-cli %s\n", version)
+			fmt.Printf("aws-pp-pp-cli %s\n", version)
 		},
 	}
 }

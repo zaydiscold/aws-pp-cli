@@ -1,22 +1,20 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-14T19:15:21.987515Z",
+  "generated_at": "2026-05-15T01:25:17.692289Z",
   "printing_press_version": "4.5.1",
-  "api_name": "aws-quotas",
-  "display_name": "Aws Quotas",
-  "cli_name": "aws-quotas-pp-cli",
+  "api_name": "aws-pp",
+  "display_name": "Aws Pp",
+  "cli_name": "aws-pp-pp-cli",
   "owner": "zaydiscold",
   "printer": "zaydiscold",
   "printer_name": "zayd",
-  "spec_url": "https://docs.aws.amazon.com/servicequotas/2019-06-24/apireference/Welcome.html",
-  "spec_format": "docs",
-  "mcp_binary": "aws-quotas-pp-mcp",
-  "mcp_tool_count": 19,
+  "spec_url": "https://api.apis.guru/v2/specs/amazonaws.com/service-quotas/2019-06-24/openapi.json",
+  "mcp_binary": "aws-pp-pp-mcp",
+  "mcp_tool_count": 70,
   "mcp_ready": "full",
-  "api_version": "1.0.0",
-  "auth_type": "bearer_token",
+  "api_version": "2019-06-24",
+  "auth_type": "api_key",
   "auth_env_vars": [
-    "AWS_ACCESS_KEY_ID",
-    "AWS_SECRET_ACCESS_KEY"
+    "SERVICE_QUOTAS_HMAC"
   ]
 }

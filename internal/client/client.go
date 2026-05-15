@@ -4,8 +4,8 @@
 package client
 
 import (
-	"aws-quotas-pp-cli/internal/cliutil"
-	"aws-quotas-pp-cli/internal/config"
+	"aws-pp-pp-cli/internal/cliutil"
+	"aws-pp-pp-cli/internal/config"
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
@@ -49,7 +49,7 @@ func newHTTPClient(timeout time.Duration, jar http.CookieJar) *http.Client {
 
 func New(cfg *config.Config, timeout time.Duration, rateLimit float64) *Client {
 	homeDir, _ := os.UserHomeDir()
-	cacheDir := filepath.Join(homeDir, ".cache", "aws-quotas-pp-cli", "http")
+	cacheDir := filepath.Join(homeDir, ".cache", "aws-pp-pp-cli", "http")
 	httpClient := newHTTPClient(timeout, nil)
 	return &Client{
 		BaseURL:    strings.TrimRight(cfg.BaseURL, "/"),
@@ -177,7 +177,15 @@ func (c *Client) PatchWithHeaders(path string, body any, headers map[string]stri
 // do executes an HTTP request. headerOverrides, when non-nil, override global
 // RequiredHeaders for this specific request (used for per-endpoint API versioning).
 func (c *Client) do(method, path string, params map[string]string, body any, headerOverrides map[string]string) (json.RawMessage, int, error) {
-	targetURL := c.BaseURL + path
+	// Resource and endpoint BaseURL overrides flow through as absolute paths
+	// (https:// or http://); the resource template emits the full URL
+	// in `path` and we skip the c.BaseURL concat for those.
+	var targetURL string
+	if isAbsoluteURL(path) {
+		targetURL = path
+	} else {
+		targetURL = c.BaseURL + path
+	}
 
 	var bodyBytes []byte
 	if body != nil {
@@ -244,7 +252,7 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 			req.Header.Set(k, v)
 		}
 		if req.Header.Get("User-Agent") == "" {
-			req.Header.Set("User-Agent", "aws-quotas-pp-cli/1.0.0")
+			req.Header.Set("User-Agent", "aws-pp-pp-cli/2019-06-24")
 		}
 		// Go's net/http omits Accept by default; browsers, curl, and other
 		// stdlibs always send it. Fingerprint-checking WAFs (Imperva, Akamai,
@@ -375,6 +383,13 @@ func (c *Client) refreshAccessToken() error {
 	}
 
 	return nil
+}
+
+// isAbsoluteURL reports whether path is already a full URL (resource or
+// endpoint BaseURL override emits the full URL into path; the relative-path
+// concat with c.BaseURL must be skipped for those calls).
+func isAbsoluteURL(path string) bool {
+	return strings.HasPrefix(path, "https://") || strings.HasPrefix(path, "http://")
 }
 
 // sanitizeJSONResponse strips known JSONP/XSSI prefixes and UTF-8 BOM from

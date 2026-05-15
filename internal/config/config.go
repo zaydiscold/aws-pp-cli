@@ -14,33 +14,32 @@ import (
 )
 
 type Config struct {
-	BaseURL            string            `toml:"base_url"`
-	AuthHeaderVal      string            `toml:"auth_header"`
-	Headers            map[string]string `toml:"headers,omitempty"`
-	AuthSource         string            `toml:"-"`
-	AccessToken        string            `toml:"access_token"`
-	RefreshToken       string            `toml:"refresh_token"`
-	TokenExpiry        time.Time         `toml:"token_expiry"`
-	ClientID           string            `toml:"client_id"`
-	ClientSecret       string            `toml:"client_secret"`
-	Path               string            `toml:"-"`
-	AwsAccessKeyId     string            `toml:"access_key_id"`
-	AwsSecretAccessKey string            `toml:"secret_access_key"`
+	BaseURL           string            `toml:"base_url"`
+	AuthHeaderVal     string            `toml:"auth_header"`
+	Headers           map[string]string `toml:"headers,omitempty"`
+	AuthSource        string            `toml:"-"`
+	AccessToken       string            `toml:"access_token"`
+	RefreshToken      string            `toml:"refresh_token"`
+	TokenExpiry       time.Time         `toml:"token_expiry"`
+	ClientID          string            `toml:"client_id"`
+	ClientSecret      string            `toml:"client_secret"`
+	Path              string            `toml:"-"`
+	ServiceQuotasHmac string            `toml:"quotas_hmac"`
 }
 
 func Load(configPath string) (*Config, error) {
 	cfg := &Config{
-		BaseURL: "https://servicequotas.us-east-1.amazonaws.com",
+		BaseURL: "http://servicequotas.us-east-1.amazonaws.com",
 	}
 
 	// Resolve config path
 	path := configPath
 	if path == "" {
-		path = os.Getenv("AWS_QUOTAS_CONFIG")
+		path = os.Getenv("AWS_PP_CONFIG")
 	}
 	if path == "" {
 		home, _ := os.UserHomeDir()
-		path = filepath.Join(home, ".config", "aws-quotas-pp-cli", "config.toml")
+		path = filepath.Join(home, ".config", "aws-pp-pp-cli", "config.toml")
 	}
 	cfg.Path = path
 
@@ -53,13 +52,9 @@ func Load(configPath string) (*Config, error) {
 	}
 
 	// Env var overrides
-	if v := os.Getenv("AWS_ACCESS_KEY_ID"); v != "" {
-		cfg.AwsAccessKeyId = v
-		cfg.AuthSource = "env:AWS_ACCESS_KEY_ID"
-	}
-	if v := os.Getenv("AWS_SECRET_ACCESS_KEY"); v != "" {
-		cfg.AwsSecretAccessKey = v
-		cfg.AuthSource = "env:AWS_SECRET_ACCESS_KEY"
+	if v := os.Getenv("SERVICE_QUOTAS_HMAC"); v != "" {
+		cfg.ServiceQuotasHmac = v
+		cfg.AuthSource = "env:SERVICE_QUOTAS_HMAC"
 	}
 
 	// Label config-file-derived credentials so doctor can distinguish
@@ -73,15 +68,12 @@ func Load(configPath string) (*Config, error) {
 	if cfg.AuthSource == "" && (cfg.AuthHeaderVal != "" || cfg.AccessToken != "") {
 		cfg.AuthSource = "config"
 	}
-	if cfg.AuthSource == "" && cfg.AwsAccessKeyId != "" {
-		cfg.AuthSource = "config"
-	}
-	if cfg.AuthSource == "" && cfg.AwsSecretAccessKey != "" {
+	if cfg.AuthSource == "" && cfg.ServiceQuotasHmac != "" {
 		cfg.AuthSource = "config"
 	}
 
 	// Base URL override (used by printing-press verify to point at mock/test servers)
-	if v := os.Getenv("AWS_QUOTAS_BASE_URL"); v != "" {
+	if v := os.Getenv("AWS_PP_BASE_URL"); v != "" {
 		cfg.BaseURL = v
 	}
 	return cfg, nil
@@ -91,20 +83,14 @@ func (c *Config) AuthHeader() string {
 	if c.AuthHeaderVal != "" {
 		return c.AuthHeaderVal
 	}
-	// Env-var token wins over file-stored AccessToken (env > config convention).
-	if c.AwsAccessKeyId != "" {
-		c.AuthSource = "env:AWS_ACCESS_KEY_ID"
-		return applyAuthFormat("AWS4-HMAC-SHA256 {token}", map[string]string{
-			"access_key_id":     c.AwsAccessKeyId,
-			"AWS_ACCESS_KEY_ID": c.AwsAccessKeyId,
-			"token":             c.AwsAccessKeyId,
-		})
+	token := c.ServiceQuotasHmac
+	if token == "" {
+		return ""
 	}
-	if c.AccessToken != "" {
-		c.AuthSource = "oauth2"
-		return applyAuthFormat("AWS4-HMAC-SHA256 {token}", map[string]string{"access_token": c.AccessToken, "token": c.AccessToken})
+	if c.ServiceQuotasHmac == "" {
+		return ""
 	}
-	return ""
+	return token
 }
 
 func applyAuthFormat(format string, replacements map[string]string) string {
@@ -126,6 +112,21 @@ func (c *Config) SaveTokens(clientID, clientSecret, accessToken, refreshToken st
 	c.AccessToken = accessToken
 	c.RefreshToken = refreshToken
 	c.TokenExpiry = expiry
+	return c.save()
+}
+
+// SaveCredential persists a single API credential to the field that
+// AuthHeader() consults for api_key auth. Writing to AccessToken (the
+// bearer slot) would silently no-op since AuthHeader() reads the env-var-
+// derived field, not AccessToken, when Auth.Type == "api_key".
+//
+// The clears precede the assignment so a canonical env-var whose placeholder
+// collides with a builtin tag (e.g. an env var named XXX_ACCESS_TOKEN
+// resolving to the AccessToken field) ends up holding the new token.
+func (c *Config) SaveCredential(token string) error {
+	c.AuthHeaderVal = ""
+	c.AccessToken = ""
+	c.ServiceQuotasHmac = token
 	return c.save()
 }
 

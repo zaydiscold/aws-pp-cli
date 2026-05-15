@@ -4,7 +4,7 @@
 package cli
 
 import (
-	"aws-quotas-pp-cli/internal/config"
+	"aws-pp-pp-cli/internal/config"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -13,7 +13,7 @@ import (
 func newAuthCmd(flags *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "auth",
-		Short: "Manage authentication for Aws Quotas",
+		Short: "Manage authentication for Aws Pp",
 	}
 
 	cmd.AddCommand(newAuthSetupCmd(flags))
@@ -32,15 +32,14 @@ func newAuthSetupCmd(_ *rootFlags) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "setup",
 		Short:   "Print steps for obtaining a credential (use --launch to open the URL)",
-		Example: "  aws-quotas-pp-cli auth setup\n  aws-quotas-pp-cli auth setup --launch",
+		Example: "  aws-pp-pp-cli auth setup\n  aws-pp-pp-cli auth setup --launch",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			w := cmd.OutOrStdout()
 			fmt.Fprintln(w, "No setup URL is configured for this CLI; check the API's docs.")
 			fmt.Fprintln(w, "")
 			fmt.Fprintln(w, "Then set:")
-			fmt.Fprintln(w, "  export AWS_ACCESS_KEY_ID=\"<your-token>\"")
-			fmt.Fprintln(w, "  export AWS_SECRET_ACCESS_KEY=\"<your-token>\"")
-			fmt.Fprintln(w, "  aws-quotas-pp-cli auth set-token <token>")
+			fmt.Fprintln(w, "  export SERVICE_QUOTAS_HMAC=\"<your-token>\"")
+			fmt.Fprintln(w, "  aws-pp-pp-cli auth set-token <token>")
 			if !launch {
 				return nil
 			}
@@ -56,7 +55,7 @@ func newAuthStatusCmd(flags *rootFlags) *cobra.Command {
 	return &cobra.Command{
 		Use:     "status",
 		Short:   "Show authentication status",
-		Example: "  aws-quotas-pp-cli auth status",
+		Example: "  aws-pp-pp-cli auth status",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg, err := config.Load(flags.configPath)
 			if err != nil {
@@ -88,9 +87,8 @@ func newAuthStatusCmd(flags *rootFlags) *cobra.Command {
 				fmt.Fprintln(w, red("Not authenticated"))
 				fmt.Fprintln(w, "")
 				fmt.Fprintln(w, "Set your token:")
-				fmt.Fprintln(w, "  export AWS_ACCESS_KEY_ID=\"your-token-here\"")
-				fmt.Fprintln(w, "  export AWS_SECRET_ACCESS_KEY=\"your-token-here\"")
-				fmt.Fprintf(w, "  aws-quotas-pp-cli auth set-token <token>\n")
+				fmt.Fprintln(w, "  export SERVICE_QUOTAS_HMAC=\"your-token-here\"")
+				fmt.Fprintf(w, "  aws-pp-pp-cli auth set-token <token>\n")
 				return authErr(fmt.Errorf("no credentials configured"))
 			}
 
@@ -106,7 +104,7 @@ func newAuthSetTokenCmd(flags *rootFlags) *cobra.Command {
 	return &cobra.Command{
 		Use:     "set-token <token>",
 		Short:   "Save an API token to the config file",
-		Example: "  aws-quotas-pp-cli auth set-token YOUR_TOKEN_HERE",
+		Example: "  aws-pp-pp-cli auth set-token YOUR_TOKEN_HERE",
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg, err := config.Load(flags.configPath)
@@ -121,7 +119,11 @@ func newAuthSetTokenCmd(flags *rootFlags) *cobra.Command {
 			// log line): a masked-tail variant could leak token bytes through
 			// scripted dogfood that captures stderr.
 			cfg.AuthHeaderVal = ""
-			if err := cfg.SaveTokens("", "", args[0], "", cfg.TokenExpiry); err != nil {
+			// api_key auth: AuthHeader() reads the env-var-derived field, not
+			// AccessToken. Writing the token to AccessToken via SaveTokens
+			// would persist the bytes but leave doctor reporting "not
+			// configured" — the slot the header builder consults stays empty.
+			if err := cfg.SaveCredential(args[0]); err != nil {
 				return configErr(fmt.Errorf("saving token: %w", err))
 			}
 
@@ -142,7 +144,7 @@ func newAuthLogoutCmd(flags *rootFlags) *cobra.Command {
 	return &cobra.Command{
 		Use:     "logout",
 		Short:   "Clear stored credentials",
-		Example: "  aws-quotas-pp-cli auth logout",
+		Example: "  aws-pp-pp-cli auth logout",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfg, err := config.Load(flags.configPath)
 			if err != nil {
@@ -156,11 +158,8 @@ func newAuthLogoutCmd(flags *rootFlags) *cobra.Command {
 			// Identify which (if any) auth env var is still exported so the
 			// JSON envelope and the human prose can both surface it.
 			envStillSet := ""
-			if envStillSet == "" && os.Getenv("AWS_ACCESS_KEY_ID") != "" {
-				envStillSet = "AWS_ACCESS_KEY_ID"
-			}
-			if envStillSet == "" && os.Getenv("AWS_SECRET_ACCESS_KEY") != "" {
-				envStillSet = "AWS_SECRET_ACCESS_KEY"
+			if envStillSet == "" && os.Getenv("SERVICE_QUOTAS_HMAC") != "" {
+				envStillSet = "SERVICE_QUOTAS_HMAC"
 			}
 
 			// JSON envelope: {cleared: true, note?: "<env_var> env var is still set"}.

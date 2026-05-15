@@ -4,7 +4,7 @@
 package cli
 
 import (
-	"aws-quotas-pp-cli/internal/store"
+	"aws-pp-pp-cli/internal/store"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -69,22 +69,22 @@ Exit codes & warnings:
   --strict to exit non-zero on any per-resource failure. Exit is always
   non-zero when every selected resource failed, regardless of --strict.`,
 		Example: `  # Sync all resources
-  aws-quotas-pp-cli sync
+  aws-pp-pp-cli sync
 
   # Sync specific resources only
-  aws-quotas-pp-cli sync --resources channels,messages
+  aws-pp-pp-cli sync --resources channels,messages
 
   # Full resync (ignore previous checkpoint)
-  aws-quotas-pp-cli sync --full
+  aws-pp-pp-cli sync --full
 
   # Incremental sync: only records from the last 7 days
-  aws-quotas-pp-cli sync --since 7d
+  aws-pp-pp-cli sync --since 7d
 
   # Parallel sync with 8 workers
-  aws-quotas-pp-cli sync --concurrency 8
+  aws-pp-pp-cli sync --concurrency 8
 
   # Latest-only: refresh head of each resource, no historical backfill
-  aws-quotas-pp-cli sync --latest-only`,
+  aws-pp-pp-cli sync --latest-only`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			userParams, err := parseSyncUserParams(paramFlags, resourceParamFlags)
 			if err != nil {
@@ -98,7 +98,7 @@ Exit codes & warnings:
 			c.NoCache = true
 
 			if dbPath == "" {
-				dbPath = defaultDBPath("aws-quotas-pp-cli")
+				dbPath = defaultDBPath("aws-pp-pp-cli")
 			}
 
 			db, err := store.OpenWithContext(cmd.Context(), dbPath)
@@ -284,7 +284,7 @@ Exit codes & warnings:
 	cmd.Flags().BoolVar(&full, "full", false, "Full resync (ignore previous checkpoint)")
 	cmd.Flags().StringVar(&since, "since", "", "Incremental sync duration (e.g. 7d, 24h, 1w, 30m)")
 	cmd.Flags().IntVar(&concurrency, "concurrency", 4, "Number of parallel sync workers")
-	cmd.Flags().StringVar(&dbPath, "db", "", "Database path (default: ~/.local/share/aws-quotas-pp-cli/data.db)")
+	cmd.Flags().StringVar(&dbPath, "db", "", "Database path (default: ~/.local/share/aws-pp-pp-cli/data.db)")
 	cmd.Flags().IntVar(&maxPages, "max-pages", 100, "Maximum pages to fetch per resource (0 = unlimited; cap-hit emits a sync_warning event)")
 	cmd.Flags().BoolVar(&latestOnly, "latest-only", false, "Refresh head of each resource only; clears resume cursor and caps pages at 1. Mutually exclusive with --since (--since wins).")
 	cmd.Flags().BoolVar(&strict, "strict", false, "Exit non-zero on any per-resource failure (default: only critical failures or all-resource failure exit non-zero).")
@@ -891,6 +891,20 @@ func upsertSingleObject(db *store.Store, resource string, data json.RawMessage) 
 	}
 
 	switch resource {
+	case "x-amz-target-awsinsights-index-service-get-cost-categories":
+		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetCostCategories(data)
+	case "x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation":
+		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetReservationPurchaseRecommendation(data)
+	case "x-amz-target-awsinsights-index-service-get-rightsizing-recommendation":
+		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetRightsizingRecommendation(data)
+	case "x-amz-target-awsinsights-index-service-get-savings-plans-purchase-recommendation":
+		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetSavingsPlansPurchaseRecommendation(data)
+	case "x-amz-target-awsinsights-index-service-get-tags":
+		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetTags(data)
+	case "x-amz-target-awsinsights-index-service-list-tags-for-resource":
+		return db.UpsertXAmzTargetAwsinsightsIndexServiceListTagsForResource(data)
+	case "x-amz-target-service-quotas-v20190624-list-tags-for-resource":
+		return db.UpsertXAmzTargetServiceQuotasV20190624ListTagsForResource(data)
 	default:
 		return db.Upsert(resource, id, data)
 	}

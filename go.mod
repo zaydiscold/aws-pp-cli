@@ -1,4 +1,4 @@
-module aws-quotas-pp-cli
+module aws-pp-pp-cli
 
 go 1.26.3
 
