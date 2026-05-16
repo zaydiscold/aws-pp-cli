@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-05-15T01:25:17.692289Z",
+  "generated_at": "2026-05-16T07:35:30.530157Z",
   "printing_press_version": "4.5.1",
   "api_name": "aws-pp",
   "display_name": "Aws Pp",
@@ -10,7 +10,7 @@
   "printer_name": "zayd",
   "spec_url": "https://api.apis.guru/v2/specs/amazonaws.com/service-quotas/2019-06-24/openapi.json",
   "mcp_binary": "aws-pp-pp-mcp",
-  "mcp_tool_count": 70,
+  "mcp_tool_count": 339,
   "mcp_ready": "full",
   "api_version": "2019-06-24",
   "auth_type": "api_key",

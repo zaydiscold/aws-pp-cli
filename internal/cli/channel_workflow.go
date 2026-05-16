@@ -53,7 +53,7 @@ and full resync. After archiving, use 'search' for instant full-text search.`,
 			}
 			defer s.Close()
 
-			resources := []string{}
+			resources := []string{"accounts", "administrator", "finding-aggregator", "invitations", "invitations-count", "master", "members", "organization", "organization-configuration", "product-subscriptions", "products", "report-definition", "security-controls", "standards"}
 			totalSynced := 0
 
 			// --full clears the cursor here because syncResource reads

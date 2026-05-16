@@ -366,6 +366,15 @@ func classifyAPIError(err error, flags *rootFlags) error {
 	}
 }
 
+// classifyDeleteError maps DELETE errors and supports explicit idempotent no-op handling.
+func classifyDeleteError(err error, flags *rootFlags) error {
+	msg := err.Error()
+	if strings.Contains(msg, "HTTP 404") && flags != nil && flags.ignoreMissing {
+		return writeNoop(flags, "already_deleted", "already deleted (no-op)")
+	}
+	return classifyAPIError(err, flags)
+}
+
 func truncate(s string, max int) string {
 	if len(s) <= max {
 		return s
@@ -378,6 +387,9 @@ func truncate(s string, max int) string {
 
 func newTabWriter(w io.Writer) *tabwriter.Writer {
 	return tabwriter.NewWriter(w, 2, 4, 2, ' ', 0)
+}
+func replacePathParam(path, name, value string) string {
+	return strings.ReplaceAll(path, "{"+name+"}", value)
 }
 
 // paginatedGet fetches pages and concatenates array results. The headers

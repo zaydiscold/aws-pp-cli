@@ -215,6 +215,58 @@ func (s *Store) ensureColumn(ctx context.Context, conn *sql.Conn, table, column,
 // word.
 func (s *Store) backfillColumns(ctx context.Context, conn *sql.Conn) error {
 	for _, c := range []struct{ table, column, decl string }{
+		{table: "accounts", column: "auto_enable_controls", decl: "TEXT"},
+		{table: "accounts", column: "control_finding_generator", decl: "TEXT"},
+		{table: "accounts", column: "hub_arn", decl: "TEXT"},
+		{table: "accounts", column: "subscribed_at", decl: "TEXT"},
+		{table: "action_targets", column: "action_target_arn", decl: "TEXT"},
+		{table: "action_targets", column: "action_targets", decl: "TEXT"},
+		{table: "action_targets", column: "next_token", decl: "TEXT"},
+		{table: "associations", column: "standards_control_association_details", decl: "TEXT"},
+		{table: "associations", column: "unprocessed_associations", decl: "TEXT"},
+		{table: "associations", column: "unprocessed_association_updates", decl: "TEXT"},
+		{table: "finding_aggregator", column: "finding_aggregation_region", decl: "TEXT"},
+		{table: "finding_aggregator", column: "finding_aggregator_arn", decl: "TEXT"},
+		{table: "finding_aggregator", column: "region_linking_mode", decl: "TEXT"},
+		{table: "finding_aggregator", column: "regions", decl: "TEXT"},
+		{table: "finding_aggregator", column: "finding_aggregators", decl: "TEXT"},
+		{table: "finding_aggregator", column: "next_token", decl: "TEXT"},
+		{table: "findings", column: "failed_count", decl: "TEXT"},
+		{table: "findings", column: "failed_findings", decl: "TEXT"},
+		{table: "findings", column: "success_count", decl: "TEXT"},
+		{table: "findings", column: "processed_findings", decl: "TEXT"},
+		{table: "findings", column: "unprocessed_findings", decl: "TEXT"},
+		{table: "findings", column: "findings", decl: "TEXT"},
+		{table: "findings", column: "next_token", decl: "TEXT"},
+		{table: "insights", column: "insight_results", decl: "TEXT"},
+		{table: "invitations", column: "invitations_count", decl: "TEXT"},
+		{table: "invitations", column: "invitations", decl: "TEXT"},
+		{table: "invitations", column: "next_token", decl: "TEXT"},
+		{table: "master", column: "master", decl: "TEXT"},
+		{table: "members", column: "members", decl: "TEXT"},
+		{table: "members", column: "next_token", decl: "TEXT"},
+		{table: "organization", column: "auto_enable", decl: "TEXT"},
+		{table: "organization", column: "auto_enable_standards", decl: "TEXT"},
+		{table: "organization", column: "member_account_limit_reached", decl: "TEXT"},
+		{table: "organization", column: "admin_accounts", decl: "TEXT"},
+		{table: "organization", column: "next_token", decl: "TEXT"},
+		{table: "product_subscriptions", column: "next_token", decl: "TEXT"},
+		{table: "product_subscriptions", column: "product_subscriptions", decl: "TEXT"},
+		{table: "report_definition", column: "created_at", decl: "TEXT"},
+		{table: "report_definition", column: "destination_s3_location", decl: "TEXT"},
+		{table: "report_definition", column: "format", decl: "TEXT"},
+		{table: "report_definition", column: "last_updated", decl: "TEXT"},
+		{table: "report_definition", column: "report_description", decl: "TEXT"},
+		{table: "report_definition", column: "report_frequency", decl: "TEXT"},
+		{table: "report_definition", column: "report_id", decl: "TEXT"},
+		{table: "report_definition", column: "next_token", decl: "TEXT"},
+		{table: "report_definition", column: "report_definitions", decl: "TEXT"},
+		{table: "security_controls", column: "next_token", decl: "TEXT"},
+		{table: "security_controls", column: "security_control_definitions", decl: "TEXT"},
+		{table: "standards", column: "next_token", decl: "TEXT"},
+		{table: "standards", column: "standards", decl: "TEXT"},
+		{table: "standards", column: "controls", decl: "TEXT"},
+		{table: "tags", column: "tags", decl: "TEXT"},
 		{table: "x_amz_target_awsinsights_index_service_get_cost_categories", column: "cost_category_names", decl: "TEXT"},
 		{table: "x_amz_target_awsinsights_index_service_get_cost_categories", column: "cost_category_values", decl: "TEXT"},
 		{table: "x_amz_target_awsinsights_index_service_get_cost_categories", column: "next_page_token", decl: "TEXT"},
@@ -236,7 +288,159 @@ func (s *Store) backfillColumns(ctx context.Context, conn *sql.Conn) error {
 		{table: "x_amz_target_awsinsights_index_service_get_tags", column: "tags", decl: "TEXT"},
 		{table: "x_amz_target_awsinsights_index_service_get_tags", column: "total_size", decl: "TEXT"},
 		{table: "x_amz_target_awsinsights_index_service_list_tags_for_resource", column: "tags", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel", column: "channel_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel", column: "destinations", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel", column: "source", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "advanced_event_selectors", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "event_data_store_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "kms_key_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "multi_region_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "organization_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "retention_period", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "termination_protection_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "cloud_watch_logs_log_group_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "cloud_watch_logs_role_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "include_global_service_events", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "is_multi_region_trail", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "is_organization_trail", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "kms_key_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "log_file_validation_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "s3_bucket_name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "s3_key_prefix", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "sns_topic_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "sns_topic_name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail", column: "trail_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "delivery_s3_uri", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "delivery_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "error_message", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "query_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "query_statistics", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "query_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query", column: "query_string", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel", column: "channel_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel", column: "destinations", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel", column: "ingestion_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel", column: "source", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel", column: "source_config", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "advanced_event_selectors", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "event_data_store_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "kms_key_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "multi_region_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "organization_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "retention_period", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "termination_protection_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "destinations", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "end_event_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "import_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "import_source", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "import_statistics", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "import_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "start_event_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results", column: "error_message", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results", column: "next_token", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results", column: "query_result_rows", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results", column: "query_statistics", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results", column: "query_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "is_logging", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_cloud_watch_logs_delivery_error", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_cloud_watch_logs_delivery_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_delivery_attempt_succeeded", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_delivery_attempt_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_delivery_error", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_delivery_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_digest_delivery_error", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_digest_delivery_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_notification_attempt_succeeded", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_notification_attempt_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_notification_error", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "latest_notification_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "start_logging_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "stop_logging_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "time_logging_started", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status", column: "time_logging_stopped", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "advanced_event_selectors", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "event_data_store_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "kms_key_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "multi_region_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "organization_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "retention_period", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "termination_protection_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "destinations", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "end_event_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "import_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "import_source", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "import_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "start_event_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "destinations", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "end_event_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "import_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "import_source", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "import_statistics", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "import_status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "start_event_time", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel", column: "channel_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel", column: "destinations", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel", column: "source", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "advanced_event_selectors", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "created_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "event_data_store_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "kms_key_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "multi_region_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "organization_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "retention_period", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "status", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "termination_protection_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store", column: "updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "cloud_watch_logs_log_group_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "cloud_watch_logs_role_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "include_global_service_events", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "is_multi_region_trail", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "is_organization_trail", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "kms_key_id", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "log_file_validation_enabled", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "s3_bucket_name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "s3_key_prefix", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "sns_topic_arn", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "sns_topic_name", decl: "TEXT"},
+		{table: "x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail", column: "trail_arn", decl: "TEXT"},
+		{table: "x_amz_target_compute_optimizer_service_get_enrollment_status", column: "last_updated_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_compute_optimizer_service_get_enrollment_status", column: "member_accounts_enrolled", decl: "TEXT"},
+		{table: "x_amz_target_compute_optimizer_service_get_enrollment_status", column: "number_of_member_accounts_opted_in", decl: "TEXT"},
+		{table: "x_amz_target_compute_optimizer_service_get_enrollment_status", column: "status", decl: "TEXT"},
+		{table: "x_amz_target_compute_optimizer_service_get_enrollment_status", column: "status_reason", decl: "TEXT"},
 		{table: "x_amz_target_service_quotas_v20190624_list_tags_for_resource", column: "tags", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "compliance", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "evaluation_context", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "evaluation_mode", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "evaluation_start_timestamp", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "evaluation_status", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "resource_details", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_get_resource_evaluation_summary", column: "resource_evaluation_id", decl: "TEXT"},
+		{table: "x_amz_target_starling_dove_service_list_tags_for_resource", column: "tags", decl: "TEXT"},
 		{table: "sync_state", column: "last_cursor", decl: "TEXT"},
 		{table: "sync_state", column: "last_synced_at", decl: "DATETIME"},
 		{table: "sync_state", column: "total_count", decl: "INTEGER DEFAULT 0"},
@@ -288,6 +492,134 @@ func (s *Store) migrate(ctx context.Context) error {
 			total_count INTEGER DEFAULT 0
 		)`,
 		resourcesFTSCreateSQL,
+		`CREATE TABLE IF NOT EXISTS accounts (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			auto_enable_controls TEXT,
+			control_finding_generator TEXT,
+			hub_arn TEXT,
+			subscribed_at TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS action_targets (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			action_target_arn TEXT,
+			action_targets TEXT,
+			next_token TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS associations (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			standards_control_association_details TEXT,
+			unprocessed_associations TEXT,
+			unprocessed_association_updates TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS finding_aggregator (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			finding_aggregation_region TEXT,
+			finding_aggregator_arn TEXT,
+			region_linking_mode TEXT,
+			regions TEXT,
+			finding_aggregators TEXT,
+			next_token TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS findings (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			failed_count TEXT,
+			failed_findings TEXT,
+			success_count TEXT,
+			processed_findings TEXT,
+			unprocessed_findings TEXT,
+			findings TEXT,
+			next_token TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS insights (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			insight_results TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS invitations (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			invitations_count TEXT,
+			invitations TEXT,
+			next_token TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS master (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			master TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS members (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			members TEXT,
+			next_token TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS organization (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			auto_enable TEXT,
+			auto_enable_standards TEXT,
+			member_account_limit_reached TEXT,
+			admin_accounts TEXT,
+			next_token TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS product_subscriptions (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			next_token TEXT,
+			product_subscriptions TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS report_definition (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			created_at TEXT,
+			destination_s3_location TEXT,
+			format TEXT,
+			last_updated TEXT,
+			report_description TEXT,
+			report_frequency TEXT,
+			report_id TEXT,
+			next_token TEXT,
+			report_definitions TEXT
+		)`,
+		`CREATE INDEX IF NOT EXISTS idx_report_definition_created_at ON report_definition(created_at)`,
+		`CREATE TABLE IF NOT EXISTS security_controls (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			next_token TEXT,
+			security_control_definitions TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS standards (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			next_token TEXT,
+			standards TEXT,
+			controls TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS tags (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			tags TEXT
+		)`,
 		`CREATE TABLE IF NOT EXISTS x_amz_target_awsinsights_index_service_get_cost_categories (
 			id TEXT PRIMARY KEY,
 			data JSON NOT NULL,
@@ -359,7 +691,249 @@ func (s *Store) migrate(ctx context.Context) error {
 			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 			tags TEXT
 		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			channel_arn TEXT,
+			destinations TEXT,
+			name TEXT,
+			source TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			advanced_event_selectors TEXT,
+			created_timestamp TEXT,
+			event_data_store_arn TEXT,
+			kms_key_id TEXT,
+			multi_region_enabled TEXT,
+			name TEXT,
+			organization_enabled TEXT,
+			retention_period TEXT,
+			status TEXT,
+			termination_protection_enabled TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			cloud_watch_logs_log_group_arn TEXT,
+			cloud_watch_logs_role_arn TEXT,
+			include_global_service_events TEXT,
+			is_multi_region_trail TEXT,
+			is_organization_trail TEXT,
+			kms_key_id TEXT,
+			log_file_validation_enabled TEXT,
+			name TEXT,
+			s3_bucket_name TEXT,
+			s3_key_prefix TEXT,
+			sns_topic_arn TEXT,
+			sns_topic_name TEXT,
+			trail_arn TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			delivery_s3_uri TEXT,
+			delivery_status TEXT,
+			error_message TEXT,
+			query_id TEXT,
+			query_statistics TEXT,
+			query_status TEXT,
+			query_string TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			channel_arn TEXT,
+			destinations TEXT,
+			ingestion_status TEXT,
+			name TEXT,
+			source TEXT,
+			source_config TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			advanced_event_selectors TEXT,
+			created_timestamp TEXT,
+			event_data_store_arn TEXT,
+			kms_key_id TEXT,
+			multi_region_enabled TEXT,
+			name TEXT,
+			organization_enabled TEXT,
+			retention_period TEXT,
+			status TEXT,
+			termination_protection_enabled TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			created_timestamp TEXT,
+			destinations TEXT,
+			end_event_time TEXT,
+			import_id TEXT,
+			import_source TEXT,
+			import_statistics TEXT,
+			import_status TEXT,
+			start_event_time TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			error_message TEXT,
+			next_token TEXT,
+			query_result_rows TEXT,
+			query_statistics TEXT,
+			query_status TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			is_logging TEXT,
+			latest_cloud_watch_logs_delivery_error TEXT,
+			latest_cloud_watch_logs_delivery_time TEXT,
+			latest_delivery_attempt_succeeded TEXT,
+			latest_delivery_attempt_time TEXT,
+			latest_delivery_error TEXT,
+			latest_delivery_time TEXT,
+			latest_digest_delivery_error TEXT,
+			latest_digest_delivery_time TEXT,
+			latest_notification_attempt_succeeded TEXT,
+			latest_notification_attempt_time TEXT,
+			latest_notification_error TEXT,
+			latest_notification_time TEXT,
+			start_logging_time TEXT,
+			stop_logging_time TEXT,
+			time_logging_started TEXT,
+			time_logging_stopped TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			advanced_event_selectors TEXT,
+			created_timestamp TEXT,
+			event_data_store_arn TEXT,
+			kms_key_id TEXT,
+			multi_region_enabled TEXT,
+			name TEXT,
+			organization_enabled TEXT,
+			retention_period TEXT,
+			status TEXT,
+			termination_protection_enabled TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			created_timestamp TEXT,
+			destinations TEXT,
+			end_event_time TEXT,
+			import_id TEXT,
+			import_source TEXT,
+			import_status TEXT,
+			start_event_time TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			created_timestamp TEXT,
+			destinations TEXT,
+			end_event_time TEXT,
+			import_id TEXT,
+			import_source TEXT,
+			import_statistics TEXT,
+			import_status TEXT,
+			start_event_time TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			channel_arn TEXT,
+			destinations TEXT,
+			name TEXT,
+			source TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			advanced_event_selectors TEXT,
+			created_timestamp TEXT,
+			event_data_store_arn TEXT,
+			kms_key_id TEXT,
+			multi_region_enabled TEXT,
+			name TEXT,
+			organization_enabled TEXT,
+			retention_period TEXT,
+			status TEXT,
+			termination_protection_enabled TEXT,
+			updated_timestamp TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			cloud_watch_logs_log_group_arn TEXT,
+			cloud_watch_logs_role_arn TEXT,
+			include_global_service_events TEXT,
+			is_multi_region_trail TEXT,
+			is_organization_trail TEXT,
+			kms_key_id TEXT,
+			log_file_validation_enabled TEXT,
+			name TEXT,
+			s3_bucket_name TEXT,
+			s3_key_prefix TEXT,
+			sns_topic_arn TEXT,
+			sns_topic_name TEXT,
+			trail_arn TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_compute_optimizer_service_get_enrollment_status (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			last_updated_timestamp TEXT,
+			member_accounts_enrolled TEXT,
+			number_of_member_accounts_opted_in TEXT,
+			status TEXT,
+			status_reason TEXT
+		)`,
 		`CREATE TABLE IF NOT EXISTS x_amz_target_service_quotas_v20190624_list_tags_for_resource (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			tags TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_starling_dove_service_get_resource_evaluation_summary (
+			id TEXT PRIMARY KEY,
+			data JSON NOT NULL,
+			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+			compliance TEXT,
+			evaluation_context TEXT,
+			evaluation_mode TEXT,
+			evaluation_start_timestamp TEXT,
+			evaluation_status TEXT,
+			resource_details TEXT,
+			resource_evaluation_id TEXT
+		)`,
+		`CREATE TABLE IF NOT EXISTS x_amz_target_starling_dove_service_list_tags_for_resource (
 			id TEXT PRIMARY KEY,
 			data JSON NOT NULL,
 			synced_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -834,6 +1408,808 @@ func lookupFieldValue(obj map[string]any, snakeKey string) any {
 	return LookupFieldValue(obj, snakeKey)
 }
 
+// upsertAccountsTx writes the typed-table portion of a accounts upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertAccountsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO accounts (id, data, synced_at, auto_enable_controls, control_finding_generator, hub_arn, subscribed_at)
+		 VALUES (?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, auto_enable_controls = excluded.auto_enable_controls, control_finding_generator = excluded.control_finding_generator, hub_arn = excluded.hub_arn, subscribed_at = excluded.subscribed_at`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "auto_enable_controls"),
+		lookupFieldValue(obj, "control_finding_generator"),
+		lookupFieldValue(obj, "hub_arn"),
+		lookupFieldValue(obj, "subscribed_at"),
+	); err != nil {
+		return fmt.Errorf("insert into accounts: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertAccounts inserts or updates a accounts record with domain-specific columns.
+func (s *Store) UpsertAccounts(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling accounts: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for accounts")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "accounts", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertAccountsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertActionTargetsTx writes the typed-table portion of a action_targets upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertActionTargetsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO action_targets (id, data, synced_at, action_target_arn, action_targets, next_token)
+		 VALUES (?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, action_target_arn = excluded.action_target_arn, action_targets = excluded.action_targets, next_token = excluded.next_token`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "action_target_arn"),
+		lookupFieldValue(obj, "action_targets"),
+		lookupFieldValue(obj, "next_token"),
+	); err != nil {
+		return fmt.Errorf("insert into action_targets: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertActionTargets inserts or updates a action_targets record with domain-specific columns.
+func (s *Store) UpsertActionTargets(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling action_targets: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for action_targets")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "action-targets", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertActionTargetsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertAssociationsTx writes the typed-table portion of a associations upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertAssociationsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO associations (id, data, synced_at, standards_control_association_details, unprocessed_associations, unprocessed_association_updates)
+		 VALUES (?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, standards_control_association_details = excluded.standards_control_association_details, unprocessed_associations = excluded.unprocessed_associations, unprocessed_association_updates = excluded.unprocessed_association_updates`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "standards_control_association_details"),
+		lookupFieldValue(obj, "unprocessed_associations"),
+		lookupFieldValue(obj, "unprocessed_association_updates"),
+	); err != nil {
+		return fmt.Errorf("insert into associations: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertAssociations inserts or updates a associations record with domain-specific columns.
+func (s *Store) UpsertAssociations(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling associations: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for associations")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "associations", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertAssociationsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertFindingAggregatorTx writes the typed-table portion of a finding_aggregator upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertFindingAggregatorTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO finding_aggregator (id, data, synced_at, finding_aggregation_region, finding_aggregator_arn, region_linking_mode, regions, finding_aggregators, next_token)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, finding_aggregation_region = excluded.finding_aggregation_region, finding_aggregator_arn = excluded.finding_aggregator_arn, region_linking_mode = excluded.region_linking_mode, regions = excluded.regions, finding_aggregators = excluded.finding_aggregators, next_token = excluded.next_token`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "finding_aggregation_region"),
+		lookupFieldValue(obj, "finding_aggregator_arn"),
+		lookupFieldValue(obj, "region_linking_mode"),
+		lookupFieldValue(obj, "regions"),
+		lookupFieldValue(obj, "finding_aggregators"),
+		lookupFieldValue(obj, "next_token"),
+	); err != nil {
+		return fmt.Errorf("insert into finding_aggregator: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertFindingAggregator inserts or updates a finding_aggregator record with domain-specific columns.
+func (s *Store) UpsertFindingAggregator(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling finding_aggregator: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for finding_aggregator")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "finding-aggregator", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertFindingAggregatorTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertFindingsTx writes the typed-table portion of a findings upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertFindingsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO findings (id, data, synced_at, failed_count, failed_findings, success_count, processed_findings, unprocessed_findings, findings, next_token)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, failed_count = excluded.failed_count, failed_findings = excluded.failed_findings, success_count = excluded.success_count, processed_findings = excluded.processed_findings, unprocessed_findings = excluded.unprocessed_findings, findings = excluded.findings, next_token = excluded.next_token`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "failed_count"),
+		lookupFieldValue(obj, "failed_findings"),
+		lookupFieldValue(obj, "success_count"),
+		lookupFieldValue(obj, "processed_findings"),
+		lookupFieldValue(obj, "unprocessed_findings"),
+		lookupFieldValue(obj, "findings"),
+		lookupFieldValue(obj, "next_token"),
+	); err != nil {
+		return fmt.Errorf("insert into findings: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertFindings inserts or updates a findings record with domain-specific columns.
+func (s *Store) UpsertFindings(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling findings: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for findings")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "findings", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertFindingsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertInsightsTx writes the typed-table portion of a insights upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertInsightsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO insights (id, data, synced_at, insight_results)
+		 VALUES (?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, insight_results = excluded.insight_results`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "insight_results"),
+	); err != nil {
+		return fmt.Errorf("insert into insights: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertInsights inserts or updates a insights record with domain-specific columns.
+func (s *Store) UpsertInsights(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling insights: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for insights")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "insights", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertInsightsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertInvitationsTx writes the typed-table portion of a invitations upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertInvitationsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO invitations (id, data, synced_at, invitations_count, invitations, next_token)
+		 VALUES (?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, invitations_count = excluded.invitations_count, invitations = excluded.invitations, next_token = excluded.next_token`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "invitations_count"),
+		lookupFieldValue(obj, "invitations"),
+		lookupFieldValue(obj, "next_token"),
+	); err != nil {
+		return fmt.Errorf("insert into invitations: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertInvitations inserts or updates a invitations record with domain-specific columns.
+func (s *Store) UpsertInvitations(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling invitations: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for invitations")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "invitations", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertInvitationsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertMasterTx writes the typed-table portion of a master upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertMasterTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO master (id, data, synced_at, master)
+		 VALUES (?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, master = excluded.master`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "master"),
+	); err != nil {
+		return fmt.Errorf("insert into master: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertMaster inserts or updates a master record with domain-specific columns.
+func (s *Store) UpsertMaster(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling master: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for master")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "master", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertMasterTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertMembersTx writes the typed-table portion of a members upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertMembersTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO members (id, data, synced_at, members, next_token)
+		 VALUES (?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, members = excluded.members, next_token = excluded.next_token`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "members"),
+		lookupFieldValue(obj, "next_token"),
+	); err != nil {
+		return fmt.Errorf("insert into members: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertMembers inserts or updates a members record with domain-specific columns.
+func (s *Store) UpsertMembers(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling members: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for members")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "members", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertMembersTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertOrganizationTx writes the typed-table portion of a organization upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertOrganizationTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO organization (id, data, synced_at, auto_enable, auto_enable_standards, member_account_limit_reached, admin_accounts, next_token)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, auto_enable = excluded.auto_enable, auto_enable_standards = excluded.auto_enable_standards, member_account_limit_reached = excluded.member_account_limit_reached, admin_accounts = excluded.admin_accounts, next_token = excluded.next_token`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "auto_enable"),
+		lookupFieldValue(obj, "auto_enable_standards"),
+		lookupFieldValue(obj, "member_account_limit_reached"),
+		lookupFieldValue(obj, "admin_accounts"),
+		lookupFieldValue(obj, "next_token"),
+	); err != nil {
+		return fmt.Errorf("insert into organization: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertOrganization inserts or updates a organization record with domain-specific columns.
+func (s *Store) UpsertOrganization(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling organization: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for organization")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "organization", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertOrganizationTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertProductSubscriptionsTx writes the typed-table portion of a product_subscriptions upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertProductSubscriptionsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO product_subscriptions (id, data, synced_at, next_token, product_subscriptions)
+		 VALUES (?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, next_token = excluded.next_token, product_subscriptions = excluded.product_subscriptions`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "next_token"),
+		lookupFieldValue(obj, "product_subscriptions"),
+	); err != nil {
+		return fmt.Errorf("insert into product_subscriptions: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertProductSubscriptions inserts or updates a product_subscriptions record with domain-specific columns.
+func (s *Store) UpsertProductSubscriptions(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling product_subscriptions: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for product_subscriptions")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "product-subscriptions", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertProductSubscriptionsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertReportDefinitionTx writes the typed-table portion of a report_definition upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertReportDefinitionTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO report_definition (id, data, synced_at, created_at, destination_s3_location, format, last_updated, report_description, report_frequency, report_id, next_token, report_definitions)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, created_at = excluded.created_at, destination_s3_location = excluded.destination_s3_location, format = excluded.format, last_updated = excluded.last_updated, report_description = excluded.report_description, report_frequency = excluded.report_frequency, report_id = excluded.report_id, next_token = excluded.next_token, report_definitions = excluded.report_definitions`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "created_at"),
+		lookupFieldValue(obj, "destination_s3_location"),
+		lookupFieldValue(obj, "format"),
+		lookupFieldValue(obj, "last_updated"),
+		lookupFieldValue(obj, "report_description"),
+		lookupFieldValue(obj, "report_frequency"),
+		lookupFieldValue(obj, "report_id"),
+		lookupFieldValue(obj, "next_token"),
+		lookupFieldValue(obj, "report_definitions"),
+	); err != nil {
+		return fmt.Errorf("insert into report_definition: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertReportDefinition inserts or updates a report_definition record with domain-specific columns.
+func (s *Store) UpsertReportDefinition(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling report_definition: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for report_definition")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "report-definition", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertReportDefinitionTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertSecurityControlsTx writes the typed-table portion of a security_controls upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertSecurityControlsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO security_controls (id, data, synced_at, next_token, security_control_definitions)
+		 VALUES (?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, next_token = excluded.next_token, security_control_definitions = excluded.security_control_definitions`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "next_token"),
+		lookupFieldValue(obj, "security_control_definitions"),
+	); err != nil {
+		return fmt.Errorf("insert into security_controls: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertSecurityControls inserts or updates a security_controls record with domain-specific columns.
+func (s *Store) UpsertSecurityControls(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling security_controls: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for security_controls")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "security-controls", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertSecurityControlsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertStandardsTx writes the typed-table portion of a standards upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertStandardsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO standards (id, data, synced_at, next_token, standards, controls)
+		 VALUES (?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, next_token = excluded.next_token, standards = excluded.standards, controls = excluded.controls`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "next_token"),
+		lookupFieldValue(obj, "standards"),
+		lookupFieldValue(obj, "controls"),
+	); err != nil {
+		return fmt.Errorf("insert into standards: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertStandards inserts or updates a standards record with domain-specific columns.
+func (s *Store) UpsertStandards(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling standards: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for standards")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "standards", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertStandardsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertTagsTx writes the typed-table portion of a tags upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertTagsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO tags (id, data, synced_at, tags)
+		 VALUES (?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, tags = excluded.tags`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "tags"),
+	); err != nil {
+		return fmt.Errorf("insert into tags: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertTags inserts or updates a tags record with domain-specific columns.
+func (s *Store) UpsertTags(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling tags: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for tags")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "tags", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertTagsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
 // upsertXAmzTargetAwsinsightsIndexServiceGetCostCategoriesTx writes the typed-table portion of a x_amz_target_awsinsights_index_service_get_cost_categories upsert
 // inside an existing transaction. The caller is responsible for the generic
 // resources insert (via upsertGenericResourceTx) and for committing the tx.
@@ -1155,6 +2531,950 @@ func (s *Store) UpsertXAmzTargetAwsinsightsIndexServiceListTagsForResource(data 
 	return tx.Commit()
 }
 
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannelTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannelTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel (id, data, synced_at, channel_arn, destinations, name, source)
+		 VALUES (?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, channel_arn = excluded.channel_arn, destinations = excluded.destinations, name = excluded.name, source = excluded.source`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "channel_arn"),
+		lookupFieldValue(obj, "destinations"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "source"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannel inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannel(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_channel")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-channel", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannelTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStoreTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStoreTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store (id, data, synced_at, advanced_event_selectors, created_timestamp, event_data_store_arn, kms_key_id, multi_region_enabled, name, organization_enabled, retention_period, status, termination_protection_enabled, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, advanced_event_selectors = excluded.advanced_event_selectors, created_timestamp = excluded.created_timestamp, event_data_store_arn = excluded.event_data_store_arn, kms_key_id = excluded.kms_key_id, multi_region_enabled = excluded.multi_region_enabled, name = excluded.name, organization_enabled = excluded.organization_enabled, retention_period = excluded.retention_period, status = excluded.status, termination_protection_enabled = excluded.termination_protection_enabled, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "advanced_event_selectors"),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "event_data_store_arn"),
+		lookupFieldValue(obj, "kms_key_id"),
+		lookupFieldValue(obj, "multi_region_enabled"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "organization_enabled"),
+		lookupFieldValue(obj, "retention_period"),
+		lookupFieldValue(obj, "status"),
+		lookupFieldValue(obj, "termination_protection_enabled"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStore inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStore(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_event_data_store")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-event-data-store", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStoreTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrailTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrailTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail (id, data, synced_at, cloud_watch_logs_log_group_arn, cloud_watch_logs_role_arn, include_global_service_events, is_multi_region_trail, is_organization_trail, kms_key_id, log_file_validation_enabled, name, s3_bucket_name, s3_key_prefix, sns_topic_arn, sns_topic_name, trail_arn)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, cloud_watch_logs_log_group_arn = excluded.cloud_watch_logs_log_group_arn, cloud_watch_logs_role_arn = excluded.cloud_watch_logs_role_arn, include_global_service_events = excluded.include_global_service_events, is_multi_region_trail = excluded.is_multi_region_trail, is_organization_trail = excluded.is_organization_trail, kms_key_id = excluded.kms_key_id, log_file_validation_enabled = excluded.log_file_validation_enabled, name = excluded.name, s3_bucket_name = excluded.s3_bucket_name, s3_key_prefix = excluded.s3_key_prefix, sns_topic_arn = excluded.sns_topic_arn, sns_topic_name = excluded.sns_topic_name, trail_arn = excluded.trail_arn`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "cloud_watch_logs_log_group_arn"),
+		lookupFieldValue(obj, "cloud_watch_logs_role_arn"),
+		lookupFieldValue(obj, "include_global_service_events"),
+		lookupFieldValue(obj, "is_multi_region_trail"),
+		lookupFieldValue(obj, "is_organization_trail"),
+		lookupFieldValue(obj, "kms_key_id"),
+		lookupFieldValue(obj, "log_file_validation_enabled"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "s3_bucket_name"),
+		lookupFieldValue(obj, "s3_key_prefix"),
+		lookupFieldValue(obj, "sns_topic_arn"),
+		lookupFieldValue(obj, "sns_topic_name"),
+		lookupFieldValue(obj, "trail_arn"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrail inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrail(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_create_trail")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-trail", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrailTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQueryTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQueryTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query (id, data, synced_at, delivery_s3_uri, delivery_status, error_message, query_id, query_statistics, query_status, query_string)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, delivery_s3_uri = excluded.delivery_s3_uri, delivery_status = excluded.delivery_status, error_message = excluded.error_message, query_id = excluded.query_id, query_statistics = excluded.query_statistics, query_status = excluded.query_status, query_string = excluded.query_string`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "delivery_s3_uri"),
+		lookupFieldValue(obj, "delivery_status"),
+		lookupFieldValue(obj, "error_message"),
+		lookupFieldValue(obj, "query_id"),
+		lookupFieldValue(obj, "query_statistics"),
+		lookupFieldValue(obj, "query_status"),
+		lookupFieldValue(obj, "query_string"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQuery inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQuery(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_describe_query")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-describe-query", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQueryTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannelTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannelTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel (id, data, synced_at, channel_arn, destinations, ingestion_status, name, source, source_config)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, channel_arn = excluded.channel_arn, destinations = excluded.destinations, ingestion_status = excluded.ingestion_status, name = excluded.name, source = excluded.source, source_config = excluded.source_config`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "channel_arn"),
+		lookupFieldValue(obj, "destinations"),
+		lookupFieldValue(obj, "ingestion_status"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "source"),
+		lookupFieldValue(obj, "source_config"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannel inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannel(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_channel")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-channel", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannelTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStoreTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStoreTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store (id, data, synced_at, advanced_event_selectors, created_timestamp, event_data_store_arn, kms_key_id, multi_region_enabled, name, organization_enabled, retention_period, status, termination_protection_enabled, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, advanced_event_selectors = excluded.advanced_event_selectors, created_timestamp = excluded.created_timestamp, event_data_store_arn = excluded.event_data_store_arn, kms_key_id = excluded.kms_key_id, multi_region_enabled = excluded.multi_region_enabled, name = excluded.name, organization_enabled = excluded.organization_enabled, retention_period = excluded.retention_period, status = excluded.status, termination_protection_enabled = excluded.termination_protection_enabled, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "advanced_event_selectors"),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "event_data_store_arn"),
+		lookupFieldValue(obj, "kms_key_id"),
+		lookupFieldValue(obj, "multi_region_enabled"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "organization_enabled"),
+		lookupFieldValue(obj, "retention_period"),
+		lookupFieldValue(obj, "status"),
+		lookupFieldValue(obj, "termination_protection_enabled"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStore inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStore(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_event_data_store")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-event-data-store", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStoreTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImportTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImportTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import (id, data, synced_at, created_timestamp, destinations, end_event_time, import_id, import_source, import_statistics, import_status, start_event_time, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, created_timestamp = excluded.created_timestamp, destinations = excluded.destinations, end_event_time = excluded.end_event_time, import_id = excluded.import_id, import_source = excluded.import_source, import_statistics = excluded.import_statistics, import_status = excluded.import_status, start_event_time = excluded.start_event_time, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "destinations"),
+		lookupFieldValue(obj, "end_event_time"),
+		lookupFieldValue(obj, "import_id"),
+		lookupFieldValue(obj, "import_source"),
+		lookupFieldValue(obj, "import_statistics"),
+		lookupFieldValue(obj, "import_status"),
+		lookupFieldValue(obj, "start_event_time"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImport inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImport(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_import")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-import", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImportTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResultsTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResultsTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results (id, data, synced_at, error_message, next_token, query_result_rows, query_statistics, query_status)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, error_message = excluded.error_message, next_token = excluded.next_token, query_result_rows = excluded.query_result_rows, query_statistics = excluded.query_statistics, query_status = excluded.query_status`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "error_message"),
+		lookupFieldValue(obj, "next_token"),
+		lookupFieldValue(obj, "query_result_rows"),
+		lookupFieldValue(obj, "query_statistics"),
+		lookupFieldValue(obj, "query_status"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResults inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResults(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_query_results")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-query-results", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResultsTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatusTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatusTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status (id, data, synced_at, is_logging, latest_cloud_watch_logs_delivery_error, latest_cloud_watch_logs_delivery_time, latest_delivery_attempt_succeeded, latest_delivery_attempt_time, latest_delivery_error, latest_delivery_time, latest_digest_delivery_error, latest_digest_delivery_time, latest_notification_attempt_succeeded, latest_notification_attempt_time, latest_notification_error, latest_notification_time, start_logging_time, stop_logging_time, time_logging_started, time_logging_stopped)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, is_logging = excluded.is_logging, latest_cloud_watch_logs_delivery_error = excluded.latest_cloud_watch_logs_delivery_error, latest_cloud_watch_logs_delivery_time = excluded.latest_cloud_watch_logs_delivery_time, latest_delivery_attempt_succeeded = excluded.latest_delivery_attempt_succeeded, latest_delivery_attempt_time = excluded.latest_delivery_attempt_time, latest_delivery_error = excluded.latest_delivery_error, latest_delivery_time = excluded.latest_delivery_time, latest_digest_delivery_error = excluded.latest_digest_delivery_error, latest_digest_delivery_time = excluded.latest_digest_delivery_time, latest_notification_attempt_succeeded = excluded.latest_notification_attempt_succeeded, latest_notification_attempt_time = excluded.latest_notification_attempt_time, latest_notification_error = excluded.latest_notification_error, latest_notification_time = excluded.latest_notification_time, start_logging_time = excluded.start_logging_time, stop_logging_time = excluded.stop_logging_time, time_logging_started = excluded.time_logging_started, time_logging_stopped = excluded.time_logging_stopped`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "is_logging"),
+		lookupFieldValue(obj, "latest_cloud_watch_logs_delivery_error"),
+		lookupFieldValue(obj, "latest_cloud_watch_logs_delivery_time"),
+		lookupFieldValue(obj, "latest_delivery_attempt_succeeded"),
+		lookupFieldValue(obj, "latest_delivery_attempt_time"),
+		lookupFieldValue(obj, "latest_delivery_error"),
+		lookupFieldValue(obj, "latest_delivery_time"),
+		lookupFieldValue(obj, "latest_digest_delivery_error"),
+		lookupFieldValue(obj, "latest_digest_delivery_time"),
+		lookupFieldValue(obj, "latest_notification_attempt_succeeded"),
+		lookupFieldValue(obj, "latest_notification_attempt_time"),
+		lookupFieldValue(obj, "latest_notification_error"),
+		lookupFieldValue(obj, "latest_notification_time"),
+		lookupFieldValue(obj, "start_logging_time"),
+		lookupFieldValue(obj, "stop_logging_time"),
+		lookupFieldValue(obj, "time_logging_started"),
+		lookupFieldValue(obj, "time_logging_stopped"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatus inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatus(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_get_trail_status")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-trail-status", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatusTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStoreTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStoreTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store (id, data, synced_at, advanced_event_selectors, created_timestamp, event_data_store_arn, kms_key_id, multi_region_enabled, name, organization_enabled, retention_period, status, termination_protection_enabled, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, advanced_event_selectors = excluded.advanced_event_selectors, created_timestamp = excluded.created_timestamp, event_data_store_arn = excluded.event_data_store_arn, kms_key_id = excluded.kms_key_id, multi_region_enabled = excluded.multi_region_enabled, name = excluded.name, organization_enabled = excluded.organization_enabled, retention_period = excluded.retention_period, status = excluded.status, termination_protection_enabled = excluded.termination_protection_enabled, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "advanced_event_selectors"),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "event_data_store_arn"),
+		lookupFieldValue(obj, "kms_key_id"),
+		lookupFieldValue(obj, "multi_region_enabled"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "organization_enabled"),
+		lookupFieldValue(obj, "retention_period"),
+		lookupFieldValue(obj, "status"),
+		lookupFieldValue(obj, "termination_protection_enabled"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStore inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStore(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_restore_event_data_store")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-restore-event-data-store", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStoreTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImportTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImportTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import (id, data, synced_at, created_timestamp, destinations, end_event_time, import_id, import_source, import_status, start_event_time, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, created_timestamp = excluded.created_timestamp, destinations = excluded.destinations, end_event_time = excluded.end_event_time, import_id = excluded.import_id, import_source = excluded.import_source, import_status = excluded.import_status, start_event_time = excluded.start_event_time, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "destinations"),
+		lookupFieldValue(obj, "end_event_time"),
+		lookupFieldValue(obj, "import_id"),
+		lookupFieldValue(obj, "import_source"),
+		lookupFieldValue(obj, "import_status"),
+		lookupFieldValue(obj, "start_event_time"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImport inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImport(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_start_import")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-start-import", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImportTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImportTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImportTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import (id, data, synced_at, created_timestamp, destinations, end_event_time, import_id, import_source, import_statistics, import_status, start_event_time, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, created_timestamp = excluded.created_timestamp, destinations = excluded.destinations, end_event_time = excluded.end_event_time, import_id = excluded.import_id, import_source = excluded.import_source, import_statistics = excluded.import_statistics, import_status = excluded.import_status, start_event_time = excluded.start_event_time, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "destinations"),
+		lookupFieldValue(obj, "end_event_time"),
+		lookupFieldValue(obj, "import_id"),
+		lookupFieldValue(obj, "import_source"),
+		lookupFieldValue(obj, "import_statistics"),
+		lookupFieldValue(obj, "import_status"),
+		lookupFieldValue(obj, "start_event_time"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImport inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImport(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_stop_import")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-stop-import", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImportTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannelTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannelTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel (id, data, synced_at, channel_arn, destinations, name, source)
+		 VALUES (?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, channel_arn = excluded.channel_arn, destinations = excluded.destinations, name = excluded.name, source = excluded.source`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "channel_arn"),
+		lookupFieldValue(obj, "destinations"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "source"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannel inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannel(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_channel")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-channel", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannelTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStoreTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStoreTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store (id, data, synced_at, advanced_event_selectors, created_timestamp, event_data_store_arn, kms_key_id, multi_region_enabled, name, organization_enabled, retention_period, status, termination_protection_enabled, updated_timestamp)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, advanced_event_selectors = excluded.advanced_event_selectors, created_timestamp = excluded.created_timestamp, event_data_store_arn = excluded.event_data_store_arn, kms_key_id = excluded.kms_key_id, multi_region_enabled = excluded.multi_region_enabled, name = excluded.name, organization_enabled = excluded.organization_enabled, retention_period = excluded.retention_period, status = excluded.status, termination_protection_enabled = excluded.termination_protection_enabled, updated_timestamp = excluded.updated_timestamp`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "advanced_event_selectors"),
+		lookupFieldValue(obj, "created_timestamp"),
+		lookupFieldValue(obj, "event_data_store_arn"),
+		lookupFieldValue(obj, "kms_key_id"),
+		lookupFieldValue(obj, "multi_region_enabled"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "organization_enabled"),
+		lookupFieldValue(obj, "retention_period"),
+		lookupFieldValue(obj, "status"),
+		lookupFieldValue(obj, "termination_protection_enabled"),
+		lookupFieldValue(obj, "updated_timestamp"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStore inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStore(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_event_data_store")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-event-data-store", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStoreTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrailTx writes the typed-table portion of a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrailTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail (id, data, synced_at, cloud_watch_logs_log_group_arn, cloud_watch_logs_role_arn, include_global_service_events, is_multi_region_trail, is_organization_trail, kms_key_id, log_file_validation_enabled, name, s3_bucket_name, s3_key_prefix, sns_topic_arn, sns_topic_name, trail_arn)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, cloud_watch_logs_log_group_arn = excluded.cloud_watch_logs_log_group_arn, cloud_watch_logs_role_arn = excluded.cloud_watch_logs_role_arn, include_global_service_events = excluded.include_global_service_events, is_multi_region_trail = excluded.is_multi_region_trail, is_organization_trail = excluded.is_organization_trail, kms_key_id = excluded.kms_key_id, log_file_validation_enabled = excluded.log_file_validation_enabled, name = excluded.name, s3_bucket_name = excluded.s3_bucket_name, s3_key_prefix = excluded.s3_key_prefix, sns_topic_arn = excluded.sns_topic_arn, sns_topic_name = excluded.sns_topic_name, trail_arn = excluded.trail_arn`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "cloud_watch_logs_log_group_arn"),
+		lookupFieldValue(obj, "cloud_watch_logs_role_arn"),
+		lookupFieldValue(obj, "include_global_service_events"),
+		lookupFieldValue(obj, "is_multi_region_trail"),
+		lookupFieldValue(obj, "is_organization_trail"),
+		lookupFieldValue(obj, "kms_key_id"),
+		lookupFieldValue(obj, "log_file_validation_enabled"),
+		lookupFieldValue(obj, "name"),
+		lookupFieldValue(obj, "s3_bucket_name"),
+		lookupFieldValue(obj, "s3_key_prefix"),
+		lookupFieldValue(obj, "sns_topic_arn"),
+		lookupFieldValue(obj, "sns_topic_name"),
+		lookupFieldValue(obj, "trail_arn"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrail inserts or updates a x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrail(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_com_amazonaws_cloudtrail_v20131101_cloud_trail_20131101_update_trail")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-trail", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrailTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatusTx writes the typed-table portion of a x_amz_target_compute_optimizer_service_get_enrollment_status upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatusTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_compute_optimizer_service_get_enrollment_status (id, data, synced_at, last_updated_timestamp, member_accounts_enrolled, number_of_member_accounts_opted_in, status, status_reason)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, last_updated_timestamp = excluded.last_updated_timestamp, member_accounts_enrolled = excluded.member_accounts_enrolled, number_of_member_accounts_opted_in = excluded.number_of_member_accounts_opted_in, status = excluded.status, status_reason = excluded.status_reason`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "last_updated_timestamp"),
+		lookupFieldValue(obj, "member_accounts_enrolled"),
+		lookupFieldValue(obj, "number_of_member_accounts_opted_in"),
+		lookupFieldValue(obj, "status"),
+		lookupFieldValue(obj, "status_reason"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_compute_optimizer_service_get_enrollment_status: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatus inserts or updates a x_amz_target_compute_optimizer_service_get_enrollment_status record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatus(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_compute_optimizer_service_get_enrollment_status: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_compute_optimizer_service_get_enrollment_status")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-compute-optimizer-service-get-enrollment-status", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatusTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
 // upsertXAmzTargetServiceQuotasV20190624ListTagsForResourceTx writes the typed-table portion of a x_amz_target_service_quotas_v20190624_list_tags_for_resource upsert
 // inside an existing transaction. The caller is responsible for the generic
 // resources insert (via upsertGenericResourceTx) and for committing the tx.
@@ -1200,6 +3520,114 @@ func (s *Store) UpsertXAmzTargetServiceQuotasV20190624ListTagsForResource(data j
 		return err
 	}
 	if err := s.upsertXAmzTargetServiceQuotasV20190624ListTagsForResourceTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummaryTx writes the typed-table portion of a x_amz_target_starling_dove_service_get_resource_evaluation_summary upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummaryTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_starling_dove_service_get_resource_evaluation_summary (id, data, synced_at, compliance, evaluation_context, evaluation_mode, evaluation_start_timestamp, evaluation_status, resource_details, resource_evaluation_id)
+		 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, compliance = excluded.compliance, evaluation_context = excluded.evaluation_context, evaluation_mode = excluded.evaluation_mode, evaluation_start_timestamp = excluded.evaluation_start_timestamp, evaluation_status = excluded.evaluation_status, resource_details = excluded.resource_details, resource_evaluation_id = excluded.resource_evaluation_id`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "compliance"),
+		lookupFieldValue(obj, "evaluation_context"),
+		lookupFieldValue(obj, "evaluation_mode"),
+		lookupFieldValue(obj, "evaluation_start_timestamp"),
+		lookupFieldValue(obj, "evaluation_status"),
+		lookupFieldValue(obj, "resource_details"),
+		lookupFieldValue(obj, "resource_evaluation_id"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_starling_dove_service_get_resource_evaluation_summary: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummary inserts or updates a x_amz_target_starling_dove_service_get_resource_evaluation_summary record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummary(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_starling_dove_service_get_resource_evaluation_summary: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_starling_dove_service_get_resource_evaluation_summary")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-starling-dove-service-get-resource-evaluation-summary", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummaryTx(tx, id, obj, data); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+// upsertXAmzTargetStarlingDoveServiceListTagsForResourceTx writes the typed-table portion of a x_amz_target_starling_dove_service_list_tags_for_resource upsert
+// inside an existing transaction. The caller is responsible for the generic
+// resources insert (via upsertGenericResourceTx) and for committing the tx.
+// Splitting this out lets UpsertBatch dispatch typed inserts per item without
+// opening a per-item transaction.
+func (s *Store) upsertXAmzTargetStarlingDoveServiceListTagsForResourceTx(tx *sql.Tx, id string, obj map[string]any, data json.RawMessage) error {
+	if _, err := tx.Exec(
+		`INSERT INTO x_amz_target_starling_dove_service_list_tags_for_resource (id, data, synced_at, tags)
+		 VALUES (?, ?, ?, ?)
+		 ON CONFLICT(id) DO UPDATE SET data = excluded.data, synced_at = excluded.synced_at, tags = excluded.tags`,
+		id,
+		string(data),
+		time.Now(),
+		lookupFieldValue(obj, "tags"),
+	); err != nil {
+		return fmt.Errorf("insert into x_amz_target_starling_dove_service_list_tags_for_resource: %w", err)
+	}
+
+	return nil
+}
+
+// UpsertXAmzTargetStarlingDoveServiceListTagsForResource inserts or updates a x_amz_target_starling_dove_service_list_tags_for_resource record with domain-specific columns.
+func (s *Store) UpsertXAmzTargetStarlingDoveServiceListTagsForResource(data json.RawMessage) error {
+	var obj map[string]any
+	if err := json.Unmarshal(data, &obj); err != nil {
+		return fmt.Errorf("unmarshaling x_amz_target_starling_dove_service_list_tags_for_resource: %w", err)
+	}
+
+	id := extractObjectID(obj)
+	if id == "" {
+		return fmt.Errorf("missing id for x_amz_target_starling_dove_service_list_tags_for_resource")
+	}
+
+	s.writeMu.Lock()
+	defer s.writeMu.Unlock()
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err := s.upsertGenericResourceTx(tx, "x-amz-target-starling-dove-service-list-tags-for-resource", id, data); err != nil {
+		return err
+	}
+	if err := s.upsertXAmzTargetStarlingDoveServiceListTagsForResourceTx(tx, id, obj, data); err != nil {
 		return err
 	}
 
@@ -1286,6 +3714,66 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 		}
 
 		switch resourceType {
+		case "accounts":
+			if err := s.upsertAccountsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "action-targets":
+			if err := s.upsertActionTargetsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "associations":
+			if err := s.upsertAssociationsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "finding-aggregator":
+			if err := s.upsertFindingAggregatorTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "findings":
+			if err := s.upsertFindingsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "insights":
+			if err := s.upsertInsightsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "invitations":
+			if err := s.upsertInvitationsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "master":
+			if err := s.upsertMasterTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "members":
+			if err := s.upsertMembersTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "organization":
+			if err := s.upsertOrganizationTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "product-subscriptions":
+			if err := s.upsertProductSubscriptionsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "report-definition":
+			if err := s.upsertReportDefinitionTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "security-controls":
+			if err := s.upsertSecurityControlsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "standards":
+			if err := s.upsertStandardsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "tags":
+			if err := s.upsertTagsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
 		case "x-amz-target-awsinsights-index-service-get-cost-categories":
 			if err := s.upsertXAmzTargetAwsinsightsIndexServiceGetCostCategoriesTx(tx, id, obj, item); err != nil {
 				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
@@ -1310,8 +3798,80 @@ func (s *Store) UpsertBatch(resourceType string, items []json.RawMessage) (int, 
 			if err := s.upsertXAmzTargetAwsinsightsIndexServiceListTagsForResourceTx(tx, id, obj, item); err != nil {
 				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
 			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-channel":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannelTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-event-data-store":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStoreTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-trail":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrailTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-describe-query":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQueryTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-channel":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannelTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-event-data-store":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStoreTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-import":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImportTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-query-results":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResultsTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-trail-status":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatusTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-restore-event-data-store":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStoreTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-start-import":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImportTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-stop-import":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImportTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-channel":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannelTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-event-data-store":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStoreTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-trail":
+			if err := s.upsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrailTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-compute-optimizer-service-get-enrollment-status":
+			if err := s.upsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatusTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
 		case "x-amz-target-service-quotas-v20190624-list-tags-for-resource":
 			if err := s.upsertXAmzTargetServiceQuotasV20190624ListTagsForResourceTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-starling-dove-service-get-resource-evaluation-summary":
+			if err := s.upsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummaryTx(tx, id, obj, item); err != nil {
+				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
+			}
+		case "x-amz-target-starling-dove-service-list-tags-for-resource":
+			if err := s.upsertXAmzTargetStarlingDoveServiceListTagsForResourceTx(tx, id, obj, item); err != nil {
 				return 0, extractFailures, fmt.Errorf("typed upsert for %s/%s: %w", resourceType, id, err)
 			}
 		}

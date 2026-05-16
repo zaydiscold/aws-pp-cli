@@ -5,6 +5,98 @@ package types
 
 import "encoding/json"
 
+type AcceptAdministratorInvitationRequest struct {
+	AdministratorId string `json:"AdministratorId"`
+	InvitationId    string `json:"InvitationId"`
+}
+
+type AcceptAdministratorInvitationResponse struct {
+}
+
+type AcceptInvitationRequest struct {
+	InvitationId string `json:"InvitationId"`
+	MasterId     string `json:"MasterId"`
+}
+
+type AcceptInvitationResponse struct {
+}
+
+type AccountAggregationSource struct {
+	AccountIds    string `json:"AccountIds"`
+	AllAwsRegions string `json:"AllAwsRegions"`
+	AwsRegions    string `json:"AwsRegions"`
+}
+
+type AccountDetails struct {
+	AccountId string `json:"AccountId"`
+	Email     string `json:"Email"`
+}
+
+type AccountEnrollmentStatus struct {
+	AccountId            string `json:"accountId"`
+	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp"`
+	Status               string `json:"status"`
+	StatusReason         string `json:"statusReason"`
+}
+
+type Action struct {
+	ActionId         string          `json:"ActionId"`
+	ActionThreshold  string          `json:"ActionThreshold"`
+	ActionType       string          `json:"ActionType"`
+	ApprovalModel    string          `json:"ApprovalModel"`
+	BudgetName       string          `json:"BudgetName"`
+	Definition       string          `json:"Definition"`
+	ExecutionRoleArn string          `json:"ExecutionRoleArn"`
+	NotificationType string          `json:"NotificationType"`
+	Status           string          `json:"Status"`
+	Subscribers      json.RawMessage `json:"Subscribers"`
+}
+
+type ActionHistory struct {
+	ActionHistoryDetails string `json:"ActionHistoryDetails"`
+	EventType            string `json:"EventType"`
+	Status               string `json:"Status"`
+	Timestamp            string `json:"Timestamp"`
+}
+
+type ActionHistoryDetails struct {
+	Action  string `json:"Action"`
+	Message string `json:"Message"`
+}
+
+type ActionLocalIpDetails struct {
+	IpAddressV4 string `json:"IpAddressV4"`
+}
+
+type ActionLocalPortDetails struct {
+	Port     string `json:"Port"`
+	PortName string `json:"PortName"`
+}
+
+type ActionRemoteIpDetails struct {
+	City         string `json:"City"`
+	Country      string `json:"Country"`
+	GeoLocation  string `json:"GeoLocation"`
+	IpAddressV4  string `json:"IpAddressV4"`
+	Organization string `json:"Organization"`
+}
+
+type ActionRemotePortDetails struct {
+	Port     string `json:"Port"`
+	PortName string `json:"PortName"`
+}
+
+type ActionTarget struct {
+	ActionTargetArn string `json:"ActionTargetArn"`
+	Description     string `json:"Description"`
+	Name            string `json:"Name"`
+}
+
+type ActionThreshold struct {
+	ActionThresholdType  string  `json:"ActionThresholdType"`
+	ActionThresholdValue float64 `json:"ActionThresholdValue"`
+}
+
 type AddAttachmentsToSetRequest struct {
 	AttachmentSetId string `json:"attachmentSetId"`
 	Attachments     string `json:"attachments"`
@@ -24,6 +116,133 @@ type AddCommunicationToCaseRequest struct {
 
 type AddCommunicationToCaseResponse struct {
 	Result string `json:"result"`
+}
+
+type AddTagsRequest struct {
+	ResourceId string `json:"ResourceId"`
+	TagsList   string `json:"TagsList"`
+}
+
+type AddTagsResponse struct {
+}
+
+type Adjustment struct {
+	Metric string `json:"Metric"`
+	Reason string `json:"Reason"`
+}
+
+type AdminAccount struct {
+	AccountId string `json:"AccountId"`
+	Status    string `json:"Status"`
+}
+
+type AdvancedEventSelector struct {
+	FieldSelectors string `json:"FieldSelectors"`
+	Name           string `json:"Name"`
+}
+
+type AdvancedFieldSelector struct {
+	EndsWith      string `json:"EndsWith"`
+	Equals        string `json:"Equals"`
+	Field         string `json:"Field"`
+	NotEndsWith   string `json:"NotEndsWith"`
+	NotEquals     string `json:"NotEquals"`
+	NotStartsWith string `json:"NotStartsWith"`
+	StartsWith    string `json:"StartsWith"`
+}
+
+type AffectedEntity struct {
+	AwsAccountId    string `json:"awsAccountId"`
+	EntityArn       string `json:"entityArn"`
+	EntityUrl       string `json:"entityUrl"`
+	EntityValue     string `json:"entityValue"`
+	EventArn        string `json:"eventArn"`
+	LastUpdatedTime string `json:"lastUpdatedTime"`
+	StatusCode      string `json:"statusCode"`
+	Tags            string `json:"tags"`
+}
+
+type AggregateComplianceByConfigRule struct {
+	AccountId      string `json:"AccountId"`
+	AwsRegion      string `json:"AwsRegion"`
+	Compliance     string `json:"Compliance"`
+	ConfigRuleName string `json:"ConfigRuleName"`
+}
+
+type AggregateComplianceByConformancePack struct {
+	AccountId           string `json:"AccountId"`
+	AwsRegion           string `json:"AwsRegion"`
+	Compliance          string `json:"Compliance"`
+	ConformancePackName string `json:"ConformancePackName"`
+}
+
+type AggregateComplianceCount struct {
+	ComplianceSummary string `json:"ComplianceSummary"`
+	GroupName         string `json:"GroupName"`
+}
+
+type AggregateConformancePackCompliance struct {
+	ComplianceType        string `json:"ComplianceType"`
+	CompliantRuleCount    string `json:"CompliantRuleCount"`
+	NonCompliantRuleCount string `json:"NonCompliantRuleCount"`
+	TotalRuleCount        string `json:"TotalRuleCount"`
+}
+
+type AggregateConformancePackComplianceCount struct {
+	CompliantConformancePackCount    string `json:"CompliantConformancePackCount"`
+	NonCompliantConformancePackCount string `json:"NonCompliantConformancePackCount"`
+}
+
+type AggregateConformancePackComplianceFilters struct {
+	AccountId           string `json:"AccountId"`
+	AwsRegion           string `json:"AwsRegion"`
+	ComplianceType      string `json:"ComplianceType"`
+	ConformancePackName string `json:"ConformancePackName"`
+}
+
+type AggregateConformancePackComplianceSummary struct {
+	ComplianceSummary string `json:"ComplianceSummary"`
+	GroupName         string `json:"GroupName"`
+}
+
+type AggregateConformancePackComplianceSummaryFilters struct {
+	AccountId string `json:"AccountId"`
+	AwsRegion string `json:"AwsRegion"`
+}
+
+type AggregateEvaluationResult struct {
+	AccountId                  string `json:"AccountId"`
+	Annotation                 string `json:"Annotation"`
+	AwsRegion                  string `json:"AwsRegion"`
+	ComplianceType             string `json:"ComplianceType"`
+	ConfigRuleInvokedTime      string `json:"ConfigRuleInvokedTime"`
+	EvaluationResultIdentifier string `json:"EvaluationResultIdentifier"`
+	ResultRecordedTime         string `json:"ResultRecordedTime"`
+}
+
+type AggregateResourceIdentifier struct {
+	ResourceId      string `json:"ResourceId"`
+	ResourceName    string `json:"ResourceName"`
+	ResourceType    string `json:"ResourceType"`
+	SourceAccountId string `json:"SourceAccountId"`
+	SourceRegion    string `json:"SourceRegion"`
+}
+
+type AggregatedSourceStatus struct {
+	AwsRegion        string `json:"AwsRegion"`
+	LastErrorCode    string `json:"LastErrorCode"`
+	LastErrorMessage string `json:"LastErrorMessage"`
+	LastUpdateStatus string `json:"LastUpdateStatus"`
+	LastUpdateTime   string `json:"LastUpdateTime"`
+	SourceId         string `json:"SourceId"`
+	SourceType       string `json:"SourceType"`
+}
+
+type AggregationAuthorization struct {
+	AggregationAuthorizationArn string `json:"AggregationAuthorizationArn"`
+	AuthorizedAccountId         string `json:"AuthorizedAccountId"`
+	AuthorizedAwsRegion         string `json:"AuthorizedAwsRegion"`
+	CreationTime                string `json:"CreationTime"`
 }
 
 type Anomaly struct {
@@ -77,6 +296,24 @@ type AssociateServiceQuotaTemplateRequest struct {
 type AssociateServiceQuotaTemplateResponse struct {
 }
 
+type AssociatedStandard struct {
+	StandardsId string `json:"StandardsId"`
+}
+
+type AssociationSetDetails struct {
+	AssociationState        string `json:"AssociationState"`
+	GatewayId               string `json:"GatewayId"`
+	Main                    string `json:"Main"`
+	RouteTableAssociationId string `json:"RouteTableAssociationId"`
+	RouteTableId            string `json:"RouteTableId"`
+	SubnetId                string `json:"SubnetId"`
+}
+
+type AssociationStateDetails struct {
+	State         string `json:"State"`
+	StatusMessage string `json:"StatusMessage"`
+}
+
 type Attachment struct {
 	Data     string `json:"data"`
 	FileName string `json:"fileName"`
@@ -87,7 +324,3625 @@ type AttachmentDetails struct {
 	FileName     string `json:"fileName"`
 }
 
+type AttributeValue struct {
+	Value string `json:"Value"`
+}
+
 type Attributes struct {
+}
+
+type AutoAdjustData struct {
+	AutoAdjustType     string `json:"AutoAdjustType"`
+	HistoricalOptions  string `json:"HistoricalOptions"`
+	LastAutoAdjustTime string `json:"LastAutoAdjustTime"`
+}
+
+type AutoScalingGroupConfiguration struct {
+	DesiredCapacity string `json:"desiredCapacity"`
+	InstanceType    string `json:"instanceType"`
+	MaxSize         string `json:"maxSize"`
+	MinSize         string `json:"minSize"`
+}
+
+type AutoScalingGroupRecommendation struct {
+	AccountId                          string `json:"accountId"`
+	AutoScalingGroupArn                string `json:"autoScalingGroupArn"`
+	AutoScalingGroupName               string `json:"autoScalingGroupName"`
+	CurrentConfiguration               string `json:"currentConfiguration"`
+	CurrentPerformanceRisk             string `json:"currentPerformanceRisk"`
+	EffectiveRecommendationPreferences string `json:"effectiveRecommendationPreferences"`
+	Finding                            string `json:"finding"`
+	InferredWorkloadTypes              string `json:"inferredWorkloadTypes"`
+	LastRefreshTimestamp               string `json:"lastRefreshTimestamp"`
+	LookBackPeriodInDays               string `json:"lookBackPeriodInDays"`
+	RecommendationOptions              string `json:"recommendationOptions"`
+	UtilizationMetrics                 string `json:"utilizationMetrics"`
+}
+
+type AutoScalingGroupRecommendationOption struct {
+	Configuration               string `json:"configuration"`
+	MigrationEffort             string `json:"migrationEffort"`
+	PerformanceRisk             string `json:"performanceRisk"`
+	ProjectedUtilizationMetrics string `json:"projectedUtilizationMetrics"`
+	Rank                        string `json:"rank"`
+	SavingsOpportunity          string `json:"savingsOpportunity"`
+}
+
+type AvailabilityZone struct {
+	SubnetId string `json:"SubnetId"`
+	ZoneName string `json:"ZoneName"`
+}
+
+type AwsApiCallAction struct {
+	AffectedResources string `json:"AffectedResources"`
+	Api               string `json:"Api"`
+	CallerType        string `json:"CallerType"`
+	DomainDetails     string `json:"DomainDetails"`
+	FirstSeen         string `json:"FirstSeen"`
+	LastSeen          string `json:"LastSeen"`
+	RemoteIpDetails   string `json:"RemoteIpDetails"`
+	ServiceName       string `json:"ServiceName"`
+}
+
+type AwsApiCallActionDomainDetails struct {
+	Domain string `json:"Domain"`
+}
+
+type AwsApiGatewayAccessLogSettings struct {
+	DestinationArn string `json:"DestinationArn"`
+	Format         string `json:"Format"`
+}
+
+type AwsApiGatewayCanarySettings struct {
+	DeploymentId           string `json:"DeploymentId"`
+	PercentTraffic         string `json:"PercentTraffic"`
+	StageVariableOverrides string `json:"StageVariableOverrides"`
+	UseStageCache          string `json:"UseStageCache"`
+}
+
+type AwsApiGatewayEndpointConfiguration struct {
+	Types string `json:"Types"`
+}
+
+type AwsApiGatewayMethodSettings struct {
+	CacheDataEncrypted                     string `json:"CacheDataEncrypted"`
+	CacheTtlInSeconds                      string `json:"CacheTtlInSeconds"`
+	CachingEnabled                         string `json:"CachingEnabled"`
+	DataTraceEnabled                       string `json:"DataTraceEnabled"`
+	HttpMethod                             string `json:"HttpMethod"`
+	LoggingLevel                           string `json:"LoggingLevel"`
+	MetricsEnabled                         string `json:"MetricsEnabled"`
+	RequireAuthorizationForCacheControl    string `json:"RequireAuthorizationForCacheControl"`
+	ResourcePath                           string `json:"ResourcePath"`
+	ThrottlingBurstLimit                   string `json:"ThrottlingBurstLimit"`
+	ThrottlingRateLimit                    string `json:"ThrottlingRateLimit"`
+	UnauthorizedCacheControlHeaderStrategy string `json:"UnauthorizedCacheControlHeaderStrategy"`
+}
+
+type AwsApiGatewayRestApiDetails struct {
+	ApiKeySource           string `json:"ApiKeySource"`
+	BinaryMediaTypes       string `json:"BinaryMediaTypes"`
+	CreatedDate            string `json:"CreatedDate"`
+	Description            string `json:"Description"`
+	EndpointConfiguration  string `json:"EndpointConfiguration"`
+	Id                     string `json:"Id"`
+	MinimumCompressionSize string `json:"MinimumCompressionSize"`
+	Name                   string `json:"Name"`
+	Version                string `json:"Version"`
+}
+
+type AwsApiGatewayStageDetails struct {
+	AccessLogSettings    string `json:"AccessLogSettings"`
+	CacheClusterEnabled  string `json:"CacheClusterEnabled"`
+	CacheClusterSize     string `json:"CacheClusterSize"`
+	CacheClusterStatus   string `json:"CacheClusterStatus"`
+	CanarySettings       string `json:"CanarySettings"`
+	ClientCertificateId  string `json:"ClientCertificateId"`
+	CreatedDate          string `json:"CreatedDate"`
+	DeploymentId         string `json:"DeploymentId"`
+	Description          string `json:"Description"`
+	DocumentationVersion string `json:"DocumentationVersion"`
+	LastUpdatedDate      string `json:"LastUpdatedDate"`
+	MethodSettings       string `json:"MethodSettings"`
+	StageName            string `json:"StageName"`
+	TracingEnabled       string `json:"TracingEnabled"`
+	Variables            string `json:"Variables"`
+	WebAclArn            string `json:"WebAclArn"`
+}
+
+type AwsApiGatewayV2ApiDetails struct {
+	ApiEndpoint               string `json:"ApiEndpoint"`
+	ApiId                     string `json:"ApiId"`
+	ApiKeySelectionExpression string `json:"ApiKeySelectionExpression"`
+	CorsConfiguration         string `json:"CorsConfiguration"`
+	CreatedDate               string `json:"CreatedDate"`
+	Description               string `json:"Description"`
+	Name                      string `json:"Name"`
+	ProtocolType              string `json:"ProtocolType"`
+	RouteSelectionExpression  string `json:"RouteSelectionExpression"`
+	Version                   string `json:"Version"`
+}
+
+type AwsApiGatewayV2RouteSettings struct {
+	DataTraceEnabled       string `json:"DataTraceEnabled"`
+	DetailedMetricsEnabled string `json:"DetailedMetricsEnabled"`
+	LoggingLevel           string `json:"LoggingLevel"`
+	ThrottlingBurstLimit   string `json:"ThrottlingBurstLimit"`
+	ThrottlingRateLimit    string `json:"ThrottlingRateLimit"`
+}
+
+type AwsApiGatewayV2StageDetails struct {
+	AccessLogSettings           string `json:"AccessLogSettings"`
+	ApiGatewayManaged           string `json:"ApiGatewayManaged"`
+	AutoDeploy                  string `json:"AutoDeploy"`
+	ClientCertificateId         string `json:"ClientCertificateId"`
+	CreatedDate                 string `json:"CreatedDate"`
+	DefaultRouteSettings        string `json:"DefaultRouteSettings"`
+	DeploymentId                string `json:"DeploymentId"`
+	Description                 string `json:"Description"`
+	LastDeploymentStatusMessage string `json:"LastDeploymentStatusMessage"`
+	LastUpdatedDate             string `json:"LastUpdatedDate"`
+	RouteSettings               string `json:"RouteSettings"`
+	StageName                   string `json:"StageName"`
+	StageVariables              string `json:"StageVariables"`
+}
+
+type AwsAutoScalingAutoScalingGroupAvailabilityZonesListDetails struct {
+	Value string `json:"Value"`
+}
+
+type AwsAutoScalingAutoScalingGroupDetails struct {
+	AvailabilityZones       string `json:"AvailabilityZones"`
+	CapacityRebalance       string `json:"CapacityRebalance"`
+	CreatedTime             string `json:"CreatedTime"`
+	HealthCheckGracePeriod  string `json:"HealthCheckGracePeriod"`
+	HealthCheckType         string `json:"HealthCheckType"`
+	LaunchConfigurationName string `json:"LaunchConfigurationName"`
+	LaunchTemplate          string `json:"LaunchTemplate"`
+	LoadBalancerNames       string `json:"LoadBalancerNames"`
+	MixedInstancesPolicy    string `json:"MixedInstancesPolicy"`
+}
+
+type AwsAutoScalingAutoScalingGroupLaunchTemplateLaunchTemplateSpecification struct {
+	LaunchTemplateId   string `json:"LaunchTemplateId"`
+	LaunchTemplateName string `json:"LaunchTemplateName"`
+	Version            string `json:"Version"`
+}
+
+type AwsAutoScalingAutoScalingGroupMixedInstancesPolicyDetails struct {
+	InstancesDistribution string `json:"InstancesDistribution"`
+	LaunchTemplate        string `json:"LaunchTemplate"`
+}
+
+type AwsAutoScalingAutoScalingGroupMixedInstancesPolicyInstancesDistributionDetails struct {
+	OnDemandAllocationStrategy          string `json:"OnDemandAllocationStrategy"`
+	OnDemandBaseCapacity                string `json:"OnDemandBaseCapacity"`
+	OnDemandPercentageAboveBaseCapacity string `json:"OnDemandPercentageAboveBaseCapacity"`
+	SpotAllocationStrategy              string `json:"SpotAllocationStrategy"`
+	SpotInstancePools                   string `json:"SpotInstancePools"`
+	SpotMaxPrice                        string `json:"SpotMaxPrice"`
+}
+
+type AwsAutoScalingAutoScalingGroupMixedInstancesPolicyLaunchTemplateDetails struct {
+	LaunchTemplateSpecification string `json:"LaunchTemplateSpecification"`
+	Overrides                   string `json:"Overrides"`
+}
+
+type AwsAutoScalingAutoScalingGroupMixedInstancesPolicyLaunchTemplateLaunchTemplateSpecification struct {
+	LaunchTemplateId   string `json:"LaunchTemplateId"`
+	LaunchTemplateName string `json:"LaunchTemplateName"`
+	Version            string `json:"Version"`
+}
+
+type AwsAutoScalingAutoScalingGroupMixedInstancesPolicyLaunchTemplateOverridesListDetails struct {
+	InstanceType     string `json:"InstanceType"`
+	WeightedCapacity string `json:"WeightedCapacity"`
+}
+
+type AwsAutoScalingLaunchConfigurationBlockDeviceMappingsDetails struct {
+	DeviceName  string `json:"DeviceName"`
+	Ebs         string `json:"Ebs"`
+	NoDevice    string `json:"NoDevice"`
+	VirtualName string `json:"VirtualName"`
+}
+
+type AwsAutoScalingLaunchConfigurationBlockDeviceMappingsEbsDetails struct {
+	DeleteOnTermination string `json:"DeleteOnTermination"`
+	Encrypted           string `json:"Encrypted"`
+	Iops                string `json:"Iops"`
+	SnapshotId          string `json:"SnapshotId"`
+	VolumeSize          string `json:"VolumeSize"`
+	VolumeType          string `json:"VolumeType"`
+}
+
+type AwsAutoScalingLaunchConfigurationDetails struct {
+	AssociatePublicIpAddress     string `json:"AssociatePublicIpAddress"`
+	BlockDeviceMappings          string `json:"BlockDeviceMappings"`
+	ClassicLinkVpcId             string `json:"ClassicLinkVpcId"`
+	ClassicLinkVpcSecurityGroups string `json:"ClassicLinkVpcSecurityGroups"`
+	CreatedTime                  string `json:"CreatedTime"`
+	EbsOptimized                 string `json:"EbsOptimized"`
+	IamInstanceProfile           string `json:"IamInstanceProfile"`
+	ImageId                      string `json:"ImageId"`
+	InstanceMonitoring           string `json:"InstanceMonitoring"`
+	InstanceType                 string `json:"InstanceType"`
+	KernelId                     string `json:"KernelId"`
+	KeyName                      string `json:"KeyName"`
+	LaunchConfigurationName      string `json:"LaunchConfigurationName"`
+	MetadataOptions              string `json:"MetadataOptions"`
+	PlacementTenancy             string `json:"PlacementTenancy"`
+	RamdiskId                    string `json:"RamdiskId"`
+	SecurityGroups               string `json:"SecurityGroups"`
+	SpotPrice                    string `json:"SpotPrice"`
+	UserData                     string `json:"UserData"`
+}
+
+type AwsAutoScalingLaunchConfigurationInstanceMonitoringDetails struct {
+	Enabled string `json:"Enabled"`
+}
+
+type AwsAutoScalingLaunchConfigurationMetadataOptions struct {
+	HttpEndpoint            string `json:"HttpEndpoint"`
+	HttpPutResponseHopLimit string `json:"HttpPutResponseHopLimit"`
+	HttpTokens              string `json:"HttpTokens"`
+}
+
+type AwsBackupBackupPlanAdvancedBackupSettingsDetails struct {
+	BackupOptions string `json:"BackupOptions"`
+	ResourceType  string `json:"ResourceType"`
+}
+
+type AwsBackupBackupPlanBackupPlanDetails struct {
+	AdvancedBackupSettings string `json:"AdvancedBackupSettings"`
+	BackupPlanName         string `json:"BackupPlanName"`
+	BackupPlanRule         string `json:"BackupPlanRule"`
+}
+
+type AwsBackupBackupPlanDetails struct {
+	BackupPlan    string `json:"BackupPlan"`
+	BackupPlanArn string `json:"BackupPlanArn"`
+	BackupPlanId  string `json:"BackupPlanId"`
+	VersionId     string `json:"VersionId"`
+}
+
+type AwsBackupBackupPlanLifecycleDetails struct {
+	DeleteAfterDays            string `json:"DeleteAfterDays"`
+	MoveToColdStorageAfterDays string `json:"MoveToColdStorageAfterDays"`
+}
+
+type AwsBackupBackupPlanRuleCopyActionsDetails struct {
+	DestinationBackupVaultArn string `json:"DestinationBackupVaultArn"`
+	Lifecycle                 string `json:"Lifecycle"`
+}
+
+type AwsBackupBackupPlanRuleDetails struct {
+	CompletionWindowMinutes string `json:"CompletionWindowMinutes"`
+	CopyActions             string `json:"CopyActions"`
+	EnableContinuousBackup  string `json:"EnableContinuousBackup"`
+	Lifecycle               string `json:"Lifecycle"`
+	RuleId                  string `json:"RuleId"`
+	RuleName                string `json:"RuleName"`
+	ScheduleExpression      string `json:"ScheduleExpression"`
+	StartWindowMinutes      string `json:"StartWindowMinutes"`
+	TargetBackupVault       string `json:"TargetBackupVault"`
+}
+
+type AwsBackupBackupVaultDetails struct {
+	AccessPolicy     string `json:"AccessPolicy"`
+	BackupVaultArn   string `json:"BackupVaultArn"`
+	BackupVaultName  string `json:"BackupVaultName"`
+	EncryptionKeyArn string `json:"EncryptionKeyArn"`
+	Notifications    string `json:"Notifications"`
+}
+
+type AwsBackupBackupVaultNotificationsDetails struct {
+	BackupVaultEvents string `json:"BackupVaultEvents"`
+	SnsTopicArn       string `json:"SnsTopicArn"`
+}
+
+type AwsBackupRecoveryPointCalculatedLifecycleDetails struct {
+	DeleteAt            string `json:"DeleteAt"`
+	MoveToColdStorageAt string `json:"MoveToColdStorageAt"`
+}
+
+type AwsBackupRecoveryPointCreatedByDetails struct {
+	BackupPlanArn     string `json:"BackupPlanArn"`
+	BackupPlanId      string `json:"BackupPlanId"`
+	BackupPlanVersion string `json:"BackupPlanVersion"`
+	BackupRuleId      string `json:"BackupRuleId"`
+}
+
+type AwsBackupRecoveryPointDetails struct {
+	BackupSizeInBytes    string `json:"BackupSizeInBytes"`
+	BackupVaultArn       string `json:"BackupVaultArn"`
+	BackupVaultName      string `json:"BackupVaultName"`
+	CalculatedLifecycle  string `json:"CalculatedLifecycle"`
+	CompletionDate       string `json:"CompletionDate"`
+	CreatedBy            string `json:"CreatedBy"`
+	CreationDate         string `json:"CreationDate"`
+	EncryptionKeyArn     string `json:"EncryptionKeyArn"`
+	IamRoleArn           string `json:"IamRoleArn"`
+	IsEncrypted          string `json:"IsEncrypted"`
+	LastRestoreTime      string `json:"LastRestoreTime"`
+	Lifecycle            string `json:"Lifecycle"`
+	RecoveryPointArn     string `json:"RecoveryPointArn"`
+	ResourceArn          string `json:"ResourceArn"`
+	ResourceType         string `json:"ResourceType"`
+	SourceBackupVaultArn string `json:"SourceBackupVaultArn"`
+	Status               string `json:"Status"`
+	StatusMessage        string `json:"StatusMessage"`
+	StorageClass         string `json:"StorageClass"`
+}
+
+type AwsBackupRecoveryPointLifecycleDetails struct {
+	DeleteAfterDays            string `json:"DeleteAfterDays"`
+	MoveToColdStorageAfterDays string `json:"MoveToColdStorageAfterDays"`
+}
+
+type AwsCertificateManagerCertificateDetails struct {
+	CertificateAuthorityArn string `json:"CertificateAuthorityArn"`
+	CreatedAt               string `json:"CreatedAt"`
+	DomainName              string `json:"DomainName"`
+	DomainValidationOptions string `json:"DomainValidationOptions"`
+	ExtendedKeyUsages       string `json:"ExtendedKeyUsages"`
+	FailureReason           string `json:"FailureReason"`
+	ImportedAt              string `json:"ImportedAt"`
+	InUseBy                 string `json:"InUseBy"`
+	IssuedAt                string `json:"IssuedAt"`
+	Issuer                  string `json:"Issuer"`
+	KeyAlgorithm            string `json:"KeyAlgorithm"`
+	KeyUsages               string `json:"KeyUsages"`
+	NotAfter                string `json:"NotAfter"`
+	NotBefore               string `json:"NotBefore"`
+	Options                 string `json:"Options"`
+	RenewalEligibility      string `json:"RenewalEligibility"`
+	RenewalSummary          string `json:"RenewalSummary"`
+	Serial                  string `json:"Serial"`
+	SignatureAlgorithm      string `json:"SignatureAlgorithm"`
+	Status                  string `json:"Status"`
+	Subject                 string `json:"Subject"`
+	SubjectAlternativeNames string `json:"SubjectAlternativeNames"`
+	Type                    string `json:"Type"`
+}
+
+type AwsCertificateManagerCertificateDomainValidationOption struct {
+	DomainName       string `json:"DomainName"`
+	ResourceRecord   string `json:"ResourceRecord"`
+	ValidationDomain string `json:"ValidationDomain"`
+	ValidationEmails string `json:"ValidationEmails"`
+	ValidationMethod string `json:"ValidationMethod"`
+	ValidationStatus string `json:"ValidationStatus"`
+}
+
+type AwsCertificateManagerCertificateExtendedKeyUsage struct {
+	Name string `json:"Name"`
+	OId  string `json:"OId"`
+}
+
+type AwsCertificateManagerCertificateKeyUsage struct {
+	Name string `json:"Name"`
+}
+
+type AwsCertificateManagerCertificateOptions struct {
+	CertificateTransparencyLoggingPreference string `json:"CertificateTransparencyLoggingPreference"`
+}
+
+type AwsCertificateManagerCertificateRenewalSummary struct {
+	DomainValidationOptions string `json:"DomainValidationOptions"`
+	RenewalStatus           string `json:"RenewalStatus"`
+	RenewalStatusReason     string `json:"RenewalStatusReason"`
+	UpdatedAt               string `json:"UpdatedAt"`
+}
+
+type AwsCertificateManagerCertificateResourceRecord struct {
+	Name  string `json:"Name"`
+	Type  string `json:"Type"`
+	Value string `json:"Value"`
+}
+
+type AwsCloudFormationStackDetails struct {
+	Capabilities                string `json:"Capabilities"`
+	CreationTime                string `json:"CreationTime"`
+	Description                 string `json:"Description"`
+	DisableRollback             string `json:"DisableRollback"`
+	DriftInformation            string `json:"DriftInformation"`
+	EnableTerminationProtection string `json:"EnableTerminationProtection"`
+	LastUpdatedTime             string `json:"LastUpdatedTime"`
+	NotificationArns            string `json:"NotificationArns"`
+	Outputs                     string `json:"Outputs"`
+	RoleArn                     string `json:"RoleArn"`
+	StackId                     string `json:"StackId"`
+	StackName                   string `json:"StackName"`
+	StackStatus                 string `json:"StackStatus"`
+	StackStatusReason           string `json:"StackStatusReason"`
+	TimeoutInMinutes            string `json:"TimeoutInMinutes"`
+}
+
+type AwsCloudFormationStackDriftInformationDetails struct {
+	StackDriftStatus string `json:"StackDriftStatus"`
+}
+
+type AwsCloudFormationStackOutputsDetails struct {
+	Description string `json:"Description"`
+	OutputKey   string `json:"OutputKey"`
+	OutputValue string `json:"OutputValue"`
+}
+
+type AwsCloudFrontDistributionCacheBehavior struct {
+	ViewerProtocolPolicy string `json:"ViewerProtocolPolicy"`
+}
+
+type AwsCloudFrontDistributionCacheBehaviors struct {
+	Items string `json:"Items"`
+}
+
+type AwsCloudFrontDistributionDefaultCacheBehavior struct {
+	ViewerProtocolPolicy string `json:"ViewerProtocolPolicy"`
+}
+
+type AwsCloudFrontDistributionDetails struct {
+	CacheBehaviors       string `json:"CacheBehaviors"`
+	DefaultCacheBehavior string `json:"DefaultCacheBehavior"`
+	DefaultRootObject    string `json:"DefaultRootObject"`
+	DomainName           string `json:"DomainName"`
+	ETag                 string `json:"ETag"`
+	LastModifiedTime     string `json:"LastModifiedTime"`
+	Logging              string `json:"Logging"`
+	OriginGroups         string `json:"OriginGroups"`
+	Origins              string `json:"Origins"`
+	Status               string `json:"Status"`
+	ViewerCertificate    string `json:"ViewerCertificate"`
+	WebAclId             string `json:"WebAclId"`
+}
+
+type AwsCloudFrontDistributionLogging struct {
+	Bucket         string `json:"Bucket"`
+	Enabled        string `json:"Enabled"`
+	IncludeCookies string `json:"IncludeCookies"`
+	Prefix         string `json:"Prefix"`
+}
+
+type AwsCloudFrontDistributionOriginCustomOriginConfig struct {
+	HttpPort               string `json:"HttpPort"`
+	HttpsPort              string `json:"HttpsPort"`
+	OriginKeepaliveTimeout string `json:"OriginKeepaliveTimeout"`
+	OriginProtocolPolicy   string `json:"OriginProtocolPolicy"`
+	OriginReadTimeout      string `json:"OriginReadTimeout"`
+	OriginSslProtocols     string `json:"OriginSslProtocols"`
+}
+
+type AwsCloudFrontDistributionOriginGroup struct {
+	FailoverCriteria string `json:"FailoverCriteria"`
+}
+
+type AwsCloudFrontDistributionOriginGroupFailover struct {
+	StatusCodes string `json:"StatusCodes"`
+}
+
+type AwsCloudFrontDistributionOriginGroupFailoverStatusCodes struct {
+	Items    string `json:"Items"`
+	Quantity string `json:"Quantity"`
+}
+
+type AwsCloudFrontDistributionOriginGroups struct {
+	Items string `json:"Items"`
+}
+
+type AwsCloudFrontDistributionOriginItem struct {
+	CustomOriginConfig string `json:"CustomOriginConfig"`
+	DomainName         string `json:"DomainName"`
+	Id                 string `json:"Id"`
+	OriginPath         string `json:"OriginPath"`
+	S3OriginConfig     string `json:"S3OriginConfig"`
+}
+
+type AwsCloudFrontDistributionOriginS3OriginConfig struct {
+	OriginAccessIdentity string `json:"OriginAccessIdentity"`
+}
+
+type AwsCloudFrontDistributionOriginSslProtocols struct {
+	Items    string `json:"Items"`
+	Quantity string `json:"Quantity"`
+}
+
+type AwsCloudFrontDistributionOrigins struct {
+	Items string `json:"Items"`
+}
+
+type AwsCloudFrontDistributionViewerCertificate struct {
+	AcmCertificateArn            string `json:"AcmCertificateArn"`
+	Certificate                  string `json:"Certificate"`
+	CertificateSource            string `json:"CertificateSource"`
+	CloudFrontDefaultCertificate string `json:"CloudFrontDefaultCertificate"`
+	IamCertificateId             string `json:"IamCertificateId"`
+	MinimumProtocolVersion       string `json:"MinimumProtocolVersion"`
+	SslSupportMethod             string `json:"SslSupportMethod"`
+}
+
+type AwsCloudTrailTrailDetails struct {
+	CloudWatchLogsLogGroupArn  string `json:"CloudWatchLogsLogGroupArn"`
+	CloudWatchLogsRoleArn      string `json:"CloudWatchLogsRoleArn"`
+	HasCustomEventSelectors    string `json:"HasCustomEventSelectors"`
+	HomeRegion                 string `json:"HomeRegion"`
+	IncludeGlobalServiceEvents string `json:"IncludeGlobalServiceEvents"`
+	IsMultiRegionTrail         string `json:"IsMultiRegionTrail"`
+	IsOrganizationTrail        string `json:"IsOrganizationTrail"`
+	KmsKeyId                   string `json:"KmsKeyId"`
+	LogFileValidationEnabled   string `json:"LogFileValidationEnabled"`
+	Name                       string `json:"Name"`
+	S3BucketName               string `json:"S3BucketName"`
+	S3KeyPrefix                string `json:"S3KeyPrefix"`
+	SnsTopicArn                string `json:"SnsTopicArn"`
+	SnsTopicName               string `json:"SnsTopicName"`
+	TrailArn                   string `json:"TrailArn"`
+}
+
+type AwsCloudWatchAlarmDetails struct {
+	ActionsEnabled                     string `json:"ActionsEnabled"`
+	AlarmActions                       string `json:"AlarmActions"`
+	AlarmArn                           string `json:"AlarmArn"`
+	AlarmConfigurationUpdatedTimestamp string `json:"AlarmConfigurationUpdatedTimestamp"`
+	AlarmDescription                   string `json:"AlarmDescription"`
+	AlarmName                          string `json:"AlarmName"`
+	ComparisonOperator                 string `json:"ComparisonOperator"`
+	DatapointsToAlarm                  string `json:"DatapointsToAlarm"`
+	Dimensions                         string `json:"Dimensions"`
+	EvaluateLowSampleCountPercentile   string `json:"EvaluateLowSampleCountPercentile"`
+	EvaluationPeriods                  string `json:"EvaluationPeriods"`
+	ExtendedStatistic                  string `json:"ExtendedStatistic"`
+	InsufficientDataActions            string `json:"InsufficientDataActions"`
+	MetricName                         string `json:"MetricName"`
+	Namespace                          string `json:"Namespace"`
+	OkActions                          string `json:"OkActions"`
+	Period                             string `json:"Period"`
+	Statistic                          string `json:"Statistic"`
+	Threshold                          string `json:"Threshold"`
+	ThresholdMetricId                  string `json:"ThresholdMetricId"`
+	TreatMissingData                   string `json:"TreatMissingData"`
+	Unit                               string `json:"Unit"`
+}
+
+type AwsCloudWatchAlarmDimensionsDetails struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsCodeBuildProjectArtifactsDetails struct {
+	ArtifactIdentifier   string `json:"ArtifactIdentifier"`
+	EncryptionDisabled   string `json:"EncryptionDisabled"`
+	Location             string `json:"Location"`
+	Name                 string `json:"Name"`
+	NamespaceType        string `json:"NamespaceType"`
+	OverrideArtifactName string `json:"OverrideArtifactName"`
+	Packaging            string `json:"Packaging"`
+	Path                 string `json:"Path"`
+	Type                 string `json:"Type"`
+}
+
+type AwsCodeBuildProjectDetails struct {
+	Artifacts          string `json:"Artifacts"`
+	EncryptionKey      string `json:"EncryptionKey"`
+	Environment        string `json:"Environment"`
+	LogsConfig         string `json:"LogsConfig"`
+	Name               string `json:"Name"`
+	SecondaryArtifacts string `json:"SecondaryArtifacts"`
+	ServiceRole        string `json:"ServiceRole"`
+	Source             string `json:"Source"`
+	VpcConfig          string `json:"VpcConfig"`
+}
+
+type AwsCodeBuildProjectEnvironment struct {
+	Certificate              string `json:"Certificate"`
+	EnvironmentVariables     string `json:"EnvironmentVariables"`
+	ImagePullCredentialsType string `json:"ImagePullCredentialsType"`
+	PrivilegedMode           string `json:"PrivilegedMode"`
+	RegistryCredential       string `json:"RegistryCredential"`
+	Type                     string `json:"Type"`
+}
+
+type AwsCodeBuildProjectEnvironmentEnvironmentVariablesDetails struct {
+	Name  string `json:"Name"`
+	Type  string `json:"Type"`
+	Value string `json:"Value"`
+}
+
+type AwsCodeBuildProjectEnvironmentRegistryCredential struct {
+	Credential         string `json:"Credential"`
+	CredentialProvider string `json:"CredentialProvider"`
+}
+
+type AwsCodeBuildProjectLogsConfigCloudWatchLogsDetails struct {
+	GroupName  string `json:"GroupName"`
+	Status     string `json:"Status"`
+	StreamName string `json:"StreamName"`
+}
+
+type AwsCodeBuildProjectLogsConfigDetails struct {
+	CloudWatchLogs string `json:"CloudWatchLogs"`
+	S3Logs         string `json:"S3Logs"`
+}
+
+type AwsCodeBuildProjectLogsConfigS3LogsDetails struct {
+	EncryptionDisabled string `json:"EncryptionDisabled"`
+	Location           string `json:"Location"`
+	Status             string `json:"Status"`
+}
+
+type AwsCodeBuildProjectSource struct {
+	GitCloneDepth string `json:"GitCloneDepth"`
+	InsecureSsl   string `json:"InsecureSsl"`
+	Location      string `json:"Location"`
+	Type          string `json:"Type"`
+}
+
+type AwsCodeBuildProjectVpcConfig struct {
+	SecurityGroupIds string `json:"SecurityGroupIds"`
+	Subnets          string `json:"Subnets"`
+	VpcId            string `json:"VpcId"`
+}
+
+type AwsCorsConfiguration struct {
+	AllowCredentials string `json:"AllowCredentials"`
+	AllowHeaders     string `json:"AllowHeaders"`
+	AllowMethods     string `json:"AllowMethods"`
+	AllowOrigins     string `json:"AllowOrigins"`
+	ExposeHeaders    string `json:"ExposeHeaders"`
+	MaxAge           string `json:"MaxAge"`
+}
+
+type AwsDynamoDbTableAttributeDefinition struct {
+	AttributeName string `json:"AttributeName"`
+	AttributeType string `json:"AttributeType"`
+}
+
+type AwsDynamoDbTableBillingModeSummary struct {
+	BillingMode                       string `json:"BillingMode"`
+	LastUpdateToPayPerRequestDateTime string `json:"LastUpdateToPayPerRequestDateTime"`
+}
+
+type AwsDynamoDbTableDetails struct {
+	AttributeDefinitions   string `json:"AttributeDefinitions"`
+	BillingModeSummary     string `json:"BillingModeSummary"`
+	CreationDateTime       string `json:"CreationDateTime"`
+	GlobalSecondaryIndexes string `json:"GlobalSecondaryIndexes"`
+	GlobalTableVersion     string `json:"GlobalTableVersion"`
+	ItemCount              string `json:"ItemCount"`
+	KeySchema              string `json:"KeySchema"`
+	LatestStreamArn        string `json:"LatestStreamArn"`
+	LatestStreamLabel      string `json:"LatestStreamLabel"`
+	LocalSecondaryIndexes  string `json:"LocalSecondaryIndexes"`
+	ProvisionedThroughput  string `json:"ProvisionedThroughput"`
+	Replicas               string `json:"Replicas"`
+	RestoreSummary         string `json:"RestoreSummary"`
+	SseDescription         string `json:"SseDescription"`
+	StreamSpecification    string `json:"StreamSpecification"`
+	TableId                string `json:"TableId"`
+	TableName              string `json:"TableName"`
+	TableSizeBytes         string `json:"TableSizeBytes"`
+	TableStatus            string `json:"TableStatus"`
+}
+
+type AwsDynamoDbTableGlobalSecondaryIndex struct {
+	Backfilling           string `json:"Backfilling"`
+	IndexArn              string `json:"IndexArn"`
+	IndexName             string `json:"IndexName"`
+	IndexSizeBytes        string `json:"IndexSizeBytes"`
+	IndexStatus           string `json:"IndexStatus"`
+	ItemCount             string `json:"ItemCount"`
+	KeySchema             string `json:"KeySchema"`
+	Projection            string `json:"Projection"`
+	ProvisionedThroughput string `json:"ProvisionedThroughput"`
+}
+
+type AwsDynamoDbTableKeySchema struct {
+	AttributeName string `json:"AttributeName"`
+	KeyType       string `json:"KeyType"`
+}
+
+type AwsDynamoDbTableLocalSecondaryIndex struct {
+	IndexArn   string `json:"IndexArn"`
+	IndexName  string `json:"IndexName"`
+	KeySchema  string `json:"KeySchema"`
+	Projection string `json:"Projection"`
+}
+
+type AwsDynamoDbTableProjection struct {
+	NonKeyAttributes string `json:"NonKeyAttributes"`
+	ProjectionType   string `json:"ProjectionType"`
+}
+
+type AwsDynamoDbTableProvisionedThroughput struct {
+	LastDecreaseDateTime   string `json:"LastDecreaseDateTime"`
+	LastIncreaseDateTime   string `json:"LastIncreaseDateTime"`
+	NumberOfDecreasesToday string `json:"NumberOfDecreasesToday"`
+	ReadCapacityUnits      string `json:"ReadCapacityUnits"`
+	WriteCapacityUnits     string `json:"WriteCapacityUnits"`
+}
+
+type AwsDynamoDbTableProvisionedThroughputOverride struct {
+	ReadCapacityUnits string `json:"ReadCapacityUnits"`
+}
+
+type AwsDynamoDbTableReplica struct {
+	GlobalSecondaryIndexes        string `json:"GlobalSecondaryIndexes"`
+	KmsMasterKeyId                string `json:"KmsMasterKeyId"`
+	ProvisionedThroughputOverride string `json:"ProvisionedThroughputOverride"`
+	RegionName                    string `json:"RegionName"`
+	ReplicaStatus                 string `json:"ReplicaStatus"`
+	ReplicaStatusDescription      string `json:"ReplicaStatusDescription"`
+}
+
+type AwsDynamoDbTableReplicaGlobalSecondaryIndex struct {
+	IndexName                     string `json:"IndexName"`
+	ProvisionedThroughputOverride string `json:"ProvisionedThroughputOverride"`
+}
+
+type AwsDynamoDbTableRestoreSummary struct {
+	RestoreDateTime   string `json:"RestoreDateTime"`
+	RestoreInProgress string `json:"RestoreInProgress"`
+	SourceBackupArn   string `json:"SourceBackupArn"`
+	SourceTableArn    string `json:"SourceTableArn"`
+}
+
+type AwsDynamoDbTableSseDescription struct {
+	InaccessibleEncryptionDateTime string `json:"InaccessibleEncryptionDateTime"`
+	KmsMasterKeyArn                string `json:"KmsMasterKeyArn"`
+	SseType                        string `json:"SseType"`
+	Status                         string `json:"Status"`
+}
+
+type AwsDynamoDbTableStreamSpecification struct {
+	StreamEnabled  string `json:"StreamEnabled"`
+	StreamViewType string `json:"StreamViewType"`
+}
+
+type AwsEc2EipDetails struct {
+	AllocationId            string `json:"AllocationId"`
+	AssociationId           string `json:"AssociationId"`
+	Domain                  string `json:"Domain"`
+	InstanceId              string `json:"InstanceId"`
+	NetworkBorderGroup      string `json:"NetworkBorderGroup"`
+	NetworkInterfaceId      string `json:"NetworkInterfaceId"`
+	NetworkInterfaceOwnerId string `json:"NetworkInterfaceOwnerId"`
+	PrivateIpAddress        string `json:"PrivateIpAddress"`
+	PublicIp                string `json:"PublicIp"`
+	PublicIpv4Pool          string `json:"PublicIpv4Pool"`
+}
+
+type AwsEc2InstanceDetails struct {
+	IamInstanceProfileArn string `json:"IamInstanceProfileArn"`
+	ImageId               string `json:"ImageId"`
+	IpV4Addresses         string `json:"IpV4Addresses"`
+	IpV6Addresses         string `json:"IpV6Addresses"`
+	KeyName               string `json:"KeyName"`
+	LaunchedAt            string `json:"LaunchedAt"`
+	MetadataOptions       string `json:"MetadataOptions"`
+	Monitoring            string `json:"Monitoring"`
+	NetworkInterfaces     string `json:"NetworkInterfaces"`
+	SubnetId              string `json:"SubnetId"`
+	Type                  string `json:"Type"`
+	VirtualizationType    string `json:"VirtualizationType"`
+	VpcId                 string `json:"VpcId"`
+}
+
+type AwsEc2InstanceMetadataOptions struct {
+	HttpEndpoint            string `json:"HttpEndpoint"`
+	HttpProtocolIpv6        string `json:"HttpProtocolIpv6"`
+	HttpPutResponseHopLimit string `json:"HttpPutResponseHopLimit"`
+	HttpTokens              string `json:"HttpTokens"`
+	InstanceMetadataTags    string `json:"InstanceMetadataTags"`
+}
+
+type AwsEc2InstanceMonitoringDetails struct {
+	State string `json:"State"`
+}
+
+type AwsEc2InstanceNetworkInterfacesDetails struct {
+	NetworkInterfaceId string `json:"NetworkInterfaceId"`
+}
+
+type AwsEc2LaunchTemplateDataBlockDeviceMappingSetDetails struct {
+	DeviceName  string `json:"DeviceName"`
+	Ebs         string `json:"Ebs"`
+	NoDevice    string `json:"NoDevice"`
+	VirtualName string `json:"VirtualName"`
+}
+
+type AwsEc2LaunchTemplateDataBlockDeviceMappingSetEbsDetails struct {
+	DeleteOnTermination string `json:"DeleteOnTermination"`
+	Encrypted           string `json:"Encrypted"`
+	Iops                string `json:"Iops"`
+	KmsKeyId            string `json:"KmsKeyId"`
+	SnapshotId          string `json:"SnapshotId"`
+	Throughput          string `json:"Throughput"`
+	VolumeSize          string `json:"VolumeSize"`
+	VolumeType          string `json:"VolumeType"`
+}
+
+type AwsEc2LaunchTemplateDataCapacityReservationSpecificationCapacityReservationTargetDetails struct {
+	CapacityReservationId               string `json:"CapacityReservationId"`
+	CapacityReservationResourceGroupArn string `json:"CapacityReservationResourceGroupArn"`
+}
+
+type AwsEc2LaunchTemplateDataCapacityReservationSpecificationDetails struct {
+	CapacityReservationPreference string `json:"CapacityReservationPreference"`
+	CapacityReservationTarget     string `json:"CapacityReservationTarget"`
+}
+
+type AwsEc2LaunchTemplateDataCpuOptionsDetails struct {
+	CoreCount      string `json:"CoreCount"`
+	ThreadsPerCore string `json:"ThreadsPerCore"`
+}
+
+type AwsEc2LaunchTemplateDataCreditSpecificationDetails struct {
+	CpuCredits string `json:"CpuCredits"`
+}
+
+type AwsEc2LaunchTemplateDataDetails struct {
+	BlockDeviceMappingSet             string `json:"BlockDeviceMappingSet"`
+	CapacityReservationSpecification  string `json:"CapacityReservationSpecification"`
+	CpuOptions                        string `json:"CpuOptions"`
+	CreditSpecification               string `json:"CreditSpecification"`
+	DisableApiStop                    string `json:"DisableApiStop"`
+	DisableApiTermination             string `json:"DisableApiTermination"`
+	EbsOptimized                      string `json:"EbsOptimized"`
+	ElasticGpuSpecificationSet        string `json:"ElasticGpuSpecificationSet"`
+	ElasticInferenceAcceleratorSet    string `json:"ElasticInferenceAcceleratorSet"`
+	EnclaveOptions                    string `json:"EnclaveOptions"`
+	HibernationOptions                string `json:"HibernationOptions"`
+	IamInstanceProfile                string `json:"IamInstanceProfile"`
+	ImageId                           string `json:"ImageId"`
+	InstanceInitiatedShutdownBehavior string `json:"InstanceInitiatedShutdownBehavior"`
+	InstanceMarketOptions             string `json:"InstanceMarketOptions"`
+	InstanceRequirements              string `json:"InstanceRequirements"`
+	InstanceType                      string `json:"InstanceType"`
+	KernelId                          string `json:"KernelId"`
+	KeyName                           string `json:"KeyName"`
+	LicenseSet                        string `json:"LicenseSet"`
+	MaintenanceOptions                string `json:"MaintenanceOptions"`
+	MetadataOptions                   string `json:"MetadataOptions"`
+	Monitoring                        string `json:"Monitoring"`
+	NetworkInterfaceSet               string `json:"NetworkInterfaceSet"`
+	Placement                         string `json:"Placement"`
+	PrivateDnsNameOptions             string `json:"PrivateDnsNameOptions"`
+	RamDiskId                         string `json:"RamDiskId"`
+	SecurityGroupIdSet                string `json:"SecurityGroupIdSet"`
+	SecurityGroupSet                  string `json:"SecurityGroupSet"`
+	UserData                          string `json:"UserData"`
+}
+
+type AwsEc2LaunchTemplateDataElasticGpuSpecificationSetDetails struct {
+	Type string `json:"Type"`
+}
+
+type AwsEc2LaunchTemplateDataElasticInferenceAcceleratorSetDetails struct {
+	Count string `json:"Count"`
+	Type  string `json:"Type"`
+}
+
+type AwsEc2LaunchTemplateDataEnclaveOptionsDetails struct {
+	Enabled string `json:"Enabled"`
+}
+
+type AwsEc2LaunchTemplateDataHibernationOptionsDetails struct {
+	Configured string `json:"Configured"`
+}
+
+type AwsEc2LaunchTemplateDataIamInstanceProfileDetails struct {
+	Arn  string `json:"Arn"`
+	Name string `json:"Name"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceMarketOptionsDetails struct {
+	MarketType  string `json:"MarketType"`
+	SpotOptions string `json:"SpotOptions"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceMarketOptionsSpotOptionsDetails struct {
+	BlockDurationMinutes         string `json:"BlockDurationMinutes"`
+	InstanceInterruptionBehavior string `json:"InstanceInterruptionBehavior"`
+	MaxPrice                     string `json:"MaxPrice"`
+	SpotInstanceType             string `json:"SpotInstanceType"`
+	ValidUntil                   string `json:"ValidUntil"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsAcceleratorCountDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsAcceleratorTotalMemoryMiBDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsBaselineEbsBandwidthMbpsDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsDetails struct {
+	AcceleratorCount                          string `json:"AcceleratorCount"`
+	AcceleratorManufacturers                  string `json:"AcceleratorManufacturers"`
+	AcceleratorNames                          string `json:"AcceleratorNames"`
+	AcceleratorTotalMemoryMiB                 string `json:"AcceleratorTotalMemoryMiB"`
+	AcceleratorTypes                          string `json:"AcceleratorTypes"`
+	BareMetal                                 string `json:"BareMetal"`
+	BaselineEbsBandwidthMbps                  string `json:"BaselineEbsBandwidthMbps"`
+	BurstablePerformance                      string `json:"BurstablePerformance"`
+	CpuManufacturers                          string `json:"CpuManufacturers"`
+	ExcludedInstanceTypes                     string `json:"ExcludedInstanceTypes"`
+	InstanceGenerations                       string `json:"InstanceGenerations"`
+	LocalStorage                              string `json:"LocalStorage"`
+	LocalStorageTypes                         string `json:"LocalStorageTypes"`
+	MemoryGiBPerVCpu                          string `json:"MemoryGiBPerVCpu"`
+	MemoryMiB                                 string `json:"MemoryMiB"`
+	NetworkInterfaceCount                     string `json:"NetworkInterfaceCount"`
+	OnDemandMaxPricePercentageOverLowestPrice string `json:"OnDemandMaxPricePercentageOverLowestPrice"`
+	RequireHibernateSupport                   string `json:"RequireHibernateSupport"`
+	SpotMaxPricePercentageOverLowestPrice     string `json:"SpotMaxPricePercentageOverLowestPrice"`
+	TotalLocalStorageGB                       string `json:"TotalLocalStorageGB"`
+	VCpuCount                                 string `json:"VCpuCount"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsMemoryGiBPerVCpuDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsMemoryMiBDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsNetworkInterfaceCountDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsTotalLocalStorageGBDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataInstanceRequirementsVCpuCountDetails struct {
+	Max string `json:"Max"`
+	Min string `json:"Min"`
+}
+
+type AwsEc2LaunchTemplateDataLicenseSetDetails struct {
+	LicenseConfigurationArn string `json:"LicenseConfigurationArn"`
+}
+
+type AwsEc2LaunchTemplateDataMaintenanceOptionsDetails struct {
+	AutoRecovery string `json:"AutoRecovery"`
+}
+
+type AwsEc2LaunchTemplateDataMetadataOptionsDetails struct {
+	HttpEndpoint            string `json:"HttpEndpoint"`
+	HttpProtocolIpv6        string `json:"HttpProtocolIpv6"`
+	HttpPutResponseHopLimit string `json:"HttpPutResponseHopLimit"`
+	HttpTokens              string `json:"HttpTokens"`
+	InstanceMetadataTags    string `json:"InstanceMetadataTags"`
+}
+
+type AwsEc2LaunchTemplateDataMonitoringDetails struct {
+	Enabled string `json:"Enabled"`
+}
+
+type AwsEc2LaunchTemplateDataNetworkInterfaceSetDetails struct {
+	AssociateCarrierIpAddress      string `json:"AssociateCarrierIpAddress"`
+	AssociatePublicIpAddress       string `json:"AssociatePublicIpAddress"`
+	DeleteOnTermination            string `json:"DeleteOnTermination"`
+	Description                    string `json:"Description"`
+	DeviceIndex                    string `json:"DeviceIndex"`
+	Groups                         string `json:"Groups"`
+	InterfaceType                  string `json:"InterfaceType"`
+	Ipv4PrefixCount                string `json:"Ipv4PrefixCount"`
+	Ipv4Prefixes                   string `json:"Ipv4Prefixes"`
+	Ipv6AddressCount               string `json:"Ipv6AddressCount"`
+	Ipv6Addresses                  string `json:"Ipv6Addresses"`
+	Ipv6PrefixCount                string `json:"Ipv6PrefixCount"`
+	Ipv6Prefixes                   string `json:"Ipv6Prefixes"`
+	NetworkCardIndex               string `json:"NetworkCardIndex"`
+	NetworkInterfaceId             string `json:"NetworkInterfaceId"`
+	PrivateIpAddress               string `json:"PrivateIpAddress"`
+	PrivateIpAddresses             string `json:"PrivateIpAddresses"`
+	SecondaryPrivateIpAddressCount string `json:"SecondaryPrivateIpAddressCount"`
+	SubnetId                       string `json:"SubnetId"`
+}
+
+type AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv4PrefixesDetails struct {
+	Ipv4Prefix string `json:"Ipv4Prefix"`
+}
+
+type AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6AddressesDetails struct {
+	Ipv6Address string `json:"Ipv6Address"`
+}
+
+type AwsEc2LaunchTemplateDataNetworkInterfaceSetIpv6PrefixesDetails struct {
+	Ipv6Prefix string `json:"Ipv6Prefix"`
+}
+
+type AwsEc2LaunchTemplateDataNetworkInterfaceSetPrivateIpAddressesDetails struct {
+	Primary          string `json:"Primary"`
+	PrivateIpAddress string `json:"PrivateIpAddress"`
+}
+
+type AwsEc2LaunchTemplateDataPlacementDetails struct {
+	Affinity             string `json:"Affinity"`
+	AvailabilityZone     string `json:"AvailabilityZone"`
+	GroupName            string `json:"GroupName"`
+	HostId               string `json:"HostId"`
+	HostResourceGroupArn string `json:"HostResourceGroupArn"`
+	PartitionNumber      string `json:"PartitionNumber"`
+	SpreadDomain         string `json:"SpreadDomain"`
+	Tenancy              string `json:"Tenancy"`
+}
+
+type AwsEc2LaunchTemplateDataPrivateDnsNameOptionsDetails struct {
+	EnableResourceNameDnsAAAARecord string `json:"EnableResourceNameDnsAAAARecord"`
+	EnableResourceNameDnsARecord    string `json:"EnableResourceNameDnsARecord"`
+	HostnameType                    string `json:"HostnameType"`
+}
+
+type AwsEc2LaunchTemplateDetails struct {
+	DefaultVersionNumber string `json:"DefaultVersionNumber"`
+	Id                   string `json:"Id"`
+	LatestVersionNumber  string `json:"LatestVersionNumber"`
+	LaunchTemplateData   string `json:"LaunchTemplateData"`
+	LaunchTemplateName   string `json:"LaunchTemplateName"`
+}
+
+type AwsEc2NetworkAclAssociation struct {
+	NetworkAclAssociationId string `json:"NetworkAclAssociationId"`
+	NetworkAclId            string `json:"NetworkAclId"`
+	SubnetId                string `json:"SubnetId"`
+}
+
+type AwsEc2NetworkAclDetails struct {
+	Associations string `json:"Associations"`
+	Entries      string `json:"Entries"`
+	IsDefault    string `json:"IsDefault"`
+	NetworkAclId string `json:"NetworkAclId"`
+	OwnerId      string `json:"OwnerId"`
+	VpcId        string `json:"VpcId"`
+}
+
+type AwsEc2NetworkAclEntry struct {
+	CidrBlock     string `json:"CidrBlock"`
+	Egress        string `json:"Egress"`
+	IcmpTypeCode  string `json:"IcmpTypeCode"`
+	Ipv6CidrBlock string `json:"Ipv6CidrBlock"`
+	PortRange     string `json:"PortRange"`
+	Protocol      string `json:"Protocol"`
+	RuleAction    string `json:"RuleAction"`
+	RuleNumber    string `json:"RuleNumber"`
+}
+
+type AwsEc2NetworkInterfaceAttachment struct {
+	AttachTime          string `json:"AttachTime"`
+	AttachmentId        string `json:"AttachmentId"`
+	DeleteOnTermination string `json:"DeleteOnTermination"`
+	DeviceIndex         string `json:"DeviceIndex"`
+	InstanceId          string `json:"InstanceId"`
+	InstanceOwnerId     string `json:"InstanceOwnerId"`
+	Status              string `json:"Status"`
+}
+
+type AwsEc2NetworkInterfaceDetails struct {
+	Attachment         string `json:"Attachment"`
+	IpV6Addresses      string `json:"IpV6Addresses"`
+	NetworkInterfaceId string `json:"NetworkInterfaceId"`
+	PrivateIpAddresses string `json:"PrivateIpAddresses"`
+	PublicDnsName      string `json:"PublicDnsName"`
+	PublicIp           string `json:"PublicIp"`
+	SecurityGroups     string `json:"SecurityGroups"`
+	SourceDestCheck    string `json:"SourceDestCheck"`
+}
+
+type AwsEc2NetworkInterfaceIpV6AddressDetail struct {
+	IpV6Address string `json:"IpV6Address"`
+}
+
+type AwsEc2NetworkInterfacePrivateIpAddressDetail struct {
+	PrivateDnsName   string `json:"PrivateDnsName"`
+	PrivateIpAddress string `json:"PrivateIpAddress"`
+}
+
+type AwsEc2NetworkInterfaceSecurityGroup struct {
+	GroupId   string `json:"GroupId"`
+	GroupName string `json:"GroupName"`
+}
+
+type AwsEc2RouteTableDetails struct {
+	AssociationSet    string `json:"AssociationSet"`
+	OwnerId           string `json:"OwnerId"`
+	PropagatingVgwSet string `json:"PropagatingVgwSet"`
+	RouteSet          string `json:"RouteSet"`
+	RouteTableId      string `json:"RouteTableId"`
+	VpcId             string `json:"VpcId"`
+}
+
+type AwsEc2SecurityGroupDetails struct {
+	GroupId             string `json:"GroupId"`
+	GroupName           string `json:"GroupName"`
+	IpPermissions       string `json:"IpPermissions"`
+	IpPermissionsEgress string `json:"IpPermissionsEgress"`
+	OwnerId             string `json:"OwnerId"`
+	VpcId               string `json:"VpcId"`
+}
+
+type AwsEc2SecurityGroupIpPermission struct {
+	FromPort         string `json:"FromPort"`
+	IpProtocol       string `json:"IpProtocol"`
+	IpRanges         string `json:"IpRanges"`
+	Ipv6Ranges       string `json:"Ipv6Ranges"`
+	PrefixListIds    string `json:"PrefixListIds"`
+	ToPort           string `json:"ToPort"`
+	UserIdGroupPairs string `json:"UserIdGroupPairs"`
+}
+
+type AwsEc2SecurityGroupIpRange struct {
+	CidrIp string `json:"CidrIp"`
+}
+
+type AwsEc2SecurityGroupIpv6Range struct {
+	CidrIpv6 string `json:"CidrIpv6"`
+}
+
+type AwsEc2SecurityGroupPrefixListId struct {
+	PrefixListId string `json:"PrefixListId"`
+}
+
+type AwsEc2SecurityGroupUserIdGroupPair struct {
+	GroupId                string `json:"GroupId"`
+	GroupName              string `json:"GroupName"`
+	PeeringStatus          string `json:"PeeringStatus"`
+	UserId                 string `json:"UserId"`
+	VpcId                  string `json:"VpcId"`
+	VpcPeeringConnectionId string `json:"VpcPeeringConnectionId"`
+}
+
+type AwsEc2SubnetDetails struct {
+	AssignIpv6AddressOnCreation string `json:"AssignIpv6AddressOnCreation"`
+	AvailabilityZone            string `json:"AvailabilityZone"`
+	AvailabilityZoneId          string `json:"AvailabilityZoneId"`
+	AvailableIpAddressCount     string `json:"AvailableIpAddressCount"`
+	CidrBlock                   string `json:"CidrBlock"`
+	DefaultForAz                string `json:"DefaultForAz"`
+	Ipv6CidrBlockAssociationSet string `json:"Ipv6CidrBlockAssociationSet"`
+	MapPublicIpOnLaunch         string `json:"MapPublicIpOnLaunch"`
+	OwnerId                     string `json:"OwnerId"`
+	State                       string `json:"State"`
+	SubnetArn                   string `json:"SubnetArn"`
+	SubnetId                    string `json:"SubnetId"`
+	VpcId                       string `json:"VpcId"`
+}
+
+type AwsEc2TransitGatewayDetails struct {
+	AmazonSideAsn                  string `json:"AmazonSideAsn"`
+	AssociationDefaultRouteTableId string `json:"AssociationDefaultRouteTableId"`
+	AutoAcceptSharedAttachments    string `json:"AutoAcceptSharedAttachments"`
+	DefaultRouteTableAssociation   string `json:"DefaultRouteTableAssociation"`
+	DefaultRouteTablePropagation   string `json:"DefaultRouteTablePropagation"`
+	Description                    string `json:"Description"`
+	DnsSupport                     string `json:"DnsSupport"`
+	Id                             string `json:"Id"`
+	MulticastSupport               string `json:"MulticastSupport"`
+	PropagationDefaultRouteTableId string `json:"PropagationDefaultRouteTableId"`
+	TransitGatewayCidrBlocks       string `json:"TransitGatewayCidrBlocks"`
+	VpnEcmpSupport                 string `json:"VpnEcmpSupport"`
+}
+
+type AwsEc2VolumeAttachment struct {
+	AttachTime          string `json:"AttachTime"`
+	DeleteOnTermination string `json:"DeleteOnTermination"`
+	InstanceId          string `json:"InstanceId"`
+	Status              string `json:"Status"`
+}
+
+type AwsEc2VolumeDetails struct {
+	Attachments      string `json:"Attachments"`
+	CreateTime       string `json:"CreateTime"`
+	DeviceName       string `json:"DeviceName"`
+	Encrypted        string `json:"Encrypted"`
+	KmsKeyId         string `json:"KmsKeyId"`
+	Size             string `json:"Size"`
+	SnapshotId       string `json:"SnapshotId"`
+	Status           string `json:"Status"`
+	VolumeId         string `json:"VolumeId"`
+	VolumeScanStatus string `json:"VolumeScanStatus"`
+	VolumeType       string `json:"VolumeType"`
+}
+
+type AwsEc2VpcDetails struct {
+	CidrBlockAssociationSet     string `json:"CidrBlockAssociationSet"`
+	DhcpOptionsId               string `json:"DhcpOptionsId"`
+	Ipv6CidrBlockAssociationSet string `json:"Ipv6CidrBlockAssociationSet"`
+	State                       string `json:"State"`
+}
+
+type AwsEc2VpcEndpointServiceDetails struct {
+	AcceptanceRequired      string `json:"AcceptanceRequired"`
+	AvailabilityZones       string `json:"AvailabilityZones"`
+	BaseEndpointDnsNames    string `json:"BaseEndpointDnsNames"`
+	GatewayLoadBalancerArns string `json:"GatewayLoadBalancerArns"`
+	ManagesVpcEndpoints     string `json:"ManagesVpcEndpoints"`
+	NetworkLoadBalancerArns string `json:"NetworkLoadBalancerArns"`
+	PrivateDnsName          string `json:"PrivateDnsName"`
+	ServiceId               string `json:"ServiceId"`
+	ServiceName             string `json:"ServiceName"`
+	ServiceState            string `json:"ServiceState"`
+	ServiceType             string `json:"ServiceType"`
+}
+
+type AwsEc2VpcEndpointServiceServiceTypeDetails struct {
+	ServiceType string `json:"ServiceType"`
+}
+
+type AwsEc2VpcPeeringConnectionDetails struct {
+	AccepterVpcInfo        string `json:"AccepterVpcInfo"`
+	ExpirationTime         string `json:"ExpirationTime"`
+	RequesterVpcInfo       string `json:"RequesterVpcInfo"`
+	Status                 string `json:"Status"`
+	VpcPeeringConnectionId string `json:"VpcPeeringConnectionId"`
+}
+
+type AwsEc2VpcPeeringConnectionStatusDetails struct {
+	Code    string `json:"Code"`
+	Message string `json:"Message"`
+}
+
+type AwsEc2VpcPeeringConnectionVpcInfoDetails struct {
+	CidrBlock        string `json:"CidrBlock"`
+	CidrBlockSet     string `json:"CidrBlockSet"`
+	Ipv6CidrBlockSet string `json:"Ipv6CidrBlockSet"`
+	OwnerId          string `json:"OwnerId"`
+	PeeringOptions   string `json:"PeeringOptions"`
+	Region           string `json:"Region"`
+	VpcId            string `json:"VpcId"`
+}
+
+type AwsEc2VpnConnectionDetails struct {
+	Category                     string `json:"Category"`
+	CustomerGatewayConfiguration string `json:"CustomerGatewayConfiguration"`
+	CustomerGatewayId            string `json:"CustomerGatewayId"`
+	Options                      string `json:"Options"`
+	Routes                       string `json:"Routes"`
+	State                        string `json:"State"`
+	TransitGatewayId             string `json:"TransitGatewayId"`
+	Type                         string `json:"Type"`
+	VgwTelemetry                 string `json:"VgwTelemetry"`
+	VpnConnectionId              string `json:"VpnConnectionId"`
+	VpnGatewayId                 string `json:"VpnGatewayId"`
+}
+
+type AwsEc2VpnConnectionOptionsDetails struct {
+	StaticRoutesOnly string `json:"StaticRoutesOnly"`
+	TunnelOptions    string `json:"TunnelOptions"`
+}
+
+type AwsEc2VpnConnectionOptionsTunnelOptionsDetails struct {
+	DpdTimeoutSeconds          string `json:"DpdTimeoutSeconds"`
+	IkeVersions                string `json:"IkeVersions"`
+	OutsideIpAddress           string `json:"OutsideIpAddress"`
+	Phase1DhGroupNumbers       string `json:"Phase1DhGroupNumbers"`
+	Phase1EncryptionAlgorithms string `json:"Phase1EncryptionAlgorithms"`
+	Phase1IntegrityAlgorithms  string `json:"Phase1IntegrityAlgorithms"`
+	Phase1LifetimeSeconds      string `json:"Phase1LifetimeSeconds"`
+	Phase2DhGroupNumbers       string `json:"Phase2DhGroupNumbers"`
+	Phase2EncryptionAlgorithms string `json:"Phase2EncryptionAlgorithms"`
+	Phase2IntegrityAlgorithms  string `json:"Phase2IntegrityAlgorithms"`
+	Phase2LifetimeSeconds      string `json:"Phase2LifetimeSeconds"`
+	PreSharedKey               string `json:"PreSharedKey"`
+	RekeyFuzzPercentage        string `json:"RekeyFuzzPercentage"`
+	RekeyMarginTimeSeconds     string `json:"RekeyMarginTimeSeconds"`
+	ReplayWindowSize           string `json:"ReplayWindowSize"`
+	TunnelInsideCidr           string `json:"TunnelInsideCidr"`
+}
+
+type AwsEc2VpnConnectionRoutesDetails struct {
+	DestinationCidrBlock string `json:"DestinationCidrBlock"`
+	State                string `json:"State"`
+}
+
+type AwsEc2VpnConnectionVgwTelemetryDetails struct {
+	AcceptedRouteCount string `json:"AcceptedRouteCount"`
+	CertificateArn     string `json:"CertificateArn"`
+	LastStatusChange   string `json:"LastStatusChange"`
+	OutsideIpAddress   string `json:"OutsideIpAddress"`
+	Status             string `json:"Status"`
+	StatusMessage      string `json:"StatusMessage"`
+}
+
+type AwsEcrContainerImageDetails struct {
+	Architecture     string `json:"Architecture"`
+	ImageDigest      string `json:"ImageDigest"`
+	ImagePublishedAt string `json:"ImagePublishedAt"`
+	ImageTags        string `json:"ImageTags"`
+	RegistryId       string `json:"RegistryId"`
+	RepositoryName   string `json:"RepositoryName"`
+}
+
+type AwsEcrRepositoryDetails struct {
+	Arn                        string `json:"Arn"`
+	ImageScanningConfiguration string `json:"ImageScanningConfiguration"`
+	ImageTagMutability         string `json:"ImageTagMutability"`
+	LifecyclePolicy            string `json:"LifecyclePolicy"`
+	RepositoryName             string `json:"RepositoryName"`
+	RepositoryPolicyText       string `json:"RepositoryPolicyText"`
+}
+
+type AwsEcrRepositoryImageScanningConfigurationDetails struct {
+	ScanOnPush string `json:"ScanOnPush"`
+}
+
+type AwsEcrRepositoryLifecyclePolicyDetails struct {
+	LifecyclePolicyText string `json:"LifecyclePolicyText"`
+	RegistryId          string `json:"RegistryId"`
+}
+
+type AwsEcsClusterClusterSettingsDetails struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsEcsClusterConfigurationDetails struct {
+	ExecuteCommandConfiguration string `json:"ExecuteCommandConfiguration"`
+}
+
+type AwsEcsClusterConfigurationExecuteCommandConfigurationDetails struct {
+	KmsKeyId         string `json:"KmsKeyId"`
+	LogConfiguration string `json:"LogConfiguration"`
+	Logging          string `json:"Logging"`
+}
+
+type AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails struct {
+	CloudWatchEncryptionEnabled string `json:"CloudWatchEncryptionEnabled"`
+	CloudWatchLogGroupName      string `json:"CloudWatchLogGroupName"`
+	S3BucketName                string `json:"S3BucketName"`
+	S3EncryptionEnabled         string `json:"S3EncryptionEnabled"`
+	S3KeyPrefix                 string `json:"S3KeyPrefix"`
+}
+
+type AwsEcsClusterDefaultCapacityProviderStrategyDetails struct {
+	Base             string `json:"Base"`
+	CapacityProvider string `json:"CapacityProvider"`
+	Weight           string `json:"Weight"`
+}
+
+type AwsEcsClusterDetails struct {
+	ActiveServicesCount               string `json:"ActiveServicesCount"`
+	CapacityProviders                 string `json:"CapacityProviders"`
+	ClusterArn                        string `json:"ClusterArn"`
+	ClusterName                       string `json:"ClusterName"`
+	ClusterSettings                   string `json:"ClusterSettings"`
+	Configuration                     string `json:"Configuration"`
+	DefaultCapacityProviderStrategy   string `json:"DefaultCapacityProviderStrategy"`
+	RegisteredContainerInstancesCount string `json:"RegisteredContainerInstancesCount"`
+	RunningTasksCount                 string `json:"RunningTasksCount"`
+	Status                            string `json:"Status"`
+}
+
+type AwsEcsContainerDetails struct {
+	Image       string `json:"Image"`
+	MountPoints string `json:"MountPoints"`
+	Name        string `json:"Name"`
+	Privileged  string `json:"Privileged"`
+}
+
+type AwsEcsServiceCapacityProviderStrategyDetails struct {
+	Base             string `json:"Base"`
+	CapacityProvider string `json:"CapacityProvider"`
+	Weight           string `json:"Weight"`
+}
+
+type AwsEcsServiceDeploymentConfigurationDeploymentCircuitBreakerDetails struct {
+	Enable   string `json:"Enable"`
+	Rollback string `json:"Rollback"`
+}
+
+type AwsEcsServiceDeploymentConfigurationDetails struct {
+	DeploymentCircuitBreaker string `json:"DeploymentCircuitBreaker"`
+	MaximumPercent           string `json:"MaximumPercent"`
+	MinimumHealthyPercent    string `json:"MinimumHealthyPercent"`
+}
+
+type AwsEcsServiceDeploymentControllerDetails struct {
+	Type string `json:"Type"`
+}
+
+type AwsEcsServiceDetails struct {
+	CapacityProviderStrategy      string `json:"CapacityProviderStrategy"`
+	Cluster                       string `json:"Cluster"`
+	DeploymentConfiguration       string `json:"DeploymentConfiguration"`
+	DeploymentController          string `json:"DeploymentController"`
+	DesiredCount                  string `json:"DesiredCount"`
+	EnableEcsManagedTags          string `json:"EnableEcsManagedTags"`
+	EnableExecuteCommand          string `json:"EnableExecuteCommand"`
+	HealthCheckGracePeriodSeconds string `json:"HealthCheckGracePeriodSeconds"`
+	LaunchType                    string `json:"LaunchType"`
+	LoadBalancers                 string `json:"LoadBalancers"`
+	Name                          string `json:"Name"`
+	NetworkConfiguration          string `json:"NetworkConfiguration"`
+	PlacementConstraints          string `json:"PlacementConstraints"`
+	PlacementStrategies           string `json:"PlacementStrategies"`
+	PlatformVersion               string `json:"PlatformVersion"`
+	PropagateTags                 string `json:"PropagateTags"`
+	Role                          string `json:"Role"`
+	SchedulingStrategy            string `json:"SchedulingStrategy"`
+	ServiceArn                    string `json:"ServiceArn"`
+	ServiceName                   string `json:"ServiceName"`
+	ServiceRegistries             string `json:"ServiceRegistries"`
+	TaskDefinition                string `json:"TaskDefinition"`
+}
+
+type AwsEcsServiceLoadBalancersDetails struct {
+	ContainerName    string `json:"ContainerName"`
+	ContainerPort    string `json:"ContainerPort"`
+	LoadBalancerName string `json:"LoadBalancerName"`
+	TargetGroupArn   string `json:"TargetGroupArn"`
+}
+
+type AwsEcsServiceNetworkConfigurationAwsVpcConfigurationDetails struct {
+	AssignPublicIp string `json:"AssignPublicIp"`
+	SecurityGroups string `json:"SecurityGroups"`
+	Subnets        string `json:"Subnets"`
+}
+
+type AwsEcsServiceNetworkConfigurationDetails struct {
+	AwsVpcConfiguration string `json:"AwsVpcConfiguration"`
+}
+
+type AwsEcsServicePlacementConstraintsDetails struct {
+	Expression string `json:"Expression"`
+	Type       string `json:"Type"`
+}
+
+type AwsEcsServicePlacementStrategiesDetails struct {
+	Field string `json:"Field"`
+	Type  string `json:"Type"`
+}
+
+type AwsEcsServiceServiceRegistriesDetails struct {
+	ContainerName string `json:"ContainerName"`
+	ContainerPort string `json:"ContainerPort"`
+	Port          string `json:"Port"`
+	RegistryArn   string `json:"RegistryArn"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsDependsOnDetails struct {
+	Condition     string `json:"Condition"`
+	ContainerName string `json:"ContainerName"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsDetails struct {
+	Command                string `json:"Command"`
+	Cpu                    string `json:"Cpu"`
+	DependsOn              string `json:"DependsOn"`
+	DisableNetworking      string `json:"DisableNetworking"`
+	DnsSearchDomains       string `json:"DnsSearchDomains"`
+	DnsServers             string `json:"DnsServers"`
+	DockerLabels           string `json:"DockerLabels"`
+	DockerSecurityOptions  string `json:"DockerSecurityOptions"`
+	EntryPoint             string `json:"EntryPoint"`
+	Environment            string `json:"Environment"`
+	EnvironmentFiles       string `json:"EnvironmentFiles"`
+	Essential              string `json:"Essential"`
+	ExtraHosts             string `json:"ExtraHosts"`
+	FirelensConfiguration  string `json:"FirelensConfiguration"`
+	HealthCheck            string `json:"HealthCheck"`
+	Hostname               string `json:"Hostname"`
+	Image                  string `json:"Image"`
+	Interactive            string `json:"Interactive"`
+	Links                  string `json:"Links"`
+	LinuxParameters        string `json:"LinuxParameters"`
+	LogConfiguration       string `json:"LogConfiguration"`
+	Memory                 string `json:"Memory"`
+	MemoryReservation      string `json:"MemoryReservation"`
+	MountPoints            string `json:"MountPoints"`
+	Name                   string `json:"Name"`
+	PortMappings           string `json:"PortMappings"`
+	Privileged             string `json:"Privileged"`
+	PseudoTerminal         string `json:"PseudoTerminal"`
+	ReadonlyRootFilesystem string `json:"ReadonlyRootFilesystem"`
+	RepositoryCredentials  string `json:"RepositoryCredentials"`
+	ResourceRequirements   string `json:"ResourceRequirements"`
+	Secrets                string `json:"Secrets"`
+	StartTimeout           string `json:"StartTimeout"`
+	StopTimeout            string `json:"StopTimeout"`
+	SystemControls         string `json:"SystemControls"`
+	Ulimits                string `json:"Ulimits"`
+	User                   string `json:"User"`
+	VolumesFrom            string `json:"VolumesFrom"`
+	WorkingDirectory       string `json:"WorkingDirectory"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsEnvironmentDetails struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsEnvironmentFilesDetails struct {
+	Type  string `json:"Type"`
+	Value string `json:"Value"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsExtraHostsDetails struct {
+	Hostname  string `json:"Hostname"`
+	IpAddress string `json:"IpAddress"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsFirelensConfigurationDetails struct {
+	Options string `json:"Options"`
+	Type    string `json:"Type"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails struct {
+	Command     string `json:"Command"`
+	Interval    string `json:"Interval"`
+	Retries     string `json:"Retries"`
+	StartPeriod string `json:"StartPeriod"`
+	Timeout     string `json:"Timeout"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersCapabilitiesDetails struct {
+	Add  string `json:"Add"`
+	Drop string `json:"Drop"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails struct {
+	Capabilities       string `json:"Capabilities"`
+	Devices            string `json:"Devices"`
+	InitProcessEnabled string `json:"InitProcessEnabled"`
+	MaxSwap            string `json:"MaxSwap"`
+	SharedMemorySize   string `json:"SharedMemorySize"`
+	Swappiness         string `json:"Swappiness"`
+	Tmpfs              string `json:"Tmpfs"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesDetails struct {
+	ContainerPath string `json:"ContainerPath"`
+	HostPath      string `json:"HostPath"`
+	Permissions   string `json:"Permissions"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsDetails struct {
+	ContainerPath string `json:"ContainerPath"`
+	MountOptions  string `json:"MountOptions"`
+	Size          string `json:"Size"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationDetails struct {
+	LogDriver     string `json:"LogDriver"`
+	Options       string `json:"Options"`
+	SecretOptions string `json:"SecretOptions"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationSecretOptionsDetails struct {
+	Name      string `json:"Name"`
+	ValueFrom string `json:"ValueFrom"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsMountPointsDetails struct {
+	ContainerPath string `json:"ContainerPath"`
+	ReadOnly      string `json:"ReadOnly"`
+	SourceVolume  string `json:"SourceVolume"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsPortMappingsDetails struct {
+	ContainerPort string `json:"ContainerPort"`
+	HostPort      string `json:"HostPort"`
+	Protocol      string `json:"Protocol"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsRepositoryCredentialsDetails struct {
+	CredentialsParameter string `json:"CredentialsParameter"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsResourceRequirementsDetails struct {
+	Type  string `json:"Type"`
+	Value string `json:"Value"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsSecretsDetails struct {
+	Name      string `json:"Name"`
+	ValueFrom string `json:"ValueFrom"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsSystemControlsDetails struct {
+	Namespace string `json:"Namespace"`
+	Value     string `json:"Value"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsUlimitsDetails struct {
+	HardLimit string `json:"HardLimit"`
+	Name      string `json:"Name"`
+	SoftLimit string `json:"SoftLimit"`
+}
+
+type AwsEcsTaskDefinitionContainerDefinitionsVolumesFromDetails struct {
+	ReadOnly        string `json:"ReadOnly"`
+	SourceContainer string `json:"SourceContainer"`
+}
+
+type AwsEcsTaskDefinitionDetails struct {
+	ContainerDefinitions    string `json:"ContainerDefinitions"`
+	Cpu                     string `json:"Cpu"`
+	ExecutionRoleArn        string `json:"ExecutionRoleArn"`
+	Family                  string `json:"Family"`
+	InferenceAccelerators   string `json:"InferenceAccelerators"`
+	IpcMode                 string `json:"IpcMode"`
+	Memory                  string `json:"Memory"`
+	NetworkMode             string `json:"NetworkMode"`
+	PidMode                 string `json:"PidMode"`
+	PlacementConstraints    string `json:"PlacementConstraints"`
+	ProxyConfiguration      string `json:"ProxyConfiguration"`
+	RequiresCompatibilities string `json:"RequiresCompatibilities"`
+	TaskRoleArn             string `json:"TaskRoleArn"`
+	Volumes                 string `json:"Volumes"`
+}
+
+type AwsEcsTaskDefinitionInferenceAcceleratorsDetails struct {
+	DeviceName string `json:"DeviceName"`
+	DeviceType string `json:"DeviceType"`
+}
+
+type AwsEcsTaskDefinitionPlacementConstraintsDetails struct {
+	Expression string `json:"Expression"`
+	Type       string `json:"Type"`
+}
+
+type AwsEcsTaskDefinitionProxyConfigurationDetails struct {
+	ContainerName                string `json:"ContainerName"`
+	ProxyConfigurationProperties string `json:"ProxyConfigurationProperties"`
+	Type                         string `json:"Type"`
+}
+
+type AwsEcsTaskDefinitionProxyConfigurationProxyConfigurationPropertiesDetails struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsEcsTaskDefinitionVolumesDetails struct {
+	DockerVolumeConfiguration string `json:"DockerVolumeConfiguration"`
+	EfsVolumeConfiguration    string `json:"EfsVolumeConfiguration"`
+	Host                      string `json:"Host"`
+	Name                      string `json:"Name"`
+}
+
+type AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails struct {
+	Autoprovision string `json:"Autoprovision"`
+	Driver        string `json:"Driver"`
+	DriverOpts    string `json:"DriverOpts"`
+	Labels        string `json:"Labels"`
+	Scope         string `json:"Scope"`
+}
+
+type AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationAuthorizationConfigDetails struct {
+	AccessPointId string `json:"AccessPointId"`
+	Iam           string `json:"Iam"`
+}
+
+type AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails struct {
+	AuthorizationConfig   string `json:"AuthorizationConfig"`
+	FilesystemId          string `json:"FilesystemId"`
+	RootDirectory         string `json:"RootDirectory"`
+	TransitEncryption     string `json:"TransitEncryption"`
+	TransitEncryptionPort string `json:"TransitEncryptionPort"`
+}
+
+type AwsEcsTaskDefinitionVolumesHostDetails struct {
+	SourcePath string `json:"SourcePath"`
+}
+
+type AwsEcsTaskDetails struct {
+	ClusterArn        string `json:"ClusterArn"`
+	Containers        string `json:"Containers"`
+	CreatedAt         string `json:"CreatedAt"`
+	Group             string `json:"Group"`
+	StartedAt         string `json:"StartedAt"`
+	StartedBy         string `json:"StartedBy"`
+	TaskDefinitionArn string `json:"TaskDefinitionArn"`
+	Version           string `json:"Version"`
+	Volumes           string `json:"Volumes"`
+}
+
+type AwsEcsTaskVolumeDetails struct {
+	Host string `json:"Host"`
+	Name string `json:"Name"`
+}
+
+type AwsEcsTaskVolumeHostDetails struct {
+	SourcePath string `json:"SourcePath"`
+}
+
+type AwsEfsAccessPointDetails struct {
+	AccessPointId string `json:"AccessPointId"`
+	Arn           string `json:"Arn"`
+	ClientToken   string `json:"ClientToken"`
+	FileSystemId  string `json:"FileSystemId"`
+	PosixUser     string `json:"PosixUser"`
+	RootDirectory string `json:"RootDirectory"`
+}
+
+type AwsEfsAccessPointPosixUserDetails struct {
+	Gid           string `json:"Gid"`
+	SecondaryGids string `json:"SecondaryGids"`
+	Uid           string `json:"Uid"`
+}
+
+type AwsEfsAccessPointRootDirectoryCreationInfoDetails struct {
+	OwnerGid    string `json:"OwnerGid"`
+	OwnerUid    string `json:"OwnerUid"`
+	Permissions string `json:"Permissions"`
+}
+
+type AwsEfsAccessPointRootDirectoryDetails struct {
+	CreationInfo string `json:"CreationInfo"`
+	Path         string `json:"Path"`
+}
+
+type AwsEksClusterDetails struct {
+	Arn                      string `json:"Arn"`
+	CertificateAuthorityData string `json:"CertificateAuthorityData"`
+	ClusterStatus            string `json:"ClusterStatus"`
+	Endpoint                 string `json:"Endpoint"`
+	Logging                  string `json:"Logging"`
+	Name                     string `json:"Name"`
+	ResourcesVpcConfig       string `json:"ResourcesVpcConfig"`
+	RoleArn                  string `json:"RoleArn"`
+	Version                  string `json:"Version"`
+}
+
+type AwsEksClusterLoggingClusterLoggingDetails struct {
+	Enabled string `json:"Enabled"`
+	Types   string `json:"Types"`
+}
+
+type AwsEksClusterLoggingDetails struct {
+	ClusterLogging string `json:"ClusterLogging"`
+}
+
+type AwsEksClusterResourcesVpcConfigDetails struct {
+	EndpointPublicAccess string `json:"EndpointPublicAccess"`
+	SecurityGroupIds     string `json:"SecurityGroupIds"`
+	SubnetIds            string `json:"SubnetIds"`
+}
+
+type AwsElasticBeanstalkEnvironmentDetails struct {
+	ApplicationName   string `json:"ApplicationName"`
+	Cname             string `json:"Cname"`
+	DateCreated       string `json:"DateCreated"`
+	DateUpdated       string `json:"DateUpdated"`
+	Description       string `json:"Description"`
+	EndpointUrl       string `json:"EndpointUrl"`
+	EnvironmentArn    string `json:"EnvironmentArn"`
+	EnvironmentId     string `json:"EnvironmentId"`
+	EnvironmentLinks  string `json:"EnvironmentLinks"`
+	EnvironmentName   string `json:"EnvironmentName"`
+	OptionSettings    string `json:"OptionSettings"`
+	PlatformArn       string `json:"PlatformArn"`
+	SolutionStackName string `json:"SolutionStackName"`
+	Status            string `json:"Status"`
+	Tier              string `json:"Tier"`
+	VersionLabel      string `json:"VersionLabel"`
+}
+
+type AwsElasticBeanstalkEnvironmentEnvironmentLink struct {
+	EnvironmentName string `json:"EnvironmentName"`
+	LinkName        string `json:"LinkName"`
+}
+
+type AwsElasticBeanstalkEnvironmentOptionSetting struct {
+	Namespace    string `json:"Namespace"`
+	OptionName   string `json:"OptionName"`
+	ResourceName string `json:"ResourceName"`
+	Value        string `json:"Value"`
+}
+
+type AwsElasticBeanstalkEnvironmentTier struct {
+	Name    string `json:"Name"`
+	Type    string `json:"Type"`
+	Version string `json:"Version"`
+}
+
+type AwsElasticsearchDomainDetails struct {
+	AccessPolicies              string `json:"AccessPolicies"`
+	DomainEndpointOptions       string `json:"DomainEndpointOptions"`
+	DomainId                    string `json:"DomainId"`
+	DomainName                  string `json:"DomainName"`
+	ElasticsearchClusterConfig  string `json:"ElasticsearchClusterConfig"`
+	ElasticsearchVersion        string `json:"ElasticsearchVersion"`
+	EncryptionAtRestOptions     string `json:"EncryptionAtRestOptions"`
+	Endpoint                    string `json:"Endpoint"`
+	Endpoints                   string `json:"Endpoints"`
+	LogPublishingOptions        string `json:"LogPublishingOptions"`
+	NodeToNodeEncryptionOptions string `json:"NodeToNodeEncryptionOptions"`
+	ServiceSoftwareOptions      string `json:"ServiceSoftwareOptions"`
+	VPCOptions                  string `json:"VPCOptions"`
+}
+
+type AwsElasticsearchDomainDomainEndpointOptions struct {
+	EnforceHTTPS      string `json:"EnforceHTTPS"`
+	TLSSecurityPolicy string `json:"TLSSecurityPolicy"`
+}
+
+type AwsElasticsearchDomainElasticsearchClusterConfigDetails struct {
+	DedicatedMasterCount   string `json:"DedicatedMasterCount"`
+	DedicatedMasterEnabled string `json:"DedicatedMasterEnabled"`
+	DedicatedMasterType    string `json:"DedicatedMasterType"`
+	InstanceCount          string `json:"InstanceCount"`
+	InstanceType           string `json:"InstanceType"`
+	ZoneAwarenessConfig    string `json:"ZoneAwarenessConfig"`
+	ZoneAwarenessEnabled   string `json:"ZoneAwarenessEnabled"`
+}
+
+type AwsElasticsearchDomainElasticsearchClusterConfigZoneAwarenessConfigDetails struct {
+	AvailabilityZoneCount string `json:"AvailabilityZoneCount"`
+}
+
+type AwsElasticsearchDomainEncryptionAtRestOptions struct {
+	Enabled  string `json:"Enabled"`
+	KmsKeyId string `json:"KmsKeyId"`
+}
+
+type AwsElasticsearchDomainLogPublishingOptions struct {
+	AuditLogs      json.RawMessage `json:"AuditLogs"`
+	IndexSlowLogs  string          `json:"IndexSlowLogs"`
+	SearchSlowLogs string          `json:"SearchSlowLogs"`
+}
+
+type AwsElasticsearchDomainLogPublishingOptionsLogConfig struct {
+	CloudWatchLogsLogGroupArn string `json:"CloudWatchLogsLogGroupArn"`
+	Enabled                   string `json:"Enabled"`
+}
+
+type AwsElasticsearchDomainNodeToNodeEncryptionOptions struct {
+	Enabled string `json:"Enabled"`
+}
+
+type AwsElasticsearchDomainServiceSoftwareOptions struct {
+	AutomatedUpdateDate string `json:"AutomatedUpdateDate"`
+	Cancellable         string `json:"Cancellable"`
+	CurrentVersion      string `json:"CurrentVersion"`
+	Description         string `json:"Description"`
+	NewVersion          string `json:"NewVersion"`
+	UpdateAvailable     string `json:"UpdateAvailable"`
+	UpdateStatus        string `json:"UpdateStatus"`
+}
+
+type AwsElasticsearchDomainVPCOptions struct {
+	AvailabilityZones string `json:"AvailabilityZones"`
+	SecurityGroupIds  string `json:"SecurityGroupIds"`
+	SubnetIds         string `json:"SubnetIds"`
+	VPCId             string `json:"VPCId"`
+}
+
+type AwsElbAppCookieStickinessPolicy struct {
+	CookieName string `json:"CookieName"`
+	PolicyName string `json:"PolicyName"`
+}
+
+type AwsElbLbCookieStickinessPolicy struct {
+	CookieExpirationPeriod string `json:"CookieExpirationPeriod"`
+	PolicyName             string `json:"PolicyName"`
+}
+
+type AwsElbLoadBalancerAccessLog struct {
+	EmitInterval   string `json:"EmitInterval"`
+	Enabled        string `json:"Enabled"`
+	S3BucketName   string `json:"S3BucketName"`
+	S3BucketPrefix string `json:"S3BucketPrefix"`
+}
+
+type AwsElbLoadBalancerAdditionalAttribute struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type AwsElbLoadBalancerAttributes struct {
+	AccessLog              string `json:"AccessLog"`
+	AdditionalAttributes   string `json:"AdditionalAttributes"`
+	ConnectionDraining     string `json:"ConnectionDraining"`
+	ConnectionSettings     string `json:"ConnectionSettings"`
+	CrossZoneLoadBalancing string `json:"CrossZoneLoadBalancing"`
+}
+
+type AwsElbLoadBalancerBackendServerDescription struct {
+	InstancePort string `json:"InstancePort"`
+	PolicyNames  string `json:"PolicyNames"`
+}
+
+type AwsElbLoadBalancerConnectionDraining struct {
+	Enabled string `json:"Enabled"`
+	Timeout string `json:"Timeout"`
+}
+
+type AwsElbLoadBalancerConnectionSettings struct {
+	IdleTimeout string `json:"IdleTimeout"`
+}
+
+type AwsElbLoadBalancerCrossZoneLoadBalancing struct {
+	Enabled string `json:"Enabled"`
+}
+
+type AwsElbLoadBalancerDetails struct {
+	AvailabilityZones         string `json:"AvailabilityZones"`
+	BackendServerDescriptions string `json:"BackendServerDescriptions"`
+	CanonicalHostedZoneName   string `json:"CanonicalHostedZoneName"`
+	CanonicalHostedZoneNameID string `json:"CanonicalHostedZoneNameID"`
+	CreatedTime               string `json:"CreatedTime"`
+	DnsName                   string `json:"DnsName"`
+	HealthCheck               string `json:"HealthCheck"`
+	Instances                 string `json:"Instances"`
+	ListenerDescriptions      string `json:"ListenerDescriptions"`
+	LoadBalancerAttributes    string `json:"LoadBalancerAttributes"`
+	LoadBalancerName          string `json:"LoadBalancerName"`
+	Policies                  string `json:"Policies"`
+	Scheme                    string `json:"Scheme"`
+	SecurityGroups            string `json:"SecurityGroups"`
+	SourceSecurityGroup       string `json:"SourceSecurityGroup"`
+	Subnets                   string `json:"Subnets"`
+	VpcId                     string `json:"VpcId"`
+}
+
+type AwsElbLoadBalancerHealthCheck struct {
+	HealthyThreshold   string `json:"HealthyThreshold"`
+	Interval           string `json:"Interval"`
+	Target             string `json:"Target"`
+	Timeout            string `json:"Timeout"`
+	UnhealthyThreshold string `json:"UnhealthyThreshold"`
+}
+
+type AwsElbLoadBalancerInstance struct {
+	InstanceId string `json:"InstanceId"`
+}
+
+type AwsElbLoadBalancerListener struct {
+	InstancePort     string `json:"InstancePort"`
+	InstanceProtocol string `json:"InstanceProtocol"`
+	LoadBalancerPort string `json:"LoadBalancerPort"`
+	Protocol         string `json:"Protocol"`
+	SslCertificateId string `json:"SslCertificateId"`
+}
+
+type AwsElbLoadBalancerListenerDescription struct {
+	Listener    string `json:"Listener"`
+	PolicyNames string `json:"PolicyNames"`
+}
+
+type AwsElbLoadBalancerPolicies struct {
+	AppCookieStickinessPolicies string `json:"AppCookieStickinessPolicies"`
+	LbCookieStickinessPolicies  string `json:"LbCookieStickinessPolicies"`
+	OtherPolicies               string `json:"OtherPolicies"`
+}
+
+type AwsElbLoadBalancerSourceSecurityGroup struct {
+	GroupName  string `json:"GroupName"`
+	OwnerAlias string `json:"OwnerAlias"`
+}
+
+type AwsElbv2LoadBalancerAttribute struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type AwsElbv2LoadBalancerDetails struct {
+	AvailabilityZones      string `json:"AvailabilityZones"`
+	CanonicalHostedZoneId  string `json:"CanonicalHostedZoneId"`
+	CreatedTime            string `json:"CreatedTime"`
+	DNSName                string `json:"DNSName"`
+	IpAddressType          string `json:"IpAddressType"`
+	LoadBalancerAttributes string `json:"LoadBalancerAttributes"`
+	Scheme                 string `json:"Scheme"`
+	SecurityGroups         string `json:"SecurityGroups"`
+	State                  string `json:"State"`
+	Type                   string `json:"Type"`
+	VpcId                  string `json:"VpcId"`
+}
+
+type AwsIamAccessKeyDetails struct {
+	AccessKeyId    string `json:"AccessKeyId"`
+	AccountId      string `json:"AccountId"`
+	CreatedAt      string `json:"CreatedAt"`
+	PrincipalId    string `json:"PrincipalId"`
+	PrincipalName  string `json:"PrincipalName"`
+	PrincipalType  string `json:"PrincipalType"`
+	SessionContext string `json:"SessionContext"`
+	Status         string `json:"Status"`
+	UserName       string `json:"UserName"`
+}
+
+type AwsIamAccessKeySessionContext struct {
+	Attributes    string `json:"Attributes"`
+	SessionIssuer string `json:"SessionIssuer"`
+}
+
+type AwsIamAccessKeySessionContextAttributes struct {
+	CreationDate     string `json:"CreationDate"`
+	MfaAuthenticated string `json:"MfaAuthenticated"`
+}
+
+type AwsIamAccessKeySessionContextSessionIssuer struct {
+	AccountId   string `json:"AccountId"`
+	Arn         string `json:"Arn"`
+	PrincipalId string `json:"PrincipalId"`
+	Type        string `json:"Type"`
+	UserName    string `json:"UserName"`
+}
+
+type AwsIamAttachedManagedPolicy struct {
+	PolicyArn  string `json:"PolicyArn"`
+	PolicyName string `json:"PolicyName"`
+}
+
+type AwsIamGroupDetails struct {
+	AttachedManagedPolicies string `json:"AttachedManagedPolicies"`
+	CreateDate              string `json:"CreateDate"`
+	GroupId                 string `json:"GroupId"`
+	GroupName               string `json:"GroupName"`
+	GroupPolicyList         string `json:"GroupPolicyList"`
+	Path                    string `json:"Path"`
+}
+
+type AwsIamGroupPolicy struct {
+	PolicyName string `json:"PolicyName"`
+}
+
+type AwsIamInstanceProfile struct {
+	Arn                 string `json:"Arn"`
+	CreateDate          string `json:"CreateDate"`
+	InstanceProfileId   string `json:"InstanceProfileId"`
+	InstanceProfileName string `json:"InstanceProfileName"`
+	Path                string `json:"Path"`
+	Roles               string `json:"Roles"`
+}
+
+type AwsIamInstanceProfileRole struct {
+	Arn                      string `json:"Arn"`
+	AssumeRolePolicyDocument string `json:"AssumeRolePolicyDocument"`
+	CreateDate               string `json:"CreateDate"`
+	Path                     string `json:"Path"`
+	RoleId                   string `json:"RoleId"`
+	RoleName                 string `json:"RoleName"`
+}
+
+type AwsIamPermissionsBoundary struct {
+	PermissionsBoundaryArn  string `json:"PermissionsBoundaryArn"`
+	PermissionsBoundaryType string `json:"PermissionsBoundaryType"`
+}
+
+type AwsIamPolicyDetails struct {
+	AttachmentCount               string `json:"AttachmentCount"`
+	CreateDate                    string `json:"CreateDate"`
+	DefaultVersionId              string `json:"DefaultVersionId"`
+	Description                   string `json:"Description"`
+	IsAttachable                  string `json:"IsAttachable"`
+	Path                          string `json:"Path"`
+	PermissionsBoundaryUsageCount string `json:"PermissionsBoundaryUsageCount"`
+	PolicyId                      string `json:"PolicyId"`
+	PolicyName                    string `json:"PolicyName"`
+	PolicyVersionList             string `json:"PolicyVersionList"`
+	UpdateDate                    string `json:"UpdateDate"`
+}
+
+type AwsIamPolicyVersion struct {
+	CreateDate       string `json:"CreateDate"`
+	IsDefaultVersion string `json:"IsDefaultVersion"`
+	VersionId        string `json:"VersionId"`
+}
+
+type AwsIamRoleDetails struct {
+	AssumeRolePolicyDocument string          `json:"AssumeRolePolicyDocument"`
+	AttachedManagedPolicies  string          `json:"AttachedManagedPolicies"`
+	CreateDate               string          `json:"CreateDate"`
+	InstanceProfileList      string          `json:"InstanceProfileList"`
+	MaxSessionDuration       string          `json:"MaxSessionDuration"`
+	Path                     string          `json:"Path"`
+	PermissionsBoundary      json.RawMessage `json:"PermissionsBoundary"`
+	RoleId                   string          `json:"RoleId"`
+	RoleName                 string          `json:"RoleName"`
+	RolePolicyList           string          `json:"RolePolicyList"`
+}
+
+type AwsIamRolePolicy struct {
+	PolicyName string `json:"PolicyName"`
+}
+
+type AwsIamUserDetails struct {
+	AttachedManagedPolicies string `json:"AttachedManagedPolicies"`
+	CreateDate              string `json:"CreateDate"`
+	GroupList               string `json:"GroupList"`
+	Path                    string `json:"Path"`
+	PermissionsBoundary     string `json:"PermissionsBoundary"`
+	UserId                  string `json:"UserId"`
+	UserName                string `json:"UserName"`
+	UserPolicyList          string `json:"UserPolicyList"`
+}
+
+type AwsIamUserPolicy struct {
+	PolicyName string `json:"PolicyName"`
+}
+
+type AwsKinesisStreamDetails struct {
+	Arn                  string `json:"Arn"`
+	Name                 string `json:"Name"`
+	RetentionPeriodHours string `json:"RetentionPeriodHours"`
+	ShardCount           string `json:"ShardCount"`
+	StreamEncryption     string `json:"StreamEncryption"`
+}
+
+type AwsKinesisStreamStreamEncryptionDetails struct {
+	EncryptionType string `json:"EncryptionType"`
+	KeyId          string `json:"KeyId"`
+}
+
+type AwsKmsKeyDetails struct {
+	AWSAccountId      string `json:"AWSAccountId"`
+	CreationDate      string `json:"CreationDate"`
+	Description       string `json:"Description"`
+	KeyId             string `json:"KeyId"`
+	KeyManager        string `json:"KeyManager"`
+	KeyRotationStatus string `json:"KeyRotationStatus"`
+	KeyState          string `json:"KeyState"`
+	Origin            string `json:"Origin"`
+}
+
+type AwsLambdaFunctionCode struct {
+	S3Bucket        string `json:"S3Bucket"`
+	S3Key           string `json:"S3Key"`
+	S3ObjectVersion string `json:"S3ObjectVersion"`
+	ZipFile         string `json:"ZipFile"`
+}
+
+type AwsLambdaFunctionDeadLetterConfig struct {
+	TargetArn string `json:"TargetArn"`
+}
+
+type AwsLambdaFunctionDetails struct {
+	Architectures    string `json:"Architectures"`
+	Code             string `json:"Code"`
+	CodeSha256       string `json:"CodeSha256"`
+	DeadLetterConfig string `json:"DeadLetterConfig"`
+	Environment      string `json:"Environment"`
+	FunctionName     string `json:"FunctionName"`
+	Handler          string `json:"Handler"`
+	KmsKeyArn        string `json:"KmsKeyArn"`
+	LastModified     string `json:"LastModified"`
+	Layers           string `json:"Layers"`
+	MasterArn        string `json:"MasterArn"`
+	MemorySize       string `json:"MemorySize"`
+	PackageType      string `json:"PackageType"`
+	RevisionId       string `json:"RevisionId"`
+	Role             string `json:"Role"`
+	Runtime          string `json:"Runtime"`
+	Timeout          string `json:"Timeout"`
+	TracingConfig    string `json:"TracingConfig"`
+	Version          string `json:"Version"`
+	VpcConfig        string `json:"VpcConfig"`
+}
+
+type AwsLambdaFunctionEnvironment struct {
+	Error     string `json:"Error"`
+	Variables string `json:"Variables"`
+}
+
+type AwsLambdaFunctionEnvironmentError struct {
+	ErrorCode string `json:"ErrorCode"`
+	Message   string `json:"Message"`
+}
+
+type AwsLambdaFunctionLayer struct {
+	Arn      string `json:"Arn"`
+	CodeSize string `json:"CodeSize"`
+}
+
+type AwsLambdaFunctionTracingConfig struct {
+	Mode string `json:"Mode"`
+}
+
+type AwsLambdaFunctionVpcConfig struct {
+	SecurityGroupIds string `json:"SecurityGroupIds"`
+	SubnetIds        string `json:"SubnetIds"`
+	VpcId            string `json:"VpcId"`
+}
+
+type AwsLambdaLayerVersionDetails struct {
+	CompatibleRuntimes string `json:"CompatibleRuntimes"`
+	CreatedDate        string `json:"CreatedDate"`
+	Version            string `json:"Version"`
+}
+
+type AwsMountPoint struct {
+	ContainerPath string `json:"ContainerPath"`
+	SourceVolume  string `json:"SourceVolume"`
+}
+
+type AwsNetworkFirewallFirewallDetails struct {
+	DeleteProtection               string `json:"DeleteProtection"`
+	Description                    string `json:"Description"`
+	FirewallArn                    string `json:"FirewallArn"`
+	FirewallId                     string `json:"FirewallId"`
+	FirewallName                   string `json:"FirewallName"`
+	FirewallPolicyArn              string `json:"FirewallPolicyArn"`
+	FirewallPolicyChangeProtection string `json:"FirewallPolicyChangeProtection"`
+	SubnetChangeProtection         string `json:"SubnetChangeProtection"`
+	SubnetMappings                 string `json:"SubnetMappings"`
+	VpcId                          string `json:"VpcId"`
+}
+
+type AwsNetworkFirewallFirewallPolicyDetails struct {
+	Description        string `json:"Description"`
+	FirewallPolicy     string `json:"FirewallPolicy"`
+	FirewallPolicyArn  string `json:"FirewallPolicyArn"`
+	FirewallPolicyId   string `json:"FirewallPolicyId"`
+	FirewallPolicyName string `json:"FirewallPolicyName"`
+}
+
+type AwsNetworkFirewallFirewallSubnetMappingsDetails struct {
+	SubnetId string `json:"SubnetId"`
+}
+
+type AwsNetworkFirewallRuleGroupDetails struct {
+	Capacity      string `json:"Capacity"`
+	Description   string `json:"Description"`
+	RuleGroup     string `json:"RuleGroup"`
+	RuleGroupArn  string `json:"RuleGroupArn"`
+	RuleGroupId   string `json:"RuleGroupId"`
+	RuleGroupName string `json:"RuleGroupName"`
+	Type          string `json:"Type"`
+}
+
+type AwsOpenSearchServiceDomainAdvancedSecurityOptionsDetails struct {
+	Enabled                     string `json:"Enabled"`
+	InternalUserDatabaseEnabled string `json:"InternalUserDatabaseEnabled"`
+	MasterUserOptions           string `json:"MasterUserOptions"`
+}
+
+type AwsOpenSearchServiceDomainClusterConfigDetails struct {
+	DedicatedMasterCount   string `json:"DedicatedMasterCount"`
+	DedicatedMasterEnabled string `json:"DedicatedMasterEnabled"`
+	DedicatedMasterType    string `json:"DedicatedMasterType"`
+	InstanceCount          string `json:"InstanceCount"`
+	InstanceType           string `json:"InstanceType"`
+	WarmCount              string `json:"WarmCount"`
+	WarmEnabled            string `json:"WarmEnabled"`
+	WarmType               string `json:"WarmType"`
+	ZoneAwarenessConfig    string `json:"ZoneAwarenessConfig"`
+	ZoneAwarenessEnabled   string `json:"ZoneAwarenessEnabled"`
+}
+
+type AwsOpenSearchServiceDomainClusterConfigZoneAwarenessConfigDetails struct {
+	AvailabilityZoneCount string `json:"AvailabilityZoneCount"`
+}
+
+type AwsOpenSearchServiceDomainDetails struct {
+	AccessPolicies              string `json:"AccessPolicies"`
+	AdvancedSecurityOptions     string `json:"AdvancedSecurityOptions"`
+	Arn                         string `json:"Arn"`
+	ClusterConfig               string `json:"ClusterConfig"`
+	DomainEndpoint              string `json:"DomainEndpoint"`
+	DomainEndpointOptions       string `json:"DomainEndpointOptions"`
+	DomainEndpoints             string `json:"DomainEndpoints"`
+	DomainName                  string `json:"DomainName"`
+	EncryptionAtRestOptions     string `json:"EncryptionAtRestOptions"`
+	EngineVersion               string `json:"EngineVersion"`
+	Id                          string `json:"Id"`
+	LogPublishingOptions        string `json:"LogPublishingOptions"`
+	NodeToNodeEncryptionOptions string `json:"NodeToNodeEncryptionOptions"`
+	ServiceSoftwareOptions      string `json:"ServiceSoftwareOptions"`
+	VpcOptions                  string `json:"VpcOptions"`
+}
+
+type AwsOpenSearchServiceDomainDomainEndpointOptionsDetails struct {
+	CustomEndpoint               string `json:"CustomEndpoint"`
+	CustomEndpointCertificateArn string `json:"CustomEndpointCertificateArn"`
+	CustomEndpointEnabled        string `json:"CustomEndpointEnabled"`
+	EnforceHTTPS                 string `json:"EnforceHTTPS"`
+	TLSSecurityPolicy            string `json:"TLSSecurityPolicy"`
+}
+
+type AwsOpenSearchServiceDomainEncryptionAtRestOptionsDetails struct {
+	Enabled  string `json:"Enabled"`
+	KmsKeyId string `json:"KmsKeyId"`
+}
+
+type AwsOpenSearchServiceDomainLogPublishingOption struct {
+	CloudWatchLogsLogGroupArn string `json:"CloudWatchLogsLogGroupArn"`
+	Enabled                   string `json:"Enabled"`
+}
+
+type AwsOpenSearchServiceDomainLogPublishingOptionsDetails struct {
+	AuditLogs      string `json:"AuditLogs"`
+	IndexSlowLogs  string `json:"IndexSlowLogs"`
+	SearchSlowLogs string `json:"SearchSlowLogs"`
+}
+
+type AwsOpenSearchServiceDomainMasterUserOptionsDetails struct {
+	MasterUserArn      string `json:"MasterUserArn"`
+	MasterUserName     string `json:"MasterUserName"`
+	MasterUserPassword string `json:"MasterUserPassword"`
+}
+
+type AwsOpenSearchServiceDomainNodeToNodeEncryptionOptionsDetails struct {
+	Enabled string `json:"Enabled"`
+}
+
+type AwsOpenSearchServiceDomainServiceSoftwareOptionsDetails struct {
+	AutomatedUpdateDate string `json:"AutomatedUpdateDate"`
+	Cancellable         string `json:"Cancellable"`
+	CurrentVersion      string `json:"CurrentVersion"`
+	Description         string `json:"Description"`
+	NewVersion          string `json:"NewVersion"`
+	OptionalDeployment  string `json:"OptionalDeployment"`
+	UpdateAvailable     string `json:"UpdateAvailable"`
+	UpdateStatus        string `json:"UpdateStatus"`
+}
+
+type AwsOpenSearchServiceDomainVpcOptionsDetails struct {
+	SecurityGroupIds string `json:"SecurityGroupIds"`
+	SubnetIds        string `json:"SubnetIds"`
+}
+
+type AwsRdsDbClusterAssociatedRole struct {
+	RoleArn string `json:"RoleArn"`
+	Status  string `json:"Status"`
+}
+
+type AwsRdsDbClusterDetails struct {
+	ActivityStreamStatus             string `json:"ActivityStreamStatus"`
+	AllocatedStorage                 string `json:"AllocatedStorage"`
+	AssociatedRoles                  string `json:"AssociatedRoles"`
+	AvailabilityZones                string `json:"AvailabilityZones"`
+	BackupRetentionPeriod            string `json:"BackupRetentionPeriod"`
+	ClusterCreateTime                string `json:"ClusterCreateTime"`
+	CopyTagsToSnapshot               string `json:"CopyTagsToSnapshot"`
+	CrossAccountClone                string `json:"CrossAccountClone"`
+	CustomEndpoints                  string `json:"CustomEndpoints"`
+	DatabaseName                     string `json:"DatabaseName"`
+	DbClusterIdentifier              string `json:"DbClusterIdentifier"`
+	DbClusterMembers                 string `json:"DbClusterMembers"`
+	DbClusterOptionGroupMemberships  string `json:"DbClusterOptionGroupMemberships"`
+	DbClusterParameterGroup          string `json:"DbClusterParameterGroup"`
+	DbClusterResourceId              string `json:"DbClusterResourceId"`
+	DbSubnetGroup                    string `json:"DbSubnetGroup"`
+	DeletionProtection               string `json:"DeletionProtection"`
+	DomainMemberships                string `json:"DomainMemberships"`
+	EnabledCloudWatchLogsExports     string `json:"EnabledCloudWatchLogsExports"`
+	Endpoint                         string `json:"Endpoint"`
+	Engine                           string `json:"Engine"`
+	EngineMode                       string `json:"EngineMode"`
+	EngineVersion                    string `json:"EngineVersion"`
+	HostedZoneId                     string `json:"HostedZoneId"`
+	HttpEndpointEnabled              string `json:"HttpEndpointEnabled"`
+	IamDatabaseAuthenticationEnabled string `json:"IamDatabaseAuthenticationEnabled"`
+	KmsKeyId                         string `json:"KmsKeyId"`
+	MasterUsername                   string `json:"MasterUsername"`
+	MultiAz                          string `json:"MultiAz"`
+	Port                             string `json:"Port"`
+	PreferredBackupWindow            string `json:"PreferredBackupWindow"`
+	PreferredMaintenanceWindow       string `json:"PreferredMaintenanceWindow"`
+	ReadReplicaIdentifiers           string `json:"ReadReplicaIdentifiers"`
+	ReaderEndpoint                   string `json:"ReaderEndpoint"`
+	Status                           string `json:"Status"`
+	StorageEncrypted                 string `json:"StorageEncrypted"`
+	VpcSecurityGroups                string `json:"VpcSecurityGroups"`
+}
+
+type AwsRdsDbClusterMember struct {
+	DbClusterParameterGroupStatus string `json:"DbClusterParameterGroupStatus"`
+	DbInstanceIdentifier          string `json:"DbInstanceIdentifier"`
+	IsClusterWriter               string `json:"IsClusterWriter"`
+	PromotionTier                 string `json:"PromotionTier"`
+}
+
+type AwsRdsDbClusterOptionGroupMembership struct {
+	DbClusterOptionGroupName string `json:"DbClusterOptionGroupName"`
+	Status                   string `json:"Status"`
+}
+
+type AwsRdsDbClusterSnapshotDetails struct {
+	AllocatedStorage                 string `json:"AllocatedStorage"`
+	AvailabilityZones                string `json:"AvailabilityZones"`
+	ClusterCreateTime                string `json:"ClusterCreateTime"`
+	DbClusterIdentifier              string `json:"DbClusterIdentifier"`
+	DbClusterSnapshotIdentifier      string `json:"DbClusterSnapshotIdentifier"`
+	Engine                           string `json:"Engine"`
+	EngineVersion                    string `json:"EngineVersion"`
+	IamDatabaseAuthenticationEnabled string `json:"IamDatabaseAuthenticationEnabled"`
+	KmsKeyId                         string `json:"KmsKeyId"`
+	LicenseModel                     string `json:"LicenseModel"`
+	MasterUsername                   string `json:"MasterUsername"`
+	PercentProgress                  string `json:"PercentProgress"`
+	Port                             string `json:"Port"`
+	SnapshotCreateTime               string `json:"SnapshotCreateTime"`
+	SnapshotType                     string `json:"SnapshotType"`
+	Status                           string `json:"Status"`
+	StorageEncrypted                 string `json:"StorageEncrypted"`
+	VpcId                            string `json:"VpcId"`
+}
+
+type AwsRdsDbDomainMembership struct {
+	Domain      string `json:"Domain"`
+	Fqdn        string `json:"Fqdn"`
+	IamRoleName string `json:"IamRoleName"`
+	Status      string `json:"Status"`
+}
+
+type AwsRdsDbInstanceAssociatedRole struct {
+	FeatureName string `json:"FeatureName"`
+	RoleArn     string `json:"RoleArn"`
+	Status      string `json:"Status"`
+}
+
+type AwsRdsDbInstanceDetails struct {
+	AllocatedStorage                      string          `json:"AllocatedStorage"`
+	AssociatedRoles                       string          `json:"AssociatedRoles"`
+	AutoMinorVersionUpgrade               string          `json:"AutoMinorVersionUpgrade"`
+	AvailabilityZone                      string          `json:"AvailabilityZone"`
+	BackupRetentionPeriod                 string          `json:"BackupRetentionPeriod"`
+	CACertificateIdentifier               string          `json:"CACertificateIdentifier"`
+	CharacterSetName                      string          `json:"CharacterSetName"`
+	CopyTagsToSnapshot                    string          `json:"CopyTagsToSnapshot"`
+	DBClusterIdentifier                   string          `json:"DBClusterIdentifier"`
+	DBInstanceClass                       string          `json:"DBInstanceClass"`
+	DBInstanceIdentifier                  string          `json:"DBInstanceIdentifier"`
+	DBName                                string          `json:"DBName"`
+	DbInstancePort                        string          `json:"DbInstancePort"`
+	DbInstanceStatus                      string          `json:"DbInstanceStatus"`
+	DbParameterGroups                     string          `json:"DbParameterGroups"`
+	DbSecurityGroups                      string          `json:"DbSecurityGroups"`
+	DbSubnetGroup                         string          `json:"DbSubnetGroup"`
+	DbiResourceId                         string          `json:"DbiResourceId"`
+	DeletionProtection                    string          `json:"DeletionProtection"`
+	DomainMemberships                     string          `json:"DomainMemberships"`
+	EnabledCloudWatchLogsExports          string          `json:"EnabledCloudWatchLogsExports"`
+	Endpoint                              string          `json:"Endpoint"`
+	Engine                                string          `json:"Engine"`
+	EngineVersion                         string          `json:"EngineVersion"`
+	EnhancedMonitoringResourceArn         string          `json:"EnhancedMonitoringResourceArn"`
+	IAMDatabaseAuthenticationEnabled      string          `json:"IAMDatabaseAuthenticationEnabled"`
+	InstanceCreateTime                    string          `json:"InstanceCreateTime"`
+	Iops                                  string          `json:"Iops"`
+	KmsKeyId                              string          `json:"KmsKeyId"`
+	LatestRestorableTime                  string          `json:"LatestRestorableTime"`
+	LicenseModel                          string          `json:"LicenseModel"`
+	ListenerEndpoint                      json.RawMessage `json:"ListenerEndpoint"`
+	MasterUsername                        string          `json:"MasterUsername"`
+	MaxAllocatedStorage                   string          `json:"MaxAllocatedStorage"`
+	MonitoringInterval                    string          `json:"MonitoringInterval"`
+	MonitoringRoleArn                     string          `json:"MonitoringRoleArn"`
+	MultiAz                               string          `json:"MultiAz"`
+	OptionGroupMemberships                string          `json:"OptionGroupMemberships"`
+	PendingModifiedValues                 string          `json:"PendingModifiedValues"`
+	PerformanceInsightsEnabled            string          `json:"PerformanceInsightsEnabled"`
+	PerformanceInsightsKmsKeyId           string          `json:"PerformanceInsightsKmsKeyId"`
+	PerformanceInsightsRetentionPeriod    string          `json:"PerformanceInsightsRetentionPeriod"`
+	PreferredBackupWindow                 string          `json:"PreferredBackupWindow"`
+	PreferredMaintenanceWindow            string          `json:"PreferredMaintenanceWindow"`
+	ProcessorFeatures                     string          `json:"ProcessorFeatures"`
+	PromotionTier                         string          `json:"PromotionTier"`
+	PubliclyAccessible                    string          `json:"PubliclyAccessible"`
+	ReadReplicaDBClusterIdentifiers       string          `json:"ReadReplicaDBClusterIdentifiers"`
+	ReadReplicaDBInstanceIdentifiers      string          `json:"ReadReplicaDBInstanceIdentifiers"`
+	ReadReplicaSourceDBInstanceIdentifier string          `json:"ReadReplicaSourceDBInstanceIdentifier"`
+	SecondaryAvailabilityZone             string          `json:"SecondaryAvailabilityZone"`
+	StatusInfos                           string          `json:"StatusInfos"`
+	StorageEncrypted                      string          `json:"StorageEncrypted"`
+	StorageType                           string          `json:"StorageType"`
+	TdeCredentialArn                      string          `json:"TdeCredentialArn"`
+	Timezone                              string          `json:"Timezone"`
+	VpcSecurityGroups                     string          `json:"VpcSecurityGroups"`
+}
+
+type AwsRdsDbInstanceEndpoint struct {
+	Address      string `json:"Address"`
+	HostedZoneId string `json:"HostedZoneId"`
+	Port         string `json:"Port"`
+}
+
+type AwsRdsDbInstanceVpcSecurityGroup struct {
+	Status             string `json:"Status"`
+	VpcSecurityGroupId string `json:"VpcSecurityGroupId"`
+}
+
+type AwsRdsDbOptionGroupMembership struct {
+	OptionGroupName string `json:"OptionGroupName"`
+	Status          string `json:"Status"`
+}
+
+type AwsRdsDbParameterGroup struct {
+	DbParameterGroupName string `json:"DbParameterGroupName"`
+	ParameterApplyStatus string `json:"ParameterApplyStatus"`
+}
+
+type AwsRdsDbPendingModifiedValues struct {
+	AllocatedStorage             string `json:"AllocatedStorage"`
+	BackupRetentionPeriod        string `json:"BackupRetentionPeriod"`
+	CaCertificateIdentifier      string `json:"CaCertificateIdentifier"`
+	DbInstanceClass              string `json:"DbInstanceClass"`
+	DbInstanceIdentifier         string `json:"DbInstanceIdentifier"`
+	DbSubnetGroupName            string `json:"DbSubnetGroupName"`
+	EngineVersion                string `json:"EngineVersion"`
+	Iops                         string `json:"Iops"`
+	LicenseModel                 string `json:"LicenseModel"`
+	MasterUserPassword           string `json:"MasterUserPassword"`
+	MultiAZ                      string `json:"MultiAZ"`
+	PendingCloudWatchLogsExports string `json:"PendingCloudWatchLogsExports"`
+	Port                         string `json:"Port"`
+	ProcessorFeatures            string `json:"ProcessorFeatures"`
+	StorageType                  string `json:"StorageType"`
+}
+
+type AwsRdsDbProcessorFeature struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsRdsDbSecurityGroupDetails struct {
+	DbSecurityGroupArn         string `json:"DbSecurityGroupArn"`
+	DbSecurityGroupDescription string `json:"DbSecurityGroupDescription"`
+	DbSecurityGroupName        string `json:"DbSecurityGroupName"`
+	Ec2SecurityGroups          string `json:"Ec2SecurityGroups"`
+	IpRanges                   string `json:"IpRanges"`
+	OwnerId                    string `json:"OwnerId"`
+	VpcId                      string `json:"VpcId"`
+}
+
+type AwsRdsDbSecurityGroupEc2SecurityGroup struct {
+	Ec2SecurityGroupId      string `json:"Ec2SecurityGroupId"`
+	Ec2SecurityGroupName    string `json:"Ec2SecurityGroupName"`
+	Ec2SecurityGroupOwnerId string `json:"Ec2SecurityGroupOwnerId"`
+	Status                  string `json:"Status"`
+}
+
+type AwsRdsDbSecurityGroupIpRange struct {
+	CidrIp string `json:"CidrIp"`
+	Status string `json:"Status"`
+}
+
+type AwsRdsDbSnapshotDetails struct {
+	AllocatedStorage                 string `json:"AllocatedStorage"`
+	AvailabilityZone                 string `json:"AvailabilityZone"`
+	DbInstanceIdentifier             string `json:"DbInstanceIdentifier"`
+	DbSnapshotIdentifier             string `json:"DbSnapshotIdentifier"`
+	DbiResourceId                    string `json:"DbiResourceId"`
+	Encrypted                        string `json:"Encrypted"`
+	Engine                           string `json:"Engine"`
+	EngineVersion                    string `json:"EngineVersion"`
+	IamDatabaseAuthenticationEnabled string `json:"IamDatabaseAuthenticationEnabled"`
+	InstanceCreateTime               string `json:"InstanceCreateTime"`
+	Iops                             string `json:"Iops"`
+	KmsKeyId                         string `json:"KmsKeyId"`
+	LicenseModel                     string `json:"LicenseModel"`
+	MasterUsername                   string `json:"MasterUsername"`
+	OptionGroupName                  string `json:"OptionGroupName"`
+	PercentProgress                  string `json:"PercentProgress"`
+	Port                             string `json:"Port"`
+	ProcessorFeatures                string `json:"ProcessorFeatures"`
+	SnapshotCreateTime               string `json:"SnapshotCreateTime"`
+	SnapshotType                     string `json:"SnapshotType"`
+	SourceDbSnapshotIdentifier       string `json:"SourceDbSnapshotIdentifier"`
+	SourceRegion                     string `json:"SourceRegion"`
+	Status                           string `json:"Status"`
+	StorageType                      string `json:"StorageType"`
+	TdeCredentialArn                 string `json:"TdeCredentialArn"`
+	Timezone                         string `json:"Timezone"`
+	VpcId                            string `json:"VpcId"`
+}
+
+type AwsRdsDbStatusInfo struct {
+	Message    string `json:"Message"`
+	Normal     string `json:"Normal"`
+	Status     string `json:"Status"`
+	StatusType string `json:"StatusType"`
+}
+
+type AwsRdsDbSubnetGroup struct {
+	DbSubnetGroupArn         string `json:"DbSubnetGroupArn"`
+	DbSubnetGroupDescription string `json:"DbSubnetGroupDescription"`
+	DbSubnetGroupName        string `json:"DbSubnetGroupName"`
+	SubnetGroupStatus        string `json:"SubnetGroupStatus"`
+	Subnets                  string `json:"Subnets"`
+	VpcId                    string `json:"VpcId"`
+}
+
+type AwsRdsDbSubnetGroupSubnet struct {
+	SubnetAvailabilityZone string `json:"SubnetAvailabilityZone"`
+	SubnetIdentifier       string `json:"SubnetIdentifier"`
+	SubnetStatus           string `json:"SubnetStatus"`
+}
+
+type AwsRdsDbSubnetGroupSubnetAvailabilityZone struct {
+	Name string `json:"Name"`
+}
+
+type AwsRdsEventSubscriptionDetails struct {
+	CustSubscriptionId       string `json:"CustSubscriptionId"`
+	CustomerAwsId            string `json:"CustomerAwsId"`
+	Enabled                  string `json:"Enabled"`
+	EventCategoriesList      string `json:"EventCategoriesList"`
+	EventSubscriptionArn     string `json:"EventSubscriptionArn"`
+	SnsTopicArn              string `json:"SnsTopicArn"`
+	SourceIdsList            string `json:"SourceIdsList"`
+	SourceType               string `json:"SourceType"`
+	Status                   string `json:"Status"`
+	SubscriptionCreationTime string `json:"SubscriptionCreationTime"`
+}
+
+type AwsRdsPendingCloudWatchLogsExports struct {
+	LogTypesToDisable string `json:"LogTypesToDisable"`
+	LogTypesToEnable  string `json:"LogTypesToEnable"`
+}
+
+type AwsRedshiftClusterClusterNode struct {
+	NodeRole         string `json:"NodeRole"`
+	PrivateIpAddress string `json:"PrivateIpAddress"`
+	PublicIpAddress  string `json:"PublicIpAddress"`
+}
+
+type AwsRedshiftClusterClusterParameterGroup struct {
+	ClusterParameterStatusList string `json:"ClusterParameterStatusList"`
+	ParameterApplyStatus       string `json:"ParameterApplyStatus"`
+	ParameterGroupName         string `json:"ParameterGroupName"`
+}
+
+type AwsRedshiftClusterClusterParameterStatus struct {
+	ParameterApplyErrorDescription string `json:"ParameterApplyErrorDescription"`
+	ParameterApplyStatus           string `json:"ParameterApplyStatus"`
+	ParameterName                  string `json:"ParameterName"`
+}
+
+type AwsRedshiftClusterClusterSecurityGroup struct {
+	ClusterSecurityGroupName string `json:"ClusterSecurityGroupName"`
+	Status                   string `json:"Status"`
+}
+
+type AwsRedshiftClusterClusterSnapshotCopyStatus struct {
+	DestinationRegion             string `json:"DestinationRegion"`
+	ManualSnapshotRetentionPeriod string `json:"ManualSnapshotRetentionPeriod"`
+	RetentionPeriod               string `json:"RetentionPeriod"`
+	SnapshotCopyGrantName         string `json:"SnapshotCopyGrantName"`
+}
+
+type AwsRedshiftClusterDeferredMaintenanceWindow struct {
+	DeferMaintenanceEndTime    string `json:"DeferMaintenanceEndTime"`
+	DeferMaintenanceIdentifier string `json:"DeferMaintenanceIdentifier"`
+	DeferMaintenanceStartTime  string `json:"DeferMaintenanceStartTime"`
+}
+
+type AwsRedshiftClusterDetails struct {
+	AllowVersionUpgrade                    string `json:"AllowVersionUpgrade"`
+	AutomatedSnapshotRetentionPeriod       string `json:"AutomatedSnapshotRetentionPeriod"`
+	AvailabilityZone                       string `json:"AvailabilityZone"`
+	ClusterAvailabilityStatus              string `json:"ClusterAvailabilityStatus"`
+	ClusterCreateTime                      string `json:"ClusterCreateTime"`
+	ClusterIdentifier                      string `json:"ClusterIdentifier"`
+	ClusterNodes                           string `json:"ClusterNodes"`
+	ClusterParameterGroups                 string `json:"ClusterParameterGroups"`
+	ClusterPublicKey                       string `json:"ClusterPublicKey"`
+	ClusterRevisionNumber                  string `json:"ClusterRevisionNumber"`
+	ClusterSecurityGroups                  string `json:"ClusterSecurityGroups"`
+	ClusterSnapshotCopyStatus              string `json:"ClusterSnapshotCopyStatus"`
+	ClusterStatus                          string `json:"ClusterStatus"`
+	ClusterSubnetGroupName                 string `json:"ClusterSubnetGroupName"`
+	ClusterVersion                         string `json:"ClusterVersion"`
+	DBName                                 string `json:"DBName"`
+	DeferredMaintenanceWindows             string `json:"DeferredMaintenanceWindows"`
+	ElasticIpStatus                        string `json:"ElasticIpStatus"`
+	ElasticResizeNumberOfNodeOptions       string `json:"ElasticResizeNumberOfNodeOptions"`
+	Encrypted                              string `json:"Encrypted"`
+	Endpoint                               string `json:"Endpoint"`
+	EnhancedVpcRouting                     string `json:"EnhancedVpcRouting"`
+	ExpectedNextSnapshotScheduleTime       string `json:"ExpectedNextSnapshotScheduleTime"`
+	ExpectedNextSnapshotScheduleTimeStatus string `json:"ExpectedNextSnapshotScheduleTimeStatus"`
+	HsmStatus                              string `json:"HsmStatus"`
+	IamRoles                               string `json:"IamRoles"`
+	KmsKeyId                               string `json:"KmsKeyId"`
+	LoggingStatus                          string `json:"LoggingStatus"`
+	MaintenanceTrackName                   string `json:"MaintenanceTrackName"`
+	ManualSnapshotRetentionPeriod          string `json:"ManualSnapshotRetentionPeriod"`
+	MasterUsername                         string `json:"MasterUsername"`
+	NextMaintenanceWindowStartTime         string `json:"NextMaintenanceWindowStartTime"`
+	NodeType                               string `json:"NodeType"`
+	NumberOfNodes                          string `json:"NumberOfNodes"`
+	PendingActions                         string `json:"PendingActions"`
+	PendingModifiedValues                  string `json:"PendingModifiedValues"`
+	PreferredMaintenanceWindow             string `json:"PreferredMaintenanceWindow"`
+	PubliclyAccessible                     string `json:"PubliclyAccessible"`
+	ResizeInfo                             string `json:"ResizeInfo"`
+	RestoreStatus                          string `json:"RestoreStatus"`
+	SnapshotScheduleIdentifier             string `json:"SnapshotScheduleIdentifier"`
+	SnapshotScheduleState                  string `json:"SnapshotScheduleState"`
+	VpcId                                  string `json:"VpcId"`
+	VpcSecurityGroups                      string `json:"VpcSecurityGroups"`
+}
+
+type AwsRedshiftClusterElasticIpStatus struct {
+	ElasticIp string `json:"ElasticIp"`
+	Status    string `json:"Status"`
+}
+
+type AwsRedshiftClusterEndpoint struct {
+	Address string `json:"Address"`
+	Port    string `json:"Port"`
+}
+
+type AwsRedshiftClusterHsmStatus struct {
+	HsmClientCertificateIdentifier string `json:"HsmClientCertificateIdentifier"`
+	HsmConfigurationIdentifier     string `json:"HsmConfigurationIdentifier"`
+	Status                         string `json:"Status"`
+}
+
+type AwsRedshiftClusterIamRole struct {
+	ApplyStatus string `json:"ApplyStatus"`
+	IamRoleArn  string `json:"IamRoleArn"`
+}
+
+type AwsRedshiftClusterLoggingStatus struct {
+	BucketName                 string `json:"BucketName"`
+	LastFailureMessage         string `json:"LastFailureMessage"`
+	LastFailureTime            string `json:"LastFailureTime"`
+	LastSuccessfulDeliveryTime string `json:"LastSuccessfulDeliveryTime"`
+	LoggingEnabled             string `json:"LoggingEnabled"`
+	S3KeyPrefix                string `json:"S3KeyPrefix"`
+}
+
+type AwsRedshiftClusterPendingModifiedValues struct {
+	AutomatedSnapshotRetentionPeriod string `json:"AutomatedSnapshotRetentionPeriod"`
+	ClusterIdentifier                string `json:"ClusterIdentifier"`
+	ClusterType                      string `json:"ClusterType"`
+	ClusterVersion                   string `json:"ClusterVersion"`
+	EncryptionType                   string `json:"EncryptionType"`
+	EnhancedVpcRouting               string `json:"EnhancedVpcRouting"`
+	MaintenanceTrackName             string `json:"MaintenanceTrackName"`
+	MasterUserPassword               string `json:"MasterUserPassword"`
+	NodeType                         string `json:"NodeType"`
+	NumberOfNodes                    string `json:"NumberOfNodes"`
+	PubliclyAccessible               string `json:"PubliclyAccessible"`
+}
+
+type AwsRedshiftClusterResizeInfo struct {
+	AllowCancelResize string `json:"AllowCancelResize"`
+	ResizeType        string `json:"ResizeType"`
+}
+
+type AwsRedshiftClusterRestoreStatus struct {
+	CurrentRestoreRateInMegaBytesPerSecond string `json:"CurrentRestoreRateInMegaBytesPerSecond"`
+	ElapsedTimeInSeconds                   string `json:"ElapsedTimeInSeconds"`
+	EstimatedTimeToCompletionInSeconds     string `json:"EstimatedTimeToCompletionInSeconds"`
+	ProgressInMegaBytes                    string `json:"ProgressInMegaBytes"`
+	SnapshotSizeInMegaBytes                string `json:"SnapshotSizeInMegaBytes"`
+	Status                                 string `json:"Status"`
+}
+
+type AwsRedshiftClusterVpcSecurityGroup struct {
+	Status             string `json:"Status"`
+	VpcSecurityGroupId string `json:"VpcSecurityGroupId"`
+}
+
+type AwsS3AccountPublicAccessBlockDetails struct {
+	BlockPublicAcls       string `json:"BlockPublicAcls"`
+	BlockPublicPolicy     string `json:"BlockPublicPolicy"`
+	IgnorePublicAcls      string `json:"IgnorePublicAcls"`
+	RestrictPublicBuckets string `json:"RestrictPublicBuckets"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationDetails struct {
+	Rules string `json:"Rules"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesAbortIncompleteMultipartUploadDetails struct {
+	DaysAfterInitiation string `json:"DaysAfterInitiation"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesDetails struct {
+	AbortIncompleteMultipartUpload    string `json:"AbortIncompleteMultipartUpload"`
+	ExpirationDate                    string `json:"ExpirationDate"`
+	ExpirationInDays                  string `json:"ExpirationInDays"`
+	ExpiredObjectDeleteMarker         string `json:"ExpiredObjectDeleteMarker"`
+	Filter                            string `json:"Filter"`
+	ID                                string `json:"ID"`
+	NoncurrentVersionExpirationInDays string `json:"NoncurrentVersionExpirationInDays"`
+	NoncurrentVersionTransitions      string `json:"NoncurrentVersionTransitions"`
+	Prefix                            string `json:"Prefix"`
+	Status                            string `json:"Status"`
+	Transitions                       string `json:"Transitions"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesFilterDetails struct {
+	Predicate string `json:"Predicate"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateDetails struct {
+	Operands string `json:"Operands"`
+	Prefix   string `json:"Prefix"`
+	Tag      string `json:"Tag"`
+	Type     string `json:"Type"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsDetails struct {
+	Prefix string `json:"Prefix"`
+	Tag    string `json:"Tag"`
+	Type   string `json:"Type"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsTagDetails struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateTagDetails struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesNoncurrentVersionTransitionsDetails struct {
+	Days         string `json:"Days"`
+	StorageClass string `json:"StorageClass"`
+}
+
+type AwsS3BucketBucketLifecycleConfigurationRulesTransitionsDetails struct {
+	Date         string `json:"Date"`
+	Days         string `json:"Days"`
+	StorageClass string `json:"StorageClass"`
+}
+
+type AwsS3BucketBucketVersioningConfiguration struct {
+	IsMfaDeleteEnabled string `json:"IsMfaDeleteEnabled"`
+	Status             string `json:"Status"`
+}
+
+type AwsS3BucketDetails struct {
+	AccessControlList                 string `json:"AccessControlList"`
+	BucketLifecycleConfiguration      string `json:"BucketLifecycleConfiguration"`
+	BucketLoggingConfiguration        string `json:"BucketLoggingConfiguration"`
+	BucketNotificationConfiguration   string `json:"BucketNotificationConfiguration"`
+	BucketVersioningConfiguration     string `json:"BucketVersioningConfiguration"`
+	BucketWebsiteConfiguration        string `json:"BucketWebsiteConfiguration"`
+	CreatedAt                         string `json:"CreatedAt"`
+	ObjectLockConfiguration           string `json:"ObjectLockConfiguration"`
+	OwnerAccountId                    string `json:"OwnerAccountId"`
+	OwnerId                           string `json:"OwnerId"`
+	OwnerName                         string `json:"OwnerName"`
+	PublicAccessBlockConfiguration    string `json:"PublicAccessBlockConfiguration"`
+	ServerSideEncryptionConfiguration string `json:"ServerSideEncryptionConfiguration"`
+}
+
+type AwsS3BucketLoggingConfiguration struct {
+	DestinationBucketName string `json:"DestinationBucketName"`
+	LogFilePrefix         string `json:"LogFilePrefix"`
+}
+
+type AwsS3BucketNotificationConfiguration struct {
+	Configurations string `json:"Configurations"`
+}
+
+type AwsS3BucketNotificationConfigurationDetail struct {
+	Destination string `json:"Destination"`
+	Events      string `json:"Events"`
+	Filter      string `json:"Filter"`
+	Type        string `json:"Type"`
+}
+
+type AwsS3BucketNotificationConfigurationFilter struct {
+	S3KeyFilter string `json:"S3KeyFilter"`
+}
+
+type AwsS3BucketNotificationConfigurationS3KeyFilter struct {
+	FilterRules string `json:"FilterRules"`
+}
+
+type AwsS3BucketNotificationConfigurationS3KeyFilterRule struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsS3BucketObjectLockConfiguration struct {
+	ObjectLockEnabled string `json:"ObjectLockEnabled"`
+	Rule              string `json:"Rule"`
+}
+
+type AwsS3BucketObjectLockConfigurationRuleDefaultRetentionDetails struct {
+	Days  string `json:"Days"`
+	Mode  string `json:"Mode"`
+	Years string `json:"Years"`
+}
+
+type AwsS3BucketObjectLockConfigurationRuleDetails struct {
+	DefaultRetention string `json:"DefaultRetention"`
+}
+
+type AwsS3BucketServerSideEncryptionByDefault struct {
+	KMSMasterKeyID string `json:"KMSMasterKeyID"`
+	SSEAlgorithm   string `json:"SSEAlgorithm"`
+}
+
+type AwsS3BucketServerSideEncryptionConfiguration struct {
+	Rules string `json:"Rules"`
+}
+
+type AwsS3BucketServerSideEncryptionRule struct {
+	ApplyServerSideEncryptionByDefault string `json:"ApplyServerSideEncryptionByDefault"`
+}
+
+type AwsS3BucketWebsiteConfiguration struct {
+	ErrorDocument         string `json:"ErrorDocument"`
+	IndexDocumentSuffix   string `json:"IndexDocumentSuffix"`
+	RedirectAllRequestsTo string `json:"RedirectAllRequestsTo"`
+	RoutingRules          string `json:"RoutingRules"`
+}
+
+type AwsS3BucketWebsiteConfigurationRedirectTo struct {
+	Hostname string `json:"Hostname"`
+	Protocol string `json:"Protocol"`
+}
+
+type AwsS3BucketWebsiteConfigurationRoutingRule struct {
+	Condition string `json:"Condition"`
+	Redirect  string `json:"Redirect"`
+}
+
+type AwsS3BucketWebsiteConfigurationRoutingRuleCondition struct {
+	HttpErrorCodeReturnedEquals string `json:"HttpErrorCodeReturnedEquals"`
+	KeyPrefixEquals             string `json:"KeyPrefixEquals"`
+}
+
+type AwsS3BucketWebsiteConfigurationRoutingRuleRedirect struct {
+	Hostname             string `json:"Hostname"`
+	HttpRedirectCode     string `json:"HttpRedirectCode"`
+	Protocol             string `json:"Protocol"`
+	ReplaceKeyPrefixWith string `json:"ReplaceKeyPrefixWith"`
+	ReplaceKeyWith       string `json:"ReplaceKeyWith"`
+}
+
+type AwsS3ObjectDetails struct {
+	ContentType          string `json:"ContentType"`
+	ETag                 string `json:"ETag"`
+	LastModified         string `json:"LastModified"`
+	SSEKMSKeyId          string `json:"SSEKMSKeyId"`
+	ServerSideEncryption string `json:"ServerSideEncryption"`
+	VersionId            string `json:"VersionId"`
+}
+
+type AwsSageMakerNotebookInstanceDetails struct {
+	AcceleratorTypes                     string `json:"AcceleratorTypes"`
+	AdditionalCodeRepositories           string `json:"AdditionalCodeRepositories"`
+	DefaultCodeRepository                string `json:"DefaultCodeRepository"`
+	DirectInternetAccess                 string `json:"DirectInternetAccess"`
+	FailureReason                        string `json:"FailureReason"`
+	InstanceMetadataServiceConfiguration string `json:"InstanceMetadataServiceConfiguration"`
+	InstanceType                         string `json:"InstanceType"`
+	KmsKeyId                             string `json:"KmsKeyId"`
+	NetworkInterfaceId                   string `json:"NetworkInterfaceId"`
+	NotebookInstanceArn                  string `json:"NotebookInstanceArn"`
+	NotebookInstanceLifecycleConfigName  string `json:"NotebookInstanceLifecycleConfigName"`
+	NotebookInstanceName                 string `json:"NotebookInstanceName"`
+	NotebookInstanceStatus               string `json:"NotebookInstanceStatus"`
+	PlatformIdentifier                   string `json:"PlatformIdentifier"`
+	RoleArn                              string `json:"RoleArn"`
+	RootAccess                           string `json:"RootAccess"`
+	SecurityGroups                       string `json:"SecurityGroups"`
+	SubnetId                             string `json:"SubnetId"`
+	Url                                  string `json:"Url"`
+	VolumeSizeInGB                       string `json:"VolumeSizeInGB"`
+}
+
+type AwsSageMakerNotebookInstanceMetadataServiceConfigurationDetails struct {
+	MinimumInstanceMetadataServiceVersion string `json:"MinimumInstanceMetadataServiceVersion"`
+}
+
+type AwsSecretsManagerSecretDetails struct {
+	Deleted                         string `json:"Deleted"`
+	Description                     string `json:"Description"`
+	KmsKeyId                        string `json:"KmsKeyId"`
+	Name                            string `json:"Name"`
+	RotationEnabled                 string `json:"RotationEnabled"`
+	RotationLambdaArn               string `json:"RotationLambdaArn"`
+	RotationOccurredWithinFrequency string `json:"RotationOccurredWithinFrequency"`
+	RotationRules                   string `json:"RotationRules"`
+}
+
+type AwsSecretsManagerSecretRotationRules struct {
+	AutomaticallyAfterDays string `json:"AutomaticallyAfterDays"`
+}
+
+type AwsSecurityFinding struct {
+	Action                string `json:"Action"`
+	AwsAccountId          string `json:"AwsAccountId"`
+	CompanyName           string `json:"CompanyName"`
+	Compliance            string `json:"Compliance"`
+	Confidence            string `json:"Confidence"`
+	CreatedAt             string `json:"CreatedAt"`
+	Criticality           string `json:"Criticality"`
+	Description           string `json:"Description"`
+	FindingProviderFields string `json:"FindingProviderFields"`
+	FirstObservedAt       string `json:"FirstObservedAt"`
+	GeneratorId           string `json:"GeneratorId"`
+	Id                    string `json:"Id"`
+	LastObservedAt        string `json:"LastObservedAt"`
+	Malware               string `json:"Malware"`
+	Network               string `json:"Network"`
+	NetworkPath           string `json:"NetworkPath"`
+	Note                  string `json:"Note"`
+	PatchSummary          string `json:"PatchSummary"`
+	Process               string `json:"Process"`
+	ProductArn            string `json:"ProductArn"`
+	ProductFields         string `json:"ProductFields"`
+	ProductName           string `json:"ProductName"`
+	RecordState           string `json:"RecordState"`
+	Region                string `json:"Region"`
+	RelatedFindings       string `json:"RelatedFindings"`
+	Remediation           string `json:"Remediation"`
+	Resources             string `json:"Resources"`
+	Sample                string `json:"Sample"`
+	SchemaVersion         string `json:"SchemaVersion"`
+	Severity              string `json:"Severity"`
+	SourceUrl             string `json:"SourceUrl"`
+	ThreatIntelIndicators string `json:"ThreatIntelIndicators"`
+	Threats               string `json:"Threats"`
+	Title                 string `json:"Title"`
+	Types                 string `json:"Types"`
+	UpdatedAt             string `json:"UpdatedAt"`
+	UserDefinedFields     string `json:"UserDefinedFields"`
+	VerificationState     string `json:"VerificationState"`
+	Vulnerabilities       string `json:"Vulnerabilities"`
+	Workflow              string `json:"Workflow"`
+	WorkflowState         string `json:"WorkflowState"`
+}
+
+type AwsSecurityFindingFilters struct {
+	AwsAccountId                                   string `json:"AwsAccountId"`
+	CompanyName                                    string `json:"CompanyName"`
+	ComplianceAssociatedStandardsId                string `json:"ComplianceAssociatedStandardsId"`
+	ComplianceSecurityControlId                    string `json:"ComplianceSecurityControlId"`
+	ComplianceStatus                               string `json:"ComplianceStatus"`
+	Confidence                                     string `json:"Confidence"`
+	CreatedAt                                      string `json:"CreatedAt"`
+	Criticality                                    string `json:"Criticality"`
+	Description                                    string `json:"Description"`
+	FindingProviderFieldsConfidence                string `json:"FindingProviderFieldsConfidence"`
+	FindingProviderFieldsCriticality               string `json:"FindingProviderFieldsCriticality"`
+	FindingProviderFieldsRelatedFindingsId         string `json:"FindingProviderFieldsRelatedFindingsId"`
+	FindingProviderFieldsRelatedFindingsProductArn string `json:"FindingProviderFieldsRelatedFindingsProductArn"`
+	FindingProviderFieldsSeverityLabel             string `json:"FindingProviderFieldsSeverityLabel"`
+	FindingProviderFieldsSeverityOriginal          string `json:"FindingProviderFieldsSeverityOriginal"`
+	FindingProviderFieldsTypes                     string `json:"FindingProviderFieldsTypes"`
+	FirstObservedAt                                string `json:"FirstObservedAt"`
+	GeneratorId                                    string `json:"GeneratorId"`
+	Id                                             string `json:"Id"`
+	Keyword                                        string `json:"Keyword"`
+	LastObservedAt                                 string `json:"LastObservedAt"`
+	MalwareName                                    string `json:"MalwareName"`
+	MalwarePath                                    string `json:"MalwarePath"`
+	MalwareState                                   string `json:"MalwareState"`
+	MalwareType                                    string `json:"MalwareType"`
+	NetworkDestinationDomain                       string `json:"NetworkDestinationDomain"`
+	NetworkDestinationIpV4                         string `json:"NetworkDestinationIpV4"`
+	NetworkDestinationIpV6                         string `json:"NetworkDestinationIpV6"`
+	NetworkDestinationPort                         string `json:"NetworkDestinationPort"`
+	NetworkDirection                               string `json:"NetworkDirection"`
+	NetworkProtocol                                string `json:"NetworkProtocol"`
+	NetworkSourceDomain                            string `json:"NetworkSourceDomain"`
+	NetworkSourceIpV4                              string `json:"NetworkSourceIpV4"`
+	NetworkSourceIpV6                              string `json:"NetworkSourceIpV6"`
+	NetworkSourceMac                               string `json:"NetworkSourceMac"`
+	NetworkSourcePort                              string `json:"NetworkSourcePort"`
+	NoteText                                       string `json:"NoteText"`
+	NoteUpdatedAt                                  string `json:"NoteUpdatedAt"`
+	NoteUpdatedBy                                  string `json:"NoteUpdatedBy"`
+	ProcessLaunchedAt                              string `json:"ProcessLaunchedAt"`
+	ProcessName                                    string `json:"ProcessName"`
+	ProcessParentPid                               string `json:"ProcessParentPid"`
+	ProcessPath                                    string `json:"ProcessPath"`
+	ProcessPid                                     string `json:"ProcessPid"`
+	ProcessTerminatedAt                            string `json:"ProcessTerminatedAt"`
+	ProductArn                                     string `json:"ProductArn"`
+	ProductFields                                  string `json:"ProductFields"`
+	ProductName                                    string `json:"ProductName"`
+	RecommendationText                             string `json:"RecommendationText"`
+	RecordState                                    string `json:"RecordState"`
+	Region                                         string `json:"Region"`
+	RelatedFindingsId                              string `json:"RelatedFindingsId"`
+	RelatedFindingsProductArn                      string `json:"RelatedFindingsProductArn"`
+	ResourceAwsEc2InstanceIamInstanceProfileArn    string `json:"ResourceAwsEc2InstanceIamInstanceProfileArn"`
+	ResourceAwsEc2InstanceImageId                  string `json:"ResourceAwsEc2InstanceImageId"`
+	ResourceAwsEc2InstanceIpV4Addresses            string `json:"ResourceAwsEc2InstanceIpV4Addresses"`
+	ResourceAwsEc2InstanceIpV6Addresses            string `json:"ResourceAwsEc2InstanceIpV6Addresses"`
+	ResourceAwsEc2InstanceKeyName                  string `json:"ResourceAwsEc2InstanceKeyName"`
+	ResourceAwsEc2InstanceLaunchedAt               string `json:"ResourceAwsEc2InstanceLaunchedAt"`
+	ResourceAwsEc2InstanceSubnetId                 string `json:"ResourceAwsEc2InstanceSubnetId"`
+	ResourceAwsEc2InstanceType                     string `json:"ResourceAwsEc2InstanceType"`
+	ResourceAwsEc2InstanceVpcId                    string `json:"ResourceAwsEc2InstanceVpcId"`
+	ResourceAwsIamAccessKeyCreatedAt               string `json:"ResourceAwsIamAccessKeyCreatedAt"`
+	ResourceAwsIamAccessKeyPrincipalName           string `json:"ResourceAwsIamAccessKeyPrincipalName"`
+	ResourceAwsIamAccessKeyStatus                  string `json:"ResourceAwsIamAccessKeyStatus"`
+	ResourceAwsIamAccessKeyUserName                string `json:"ResourceAwsIamAccessKeyUserName"`
+	ResourceAwsIamUserUserName                     string `json:"ResourceAwsIamUserUserName"`
+	ResourceAwsS3BucketOwnerId                     string `json:"ResourceAwsS3BucketOwnerId"`
+	ResourceAwsS3BucketOwnerName                   string `json:"ResourceAwsS3BucketOwnerName"`
+	ResourceContainerImageId                       string `json:"ResourceContainerImageId"`
+	ResourceContainerImageName                     string `json:"ResourceContainerImageName"`
+	ResourceContainerLaunchedAt                    string `json:"ResourceContainerLaunchedAt"`
+	ResourceContainerName                          string `json:"ResourceContainerName"`
+	ResourceDetailsOther                           string `json:"ResourceDetailsOther"`
+	ResourceId                                     string `json:"ResourceId"`
+	ResourcePartition                              string `json:"ResourcePartition"`
+	ResourceRegion                                 string `json:"ResourceRegion"`
+	ResourceTags                                   string `json:"ResourceTags"`
+	ResourceType                                   string `json:"ResourceType"`
+	Sample                                         string `json:"Sample"`
+	SeverityLabel                                  string `json:"SeverityLabel"`
+	SeverityNormalized                             string `json:"SeverityNormalized"`
+	SeverityProduct                                string `json:"SeverityProduct"`
+	SourceUrl                                      string `json:"SourceUrl"`
+	ThreatIntelIndicatorCategory                   string `json:"ThreatIntelIndicatorCategory"`
+	ThreatIntelIndicatorLastObservedAt             string `json:"ThreatIntelIndicatorLastObservedAt"`
+	ThreatIntelIndicatorSource                     string `json:"ThreatIntelIndicatorSource"`
+	ThreatIntelIndicatorSourceUrl                  string `json:"ThreatIntelIndicatorSourceUrl"`
+	ThreatIntelIndicatorType                       string `json:"ThreatIntelIndicatorType"`
+	ThreatIntelIndicatorValue                      string `json:"ThreatIntelIndicatorValue"`
+	Title                                          string `json:"Title"`
+	Type                                           string `json:"Type"`
+	UpdatedAt                                      string `json:"UpdatedAt"`
+	UserDefinedFields                              string `json:"UserDefinedFields"`
+	VerificationState                              string `json:"VerificationState"`
+	WorkflowState                                  string `json:"WorkflowState"`
+	WorkflowStatus                                 string `json:"WorkflowStatus"`
+}
+
+type AwsSecurityFindingIdentifier struct {
+	Id         string `json:"Id"`
+	ProductArn string `json:"ProductArn"`
+}
+
+type AwsSnsTopicDetails struct {
+	ApplicationSuccessFeedbackRoleArn string `json:"ApplicationSuccessFeedbackRoleArn"`
+	FirehoseFailureFeedbackRoleArn    string `json:"FirehoseFailureFeedbackRoleArn"`
+	FirehoseSuccessFeedbackRoleArn    string `json:"FirehoseSuccessFeedbackRoleArn"`
+	HttpFailureFeedbackRoleArn        string `json:"HttpFailureFeedbackRoleArn"`
+	HttpSuccessFeedbackRoleArn        string `json:"HttpSuccessFeedbackRoleArn"`
+	KmsMasterKeyId                    string `json:"KmsMasterKeyId"`
+	Owner                             string `json:"Owner"`
+	SqsFailureFeedbackRoleArn         string `json:"SqsFailureFeedbackRoleArn"`
+	SqsSuccessFeedbackRoleArn         string `json:"SqsSuccessFeedbackRoleArn"`
+	Subscription                      string `json:"Subscription"`
+	TopicName                         string `json:"TopicName"`
+}
+
+type AwsSnsTopicSubscription struct {
+	Endpoint string `json:"Endpoint"`
+	Protocol string `json:"Protocol"`
+}
+
+type AwsSqsQueueDetails struct {
+	DeadLetterTargetArn          string `json:"DeadLetterTargetArn"`
+	KmsDataKeyReusePeriodSeconds string `json:"KmsDataKeyReusePeriodSeconds"`
+	KmsMasterKeyId               string `json:"KmsMasterKeyId"`
+	QueueName                    string `json:"QueueName"`
+}
+
+type AwsSsmComplianceSummary struct {
+	ComplianceType                 string `json:"ComplianceType"`
+	CompliantCriticalCount         string `json:"CompliantCriticalCount"`
+	CompliantHighCount             string `json:"CompliantHighCount"`
+	CompliantInformationalCount    string `json:"CompliantInformationalCount"`
+	CompliantLowCount              string `json:"CompliantLowCount"`
+	CompliantMediumCount           string `json:"CompliantMediumCount"`
+	CompliantUnspecifiedCount      string `json:"CompliantUnspecifiedCount"`
+	ExecutionType                  string `json:"ExecutionType"`
+	NonCompliantCriticalCount      string `json:"NonCompliantCriticalCount"`
+	NonCompliantHighCount          string `json:"NonCompliantHighCount"`
+	NonCompliantInformationalCount string `json:"NonCompliantInformationalCount"`
+	NonCompliantLowCount           string `json:"NonCompliantLowCount"`
+	NonCompliantMediumCount        string `json:"NonCompliantMediumCount"`
+	NonCompliantUnspecifiedCount   string `json:"NonCompliantUnspecifiedCount"`
+	OverallSeverity                string `json:"OverallSeverity"`
+	PatchBaselineId                string `json:"PatchBaselineId"`
+	PatchGroup                     string `json:"PatchGroup"`
+	Status                         string `json:"Status"`
+}
+
+type AwsSsmPatch struct {
+	ComplianceSummary string `json:"ComplianceSummary"`
+}
+
+type AwsSsmPatchComplianceDetails struct {
+	Patch string `json:"Patch"`
+}
+
+type AwsWafRateBasedRuleDetails struct {
+	MatchPredicates string `json:"MatchPredicates"`
+	MetricName      string `json:"MetricName"`
+	Name            string `json:"Name"`
+	RateKey         string `json:"RateKey"`
+	RateLimit       string `json:"RateLimit"`
+	RuleId          string `json:"RuleId"`
+}
+
+type AwsWafRateBasedRuleMatchPredicate struct {
+	DataId  string `json:"DataId"`
+	Negated string `json:"Negated"`
+	Type    string `json:"Type"`
+}
+
+type AwsWafRegionalRateBasedRuleDetails struct {
+	MatchPredicates string `json:"MatchPredicates"`
+	MetricName      string `json:"MetricName"`
+	Name            string `json:"Name"`
+	RateKey         string `json:"RateKey"`
+	RateLimit       string `json:"RateLimit"`
+	RuleId          string `json:"RuleId"`
+}
+
+type AwsWafRegionalRateBasedRuleMatchPredicate struct {
+	DataId  string `json:"DataId"`
+	Negated string `json:"Negated"`
+	Type    string `json:"Type"`
+}
+
+type AwsWafRegionalRuleDetails struct {
+	MetricName    string `json:"MetricName"`
+	Name          string `json:"Name"`
+	PredicateList string `json:"PredicateList"`
+	RuleId        string `json:"RuleId"`
+}
+
+type AwsWafRegionalRuleGroupDetails struct {
+	MetricName  string `json:"MetricName"`
+	Name        string `json:"Name"`
+	RuleGroupId string `json:"RuleGroupId"`
+	Rules       string `json:"Rules"`
+}
+
+type AwsWafRegionalRuleGroupRulesActionDetails struct {
+	Type string `json:"Type"`
+}
+
+type AwsWafRegionalRuleGroupRulesDetails struct {
+	Action   string `json:"Action"`
+	Priority string `json:"Priority"`
+	RuleId   string `json:"RuleId"`
+	Type     string `json:"Type"`
+}
+
+type AwsWafRegionalRulePredicateListDetails struct {
+	DataId  string `json:"DataId"`
+	Negated string `json:"Negated"`
+	Type    string `json:"Type"`
+}
+
+type AwsWafRegionalWebAclDetails struct {
+	DefaultAction string `json:"DefaultAction"`
+	MetricName    string `json:"MetricName"`
+	Name          string `json:"Name"`
+	RulesList     string `json:"RulesList"`
+	WebAclId      string `json:"WebAclId"`
+}
+
+type AwsWafRegionalWebAclRulesListActionDetails struct {
+	Type string `json:"Type"`
+}
+
+type AwsWafRegionalWebAclRulesListDetails struct {
+	Action         string `json:"Action"`
+	OverrideAction string `json:"OverrideAction"`
+	Priority       string `json:"Priority"`
+	RuleId         string `json:"RuleId"`
+	Type           string `json:"Type"`
+}
+
+type AwsWafRegionalWebAclRulesListOverrideActionDetails struct {
+	Type string `json:"Type"`
+}
+
+type AwsWafRuleDetails struct {
+	MetricName    string `json:"MetricName"`
+	Name          string `json:"Name"`
+	PredicateList string `json:"PredicateList"`
+	RuleId        string `json:"RuleId"`
+}
+
+type AwsWafRuleGroupDetails struct {
+	MetricName  string `json:"MetricName"`
+	Name        string `json:"Name"`
+	RuleGroupId string `json:"RuleGroupId"`
+	Rules       string `json:"Rules"`
+}
+
+type AwsWafRuleGroupRulesActionDetails struct {
+	Type string `json:"Type"`
+}
+
+type AwsWafRuleGroupRulesDetails struct {
+	Action   string `json:"Action"`
+	Priority string `json:"Priority"`
+	RuleId   string `json:"RuleId"`
+	Type     string `json:"Type"`
+}
+
+type AwsWafRulePredicateListDetails struct {
+	DataId  string `json:"DataId"`
+	Negated string `json:"Negated"`
+	Type    string `json:"Type"`
+}
+
+type AwsWafWebAclDetails struct {
+	DefaultAction string `json:"DefaultAction"`
+	Name          string `json:"Name"`
+	Rules         string `json:"Rules"`
+	WebAclId      string `json:"WebAclId"`
+}
+
+type AwsWafWebAclRule struct {
+	Action         string `json:"Action"`
+	ExcludedRules  string `json:"ExcludedRules"`
+	OverrideAction string `json:"OverrideAction"`
+	Priority       string `json:"Priority"`
+	RuleId         string `json:"RuleId"`
+	Type           string `json:"Type"`
+}
+
+type AwsWafv2ActionAllowDetails struct {
+	CustomRequestHandling string `json:"CustomRequestHandling"`
+}
+
+type AwsWafv2ActionBlockDetails struct {
+	CustomResponse string `json:"CustomResponse"`
+}
+
+type AwsWafv2CustomHttpHeader struct {
+	Name  string `json:"Name"`
+	Value string `json:"Value"`
+}
+
+type AwsWafv2CustomRequestHandlingDetails struct {
+	InsertHeaders string `json:"InsertHeaders"`
+}
+
+type AwsWafv2CustomResponseDetails struct {
+	CustomResponseBodyKey string `json:"CustomResponseBodyKey"`
+	ResponseCode          string `json:"ResponseCode"`
+	ResponseHeaders       string `json:"ResponseHeaders"`
+}
+
+type AwsWafv2RuleGroupDetails struct {
+	Arn              string `json:"Arn"`
+	Capacity         string `json:"Capacity"`
+	Description      string `json:"Description"`
+	Id               string `json:"Id"`
+	Name             string `json:"Name"`
+	Rules            string `json:"Rules"`
+	Scope            string `json:"Scope"`
+	VisibilityConfig string `json:"VisibilityConfig"`
+}
+
+type AwsWafv2RulesActionCaptchaDetails struct {
+	CustomRequestHandling string `json:"CustomRequestHandling"`
+}
+
+type AwsWafv2RulesActionCountDetails struct {
+	CustomRequestHandling string `json:"CustomRequestHandling"`
+}
+
+type AwsWafv2RulesActionDetails struct {
+	Allow   string `json:"Allow"`
+	Block   string `json:"Block"`
+	Captcha string `json:"Captcha"`
+	Count   string `json:"Count"`
+}
+
+type AwsWafv2RulesDetails struct {
+	Action           string `json:"Action"`
+	Name             string `json:"Name"`
+	OverrideAction   string `json:"OverrideAction"`
+	Priority         string `json:"Priority"`
+	VisibilityConfig string `json:"VisibilityConfig"`
+}
+
+type AwsWafv2VisibilityConfigDetails struct {
+	CloudWatchMetricsEnabled string `json:"CloudWatchMetricsEnabled"`
+	MetricName               string `json:"MetricName"`
+	SampledRequestsEnabled   string `json:"SampledRequestsEnabled"`
+}
+
+type AwsWafv2WebAclActionDetails struct {
+	Allow string `json:"Allow"`
+	Block string `json:"Block"`
+}
+
+type AwsWafv2WebAclCaptchaConfigDetails struct {
+	ImmunityTimeProperty string `json:"ImmunityTimeProperty"`
+}
+
+type AwsWafv2WebAclCaptchaConfigImmunityTimePropertyDetails struct {
+	ImmunityTime string `json:"ImmunityTime"`
+}
+
+type AwsWafv2WebAclDetails struct {
+	Arn                      string `json:"Arn"`
+	Capacity                 string `json:"Capacity"`
+	CaptchaConfig            string `json:"CaptchaConfig"`
+	DefaultAction            string `json:"DefaultAction"`
+	Description              string `json:"Description"`
+	Id                       string `json:"Id"`
+	ManagedbyFirewallManager string `json:"ManagedbyFirewallManager"`
+	Name                     string `json:"Name"`
+	Rules                    string `json:"Rules"`
+	VisibilityConfig         string `json:"VisibilityConfig"`
+}
+
+type AwsXrayEncryptionConfigDetails struct {
+	KeyId  string `json:"KeyId"`
+	Status string `json:"Status"`
+	Type   string `json:"Type"`
+}
+
+type BaseConfigurationItem struct {
+	AccountId                    string `json:"accountId"`
+	Arn                          string `json:"arn"`
+	AvailabilityZone             string `json:"availabilityZone"`
+	AwsRegion                    string `json:"awsRegion"`
+	Configuration                string `json:"configuration"`
+	ConfigurationItemCaptureTime string `json:"configurationItemCaptureTime"`
+	ConfigurationItemStatus      string `json:"configurationItemStatus"`
+	ConfigurationStateId         string `json:"configurationStateId"`
+	ResourceCreationTime         string `json:"resourceCreationTime"`
+	ResourceId                   string `json:"resourceId"`
+	ResourceName                 string `json:"resourceName"`
+	ResourceType                 string `json:"resourceType"`
+	SupplementaryConfiguration   string `json:"supplementaryConfiguration"`
+	Version                      string `json:"version"`
+}
+
+type BatchDisableStandardsRequest struct {
+	StandardsSubscriptionArns string `json:"StandardsSubscriptionArns"`
+}
+
+type BatchDisableStandardsResponse struct {
+	StandardsSubscriptions string `json:"StandardsSubscriptions"`
+}
+
+type BatchEnableStandardsRequest struct {
+	StandardsSubscriptionRequests string `json:"StandardsSubscriptionRequests"`
+}
+
+type BatchEnableStandardsResponse struct {
+	StandardsSubscriptions string `json:"StandardsSubscriptions"`
+}
+
+type BatchGetAggregateResourceConfigRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	ResourceIdentifiers         string `json:"ResourceIdentifiers"`
+}
+
+type BatchGetAggregateResourceConfigResponse struct {
+	BaseConfigurationItems         string `json:"BaseConfigurationItems"`
+	UnprocessedResourceIdentifiers string `json:"UnprocessedResourceIdentifiers"`
+}
+
+type BatchGetResourceConfigRequest struct {
+	ResourceKeys string `json:"resourceKeys"`
+}
+
+type BatchGetResourceConfigResponse struct {
+	BaseConfigurationItems  string `json:"baseConfigurationItems"`
+	UnprocessedResourceKeys string `json:"unprocessedResourceKeys"`
+}
+
+type BatchGetSecurityControlsRequest struct {
+	SecurityControlIds string `json:"SecurityControlIds"`
+}
+
+type BatchGetSecurityControlsResponse struct {
+	SecurityControls string `json:"SecurityControls"`
+	UnprocessedIds   string `json:"UnprocessedIds"`
+}
+
+type BatchGetStandardsControlAssociationsRequest struct {
+	StandardsControlAssociationIds string `json:"StandardsControlAssociationIds"`
+}
+
+type BatchGetStandardsControlAssociationsResponse struct {
+	StandardsControlAssociationDetails string `json:"StandardsControlAssociationDetails"`
+	UnprocessedAssociations            string `json:"UnprocessedAssociations"`
+}
+
+type BatchImportFindingsRequest struct {
+	Findings string `json:"Findings"`
+}
+
+type BatchImportFindingsResponse struct {
+	FailedCount    string `json:"FailedCount"`
+	FailedFindings string `json:"FailedFindings"`
+	SuccessCount   string `json:"SuccessCount"`
+}
+
+type BatchUpdateFindingsRequest struct {
+	Confidence         string          `json:"Confidence"`
+	Criticality        string          `json:"Criticality"`
+	FindingIdentifiers string          `json:"FindingIdentifiers"`
+	Note               json.RawMessage `json:"Note"`
+	RelatedFindings    string          `json:"RelatedFindings"`
+	Severity           string          `json:"Severity"`
+	Types              string          `json:"Types"`
+	UserDefinedFields  string          `json:"UserDefinedFields"`
+	VerificationState  string          `json:"VerificationState"`
+	Workflow           string          `json:"Workflow"`
+}
+
+type BatchUpdateFindingsResponse struct {
+	ProcessedFindings   string `json:"ProcessedFindings"`
+	UnprocessedFindings string `json:"UnprocessedFindings"`
+}
+
+type BatchUpdateFindingsUnprocessedFinding struct {
+	ErrorCode         string `json:"ErrorCode"`
+	ErrorMessage      string `json:"ErrorMessage"`
+	FindingIdentifier string `json:"FindingIdentifier"`
+}
+
+type BatchUpdateStandardsControlAssociationsRequest struct {
+	StandardsControlAssociationUpdates string `json:"StandardsControlAssociationUpdates"`
+}
+
+type BatchUpdateStandardsControlAssociationsResponse struct {
+	UnprocessedAssociationUpdates string `json:"UnprocessedAssociationUpdates"`
+}
+
+type BooleanFilter struct {
+	Value string `json:"Value"`
+}
+
+type Budget struct {
+	AutoAdjustData      string `json:"AutoAdjustData"`
+	BudgetLimit         string `json:"BudgetLimit"`
+	BudgetName          string `json:"BudgetName"`
+	BudgetType          string `json:"BudgetType"`
+	CalculatedSpend     string `json:"CalculatedSpend"`
+	CostFilters         string `json:"CostFilters"`
+	CostTypes           string `json:"CostTypes"`
+	LastUpdatedTime     string `json:"LastUpdatedTime"`
+	PlannedBudgetLimits string `json:"PlannedBudgetLimits"`
+	TimePeriod          string `json:"TimePeriod"`
+	TimeUnit            string `json:"TimeUnit"`
+}
+
+type BudgetNotificationsForAccount struct {
+	BudgetName    string          `json:"BudgetName"`
+	Notifications json.RawMessage `json:"Notifications"`
+}
+
+type BudgetPerformanceHistory struct {
+	BudgetName                   string `json:"BudgetName"`
+	BudgetType                   string `json:"BudgetType"`
+	BudgetedAndActualAmountsList string `json:"BudgetedAndActualAmountsList"`
+	CostFilters                  string `json:"CostFilters"`
+	CostTypes                    string `json:"CostTypes"`
+	TimeUnit                     string `json:"TimeUnit"`
+}
+
+type BudgetedAndActualAmounts struct {
+	ActualAmount   string `json:"ActualAmount"`
+	BudgetedAmount string `json:"BudgetedAmount"`
+	TimePeriod     string `json:"TimePeriod"`
+}
+
+type CalculatedSpend struct {
+	ActualSpend     string `json:"ActualSpend"`
+	ForecastedSpend string `json:"ForecastedSpend"`
+}
+
+type CancelQueryRequest struct {
+	EventDataStore string `json:"EventDataStore"`
+	QueryId        string `json:"QueryId"`
+}
+
+type CancelQueryResponse struct {
+	QueryId     string `json:"QueryId"`
+	QueryStatus string `json:"QueryStatus"`
 }
 
 type CaseDetails struct {
@@ -110,12 +3965,283 @@ type Category struct {
 	Name string `json:"name"`
 }
 
+type Cell struct {
+	CellReference string `json:"CellReference"`
+	Column        string `json:"Column"`
+	ColumnName    string `json:"ColumnName"`
+	Row           string `json:"Row"`
+}
+
+type Channel struct {
+	ChannelArn string `json:"ChannelArn"`
+	Name       string `json:"Name"`
+}
+
+type CidrBlockAssociation struct {
+	AssociationId  string `json:"AssociationId"`
+	CidrBlock      string `json:"CidrBlock"`
+	CidrBlockState string `json:"CidrBlockState"`
+}
+
+type City struct {
+	CityName string `json:"CityName"`
+}
+
+type ClassificationResult struct {
+	AdditionalOccurrences string `json:"AdditionalOccurrences"`
+	CustomDataIdentifiers string `json:"CustomDataIdentifiers"`
+	MimeType              string `json:"MimeType"`
+	SensitiveData         string `json:"SensitiveData"`
+	SizeClassified        string `json:"SizeClassified"`
+	Status                string `json:"Status"`
+}
+
+type ClassificationStatus struct {
+	Code   string `json:"Code"`
+	Reason string `json:"Reason"`
+}
+
 type Communication struct {
 	AttachmentSet string `json:"attachmentSet"`
 	Body          string `json:"body"`
 	CaseId        string `json:"caseId"`
 	SubmittedBy   string `json:"submittedBy"`
 	TimeCreated   string `json:"timeCreated"`
+}
+
+type Compliance struct {
+	ComplianceContributorCount string `json:"ComplianceContributorCount"`
+	ComplianceType             string `json:"ComplianceType"`
+}
+
+type ComplianceByConfigRule struct {
+	Compliance     string `json:"Compliance"`
+	ConfigRuleName string `json:"ConfigRuleName"`
+}
+
+type ComplianceByResource struct {
+	Compliance   string `json:"Compliance"`
+	ResourceId   string `json:"ResourceId"`
+	ResourceType string `json:"ResourceType"`
+}
+
+type ComplianceContributorCount struct {
+	CapExceeded string `json:"CapExceeded"`
+	CappedCount string `json:"CappedCount"`
+}
+
+type ComplianceSummary struct {
+	ComplianceSummaryTimestamp string `json:"ComplianceSummaryTimestamp"`
+	CompliantResourceCount     string `json:"CompliantResourceCount"`
+	NonCompliantResourceCount  string `json:"NonCompliantResourceCount"`
+}
+
+type ComplianceSummaryByResourceType struct {
+	ComplianceSummary string `json:"ComplianceSummary"`
+	ResourceType      string `json:"ResourceType"`
+}
+
+type ConfigExportDeliveryInfo struct {
+	LastAttemptTime    string `json:"lastAttemptTime"`
+	LastErrorCode      string `json:"lastErrorCode"`
+	LastErrorMessage   string `json:"lastErrorMessage"`
+	LastStatus         string `json:"lastStatus"`
+	LastSuccessfulTime string `json:"lastSuccessfulTime"`
+	NextDeliveryTime   string `json:"nextDeliveryTime"`
+}
+
+type ConfigRule struct {
+	ConfigRuleArn             string `json:"ConfigRuleArn"`
+	ConfigRuleId              string `json:"ConfigRuleId"`
+	ConfigRuleName            string `json:"ConfigRuleName"`
+	ConfigRuleState           string `json:"ConfigRuleState"`
+	CreatedBy                 string `json:"CreatedBy"`
+	Description               string `json:"Description"`
+	EvaluationModes           string `json:"EvaluationModes"`
+	InputParameters           string `json:"InputParameters"`
+	MaximumExecutionFrequency string `json:"MaximumExecutionFrequency"`
+	Scope                     string `json:"Scope"`
+	Source                    string `json:"Source"`
+}
+
+type ConfigRuleComplianceFilters struct {
+	AccountId      string `json:"AccountId"`
+	AwsRegion      string `json:"AwsRegion"`
+	ComplianceType string `json:"ComplianceType"`
+	ConfigRuleName string `json:"ConfigRuleName"`
+}
+
+type ConfigRuleComplianceSummaryFilters struct {
+	AccountId string `json:"AccountId"`
+	AwsRegion string `json:"AwsRegion"`
+}
+
+type ConfigRuleEvaluationStatus struct {
+	ConfigRuleArn                    string `json:"ConfigRuleArn"`
+	ConfigRuleId                     string `json:"ConfigRuleId"`
+	ConfigRuleName                   string `json:"ConfigRuleName"`
+	FirstActivatedTime               string `json:"FirstActivatedTime"`
+	FirstEvaluationStarted           string `json:"FirstEvaluationStarted"`
+	LastDeactivatedTime              string `json:"LastDeactivatedTime"`
+	LastDebugLogDeliveryStatus       string `json:"LastDebugLogDeliveryStatus"`
+	LastDebugLogDeliveryStatusReason string `json:"LastDebugLogDeliveryStatusReason"`
+	LastDebugLogDeliveryTime         string `json:"LastDebugLogDeliveryTime"`
+	LastErrorCode                    string `json:"LastErrorCode"`
+	LastErrorMessage                 string `json:"LastErrorMessage"`
+	LastFailedEvaluationTime         string `json:"LastFailedEvaluationTime"`
+	LastFailedInvocationTime         string `json:"LastFailedInvocationTime"`
+	LastSuccessfulEvaluationTime     string `json:"LastSuccessfulEvaluationTime"`
+	LastSuccessfulInvocationTime     string `json:"LastSuccessfulInvocationTime"`
+}
+
+type ConfigSnapshotDeliveryProperties struct {
+	DeliveryFrequency string `json:"deliveryFrequency"`
+}
+
+type ConfigStreamDeliveryInfo struct {
+	LastErrorCode        string `json:"lastErrorCode"`
+	LastErrorMessage     string `json:"lastErrorMessage"`
+	LastStatus           string `json:"lastStatus"`
+	LastStatusChangeTime string `json:"lastStatusChangeTime"`
+}
+
+type ConfigurationAggregator struct {
+	AccountAggregationSources     string `json:"AccountAggregationSources"`
+	ConfigurationAggregatorArn    string `json:"ConfigurationAggregatorArn"`
+	ConfigurationAggregatorName   string `json:"ConfigurationAggregatorName"`
+	CreatedBy                     string `json:"CreatedBy"`
+	CreationTime                  string `json:"CreationTime"`
+	LastUpdatedTime               string `json:"LastUpdatedTime"`
+	OrganizationAggregationSource string `json:"OrganizationAggregationSource"`
+}
+
+type ConfigurationItem struct {
+	AccountId                    string `json:"accountId"`
+	Arn                          string `json:"arn"`
+	AvailabilityZone             string `json:"availabilityZone"`
+	AwsRegion                    string `json:"awsRegion"`
+	Configuration                string `json:"configuration"`
+	ConfigurationItemCaptureTime string `json:"configurationItemCaptureTime"`
+	ConfigurationItemMD5Hash     string `json:"configurationItemMD5Hash"`
+	ConfigurationItemStatus      string `json:"configurationItemStatus"`
+	ConfigurationStateId         string `json:"configurationStateId"`
+	RelatedEvents                string `json:"relatedEvents"`
+	Relationships                string `json:"relationships"`
+	ResourceCreationTime         string `json:"resourceCreationTime"`
+	ResourceId                   string `json:"resourceId"`
+	ResourceName                 string `json:"resourceName"`
+	ResourceType                 string `json:"resourceType"`
+	SupplementaryConfiguration   string `json:"supplementaryConfiguration"`
+	Tags                         string `json:"tags"`
+	Version                      string `json:"version"`
+}
+
+type ConfigurationRecorder struct {
+	Name           string `json:"name"`
+	RecordingGroup string `json:"recordingGroup"`
+	RoleARN        string `json:"roleARN"`
+}
+
+type ConfigurationRecorderStatus struct {
+	LastErrorCode        string `json:"lastErrorCode"`
+	LastErrorMessage     string `json:"lastErrorMessage"`
+	LastStartTime        string `json:"lastStartTime"`
+	LastStatus           string `json:"lastStatus"`
+	LastStatusChangeTime string `json:"lastStatusChangeTime"`
+	LastStopTime         string `json:"lastStopTime"`
+	Name                 string `json:"name"`
+	Recording            string `json:"recording"`
+}
+
+type ConformancePackComplianceFilters struct {
+	ComplianceType  string `json:"ComplianceType"`
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+}
+
+type ConformancePackComplianceScore struct {
+	ConformancePackName string `json:"ConformancePackName"`
+	LastUpdatedTime     string `json:"LastUpdatedTime"`
+	Score               string `json:"Score"`
+}
+
+type ConformancePackComplianceScoresFilters struct {
+	ConformancePackNames string `json:"ConformancePackNames"`
+}
+
+type ConformancePackComplianceSummary struct {
+	ConformancePackComplianceStatus string `json:"ConformancePackComplianceStatus"`
+	ConformancePackName             string `json:"ConformancePackName"`
+}
+
+type ConformancePackDetail struct {
+	ConformancePackArn             string `json:"ConformancePackArn"`
+	ConformancePackId              string `json:"ConformancePackId"`
+	ConformancePackInputParameters string `json:"ConformancePackInputParameters"`
+	ConformancePackName            string `json:"ConformancePackName"`
+	CreatedBy                      string `json:"CreatedBy"`
+	DeliveryS3Bucket               string `json:"DeliveryS3Bucket"`
+	DeliveryS3KeyPrefix            string `json:"DeliveryS3KeyPrefix"`
+	LastUpdateRequestedTime        string `json:"LastUpdateRequestedTime"`
+	TemplateSSMDocumentDetails     string `json:"TemplateSSMDocumentDetails"`
+}
+
+type ConformancePackEvaluationFilters struct {
+	ComplianceType  string `json:"ComplianceType"`
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+	ResourceIds     string `json:"ResourceIds"`
+	ResourceType    string `json:"ResourceType"`
+}
+
+type ConformancePackEvaluationResult struct {
+	Annotation                 string          `json:"Annotation"`
+	ComplianceType             string          `json:"ComplianceType"`
+	ConfigRuleInvokedTime      string          `json:"ConfigRuleInvokedTime"`
+	EvaluationResultIdentifier json.RawMessage `json:"EvaluationResultIdentifier"`
+	ResultRecordedTime         string          `json:"ResultRecordedTime"`
+}
+
+type ConformancePackInputParameter struct {
+	ParameterName  string `json:"ParameterName"`
+	ParameterValue string `json:"ParameterValue"`
+}
+
+type ConformancePackRuleCompliance struct {
+	ComplianceType string `json:"ComplianceType"`
+	ConfigRuleName string `json:"ConfigRuleName"`
+	Controls       string `json:"Controls"`
+}
+
+type ConformancePackStatusDetail struct {
+	ConformancePackArn          string `json:"ConformancePackArn"`
+	ConformancePackId           string `json:"ConformancePackId"`
+	ConformancePackName         string `json:"ConformancePackName"`
+	ConformancePackState        string `json:"ConformancePackState"`
+	ConformancePackStatusReason string `json:"ConformancePackStatusReason"`
+	LastUpdateCompletedTime     string `json:"LastUpdateCompletedTime"`
+	LastUpdateRequestedTime     string `json:"LastUpdateRequestedTime"`
+	StackArn                    string `json:"StackArn"`
+}
+
+type ContainerConfiguration struct {
+	ContainerName           string `json:"containerName"`
+	Cpu                     string `json:"cpu"`
+	MemorySizeConfiguration string `json:"memorySizeConfiguration"`
+}
+
+type ContainerDetails struct {
+	ContainerRuntime string `json:"ContainerRuntime"`
+	ImageId          string `json:"ImageId"`
+	ImageName        string `json:"ImageName"`
+	LaunchedAt       string `json:"LaunchedAt"`
+	Name             string `json:"Name"`
+	Privileged       string `json:"Privileged"`
+	VolumeMounts     string `json:"VolumeMounts"`
+}
+
+type ContainerRecommendation struct {
+	ContainerName           string `json:"containerName"`
+	Cpu                     string `json:"cpu"`
+	MemorySizeConfiguration string `json:"memorySizeConfiguration"`
 }
 
 type CostAllocationTag struct {
@@ -187,6 +4313,28 @@ type CostCategoryValues struct {
 	Values       string `json:"Values"`
 }
 
+type CostFilters struct {
+}
+
+type CostTypes struct {
+	IncludeCredit            string `json:"IncludeCredit"`
+	IncludeDiscount          string `json:"IncludeDiscount"`
+	IncludeOtherSubscription string `json:"IncludeOtherSubscription"`
+	IncludeRecurring         string `json:"IncludeRecurring"`
+	IncludeRefund            string `json:"IncludeRefund"`
+	IncludeSubscription      string `json:"IncludeSubscription"`
+	IncludeSupport           string `json:"IncludeSupport"`
+	IncludeTax               string `json:"IncludeTax"`
+	IncludeUpfront           string `json:"IncludeUpfront"`
+	UseAmortized             string `json:"UseAmortized"`
+	UseBlended               string `json:"UseBlended"`
+}
+
+type Country struct {
+	CountryCode string `json:"CountryCode"`
+	CountryName string `json:"CountryName"`
+}
+
 type Coverage struct {
 	CoverageCost            string `json:"CoverageCost"`
 	CoverageHours           string `json:"CoverageHours"`
@@ -217,6 +4365,16 @@ type CoverageNormalizedUnits struct {
 	TotalRunningNormalizedUnits       string `json:"TotalRunningNormalizedUnits"`
 }
 
+type CreateActionTargetRequest struct {
+	Description string `json:"Description"`
+	Id          string `json:"Id"`
+	Name        string `json:"Name"`
+}
+
+type CreateActionTargetResponse struct {
+	ActionTargetArn string `json:"ActionTargetArn"`
+}
+
 type CreateAnomalyMonitorRequest struct {
 	AnomalyMonitor string `json:"AnomalyMonitor"`
 	ResourceTags   string `json:"ResourceTags"`
@@ -235,6 +4393,33 @@ type CreateAnomalySubscriptionResponse struct {
 	SubscriptionArn string `json:"SubscriptionArn"`
 }
 
+type CreateBudgetActionRequest struct {
+	AccountId        string          `json:"AccountId"`
+	ActionThreshold  json.RawMessage `json:"ActionThreshold"`
+	ActionType       string          `json:"ActionType"`
+	ApprovalModel    string          `json:"ApprovalModel"`
+	BudgetName       string          `json:"BudgetName"`
+	Definition       json.RawMessage `json:"Definition"`
+	ExecutionRoleArn string          `json:"ExecutionRoleArn"`
+	NotificationType string          `json:"NotificationType"`
+	Subscribers      json.RawMessage `json:"Subscribers"`
+}
+
+type CreateBudgetActionResponse struct {
+	AccountId  string `json:"AccountId"`
+	ActionId   string `json:"ActionId"`
+	BudgetName string `json:"BudgetName"`
+}
+
+type CreateBudgetRequest struct {
+	AccountId                    string `json:"AccountId"`
+	Budget                       string `json:"Budget"`
+	NotificationsWithSubscribers string `json:"NotificationsWithSubscribers"`
+}
+
+type CreateBudgetResponse struct {
+}
+
 type CreateCaseRequest struct {
 	AttachmentSetId   string `json:"attachmentSetId"`
 	CategoryCode      string `json:"categoryCode"`
@@ -249,6 +4434,21 @@ type CreateCaseRequest struct {
 
 type CreateCaseResponse struct {
 	CaseId string `json:"caseId"`
+}
+
+type CreateChannelRequest struct {
+	Destinations string          `json:"Destinations"`
+	Name         string          `json:"Name"`
+	Source       string          `json:"Source"`
+	Tags         json.RawMessage `json:"Tags"`
+}
+
+type CreateChannelResponse struct {
+	ChannelArn   string          `json:"ChannelArn"`
+	Destinations string          `json:"Destinations"`
+	Name         string          `json:"Name"`
+	Source       string          `json:"Source"`
+	Tags         json.RawMessage `json:"Tags"`
 }
 
 type CreateCostCategoryDefinitionRequest struct {
@@ -266,6 +4466,113 @@ type CreateCostCategoryDefinitionResponse struct {
 	EffectiveStart  string `json:"EffectiveStart"`
 }
 
+type CreateEventDataStoreRequest struct {
+	AdvancedEventSelectors       string          `json:"AdvancedEventSelectors"`
+	KmsKeyId                     string          `json:"KmsKeyId"`
+	MultiRegionEnabled           string          `json:"MultiRegionEnabled"`
+	Name                         string          `json:"Name"`
+	OrganizationEnabled          string          `json:"OrganizationEnabled"`
+	RetentionPeriod              string          `json:"RetentionPeriod"`
+	TagsList                     json.RawMessage `json:"TagsList"`
+	TerminationProtectionEnabled string          `json:"TerminationProtectionEnabled"`
+}
+
+type CreateEventDataStoreResponse struct {
+	AdvancedEventSelectors       string          `json:"AdvancedEventSelectors"`
+	CreatedTimestamp             string          `json:"CreatedTimestamp"`
+	EventDataStoreArn            string          `json:"EventDataStoreArn"`
+	KmsKeyId                     string          `json:"KmsKeyId"`
+	MultiRegionEnabled           string          `json:"MultiRegionEnabled"`
+	Name                         string          `json:"Name"`
+	OrganizationEnabled          string          `json:"OrganizationEnabled"`
+	RetentionPeriod              string          `json:"RetentionPeriod"`
+	Status                       string          `json:"Status"`
+	TagsList                     json.RawMessage `json:"TagsList"`
+	TerminationProtectionEnabled string          `json:"TerminationProtectionEnabled"`
+	UpdatedTimestamp             string          `json:"UpdatedTimestamp"`
+}
+
+type CreateFindingAggregatorRequest struct {
+	RegionLinkingMode string `json:"RegionLinkingMode"`
+	Regions           string `json:"Regions"`
+}
+
+type CreateFindingAggregatorResponse struct {
+	FindingAggregationRegion string `json:"FindingAggregationRegion"`
+	FindingAggregatorArn     string `json:"FindingAggregatorArn"`
+	RegionLinkingMode        string `json:"RegionLinkingMode"`
+	Regions                  string `json:"Regions"`
+}
+
+type CreateInsightRequest struct {
+	Filters          string `json:"Filters"`
+	GroupByAttribute string `json:"GroupByAttribute"`
+	Name             string `json:"Name"`
+}
+
+type CreateInsightResponse struct {
+	InsightArn string `json:"InsightArn"`
+}
+
+type CreateMembersRequest struct {
+	AccountDetails string `json:"AccountDetails"`
+}
+
+type CreateMembersResponse struct {
+	UnprocessedAccounts string `json:"UnprocessedAccounts"`
+}
+
+type CreateNotificationRequest struct {
+	AccountId    string `json:"AccountId"`
+	BudgetName   string `json:"BudgetName"`
+	Notification string `json:"Notification"`
+	Subscribers  string `json:"Subscribers"`
+}
+
+type CreateNotificationResponse struct {
+}
+
+type CreateSubscriberRequest struct {
+	AccountId    string `json:"AccountId"`
+	BudgetName   string `json:"BudgetName"`
+	Notification string `json:"Notification"`
+	Subscriber   string `json:"Subscriber"`
+}
+
+type CreateSubscriberResponse struct {
+}
+
+type CreateTrailRequest struct {
+	CloudWatchLogsLogGroupArn  string          `json:"CloudWatchLogsLogGroupArn"`
+	CloudWatchLogsRoleArn      string          `json:"CloudWatchLogsRoleArn"`
+	EnableLogFileValidation    string          `json:"EnableLogFileValidation"`
+	IncludeGlobalServiceEvents string          `json:"IncludeGlobalServiceEvents"`
+	IsMultiRegionTrail         string          `json:"IsMultiRegionTrail"`
+	IsOrganizationTrail        string          `json:"IsOrganizationTrail"`
+	KmsKeyId                   string          `json:"KmsKeyId"`
+	Name                       string          `json:"Name"`
+	S3BucketName               string          `json:"S3BucketName"`
+	S3KeyPrefix                string          `json:"S3KeyPrefix"`
+	SnsTopicName               string          `json:"SnsTopicName"`
+	TagsList                   json.RawMessage `json:"TagsList"`
+}
+
+type CreateTrailResponse struct {
+	CloudWatchLogsLogGroupArn  string `json:"CloudWatchLogsLogGroupArn"`
+	CloudWatchLogsRoleArn      string `json:"CloudWatchLogsRoleArn"`
+	IncludeGlobalServiceEvents string `json:"IncludeGlobalServiceEvents"`
+	IsMultiRegionTrail         string `json:"IsMultiRegionTrail"`
+	IsOrganizationTrail        string `json:"IsOrganizationTrail"`
+	KmsKeyId                   string `json:"KmsKeyId"`
+	LogFileValidationEnabled   string `json:"LogFileValidationEnabled"`
+	Name                       string `json:"Name"`
+	S3BucketName               string `json:"S3BucketName"`
+	S3KeyPrefix                string `json:"S3KeyPrefix"`
+	SnsTopicARN                string `json:"SnsTopicARN"`
+	SnsTopicName               string `json:"SnsTopicName"`
+	TrailARN                   string `json:"TrailARN"`
+}
+
 type CurrentInstance struct {
 	CurrencyCode                             string `json:"CurrencyCode"`
 	InstanceName                             string `json:"InstanceName"`
@@ -280,9 +4587,94 @@ type CurrentInstance struct {
 	TotalRunningHoursInLookbackPeriod        string `json:"TotalRunningHoursInLookbackPeriod"`
 }
 
+type CurrentPerformanceRiskRatings struct {
+	High    string `json:"high"`
+	Low     string `json:"low"`
+	Medium  string `json:"medium"`
+	VeryLow string `json:"veryLow"`
+}
+
+type CustomDataIdentifiersDetections struct {
+	Arn         string `json:"Arn"`
+	Count       string `json:"Count"`
+	Name        string `json:"Name"`
+	Occurrences string `json:"Occurrences"`
+}
+
+type CustomDataIdentifiersResult struct {
+	Detections string `json:"Detections"`
+	TotalCount string `json:"TotalCount"`
+}
+
+type CustomPolicyDetails struct {
+	EnableDebugLogDelivery string `json:"EnableDebugLogDelivery"`
+	PolicyRuntime          string `json:"PolicyRuntime"`
+	PolicyText             string `json:"PolicyText"`
+}
+
+type Cvss struct {
+	Adjustments string `json:"Adjustments"`
+	BaseScore   string `json:"BaseScore"`
+	BaseVector  string `json:"BaseVector"`
+	Source      string `json:"Source"`
+	Version     string `json:"Version"`
+}
+
+type DataClassificationDetails struct {
+	DetailedResultsLocation string `json:"DetailedResultsLocation"`
+	Result                  string `json:"Result"`
+}
+
+type DataResource struct {
+	Type   string `json:"Type"`
+	Values string `json:"Values"`
+}
+
+type DateFilter struct {
+	DateRange string `json:"DateRange"`
+	End       string `json:"End"`
+	Start     string `json:"Start"`
+}
+
 type DateInterval struct {
 	End   string `json:"End"`
 	Start string `json:"Start"`
+}
+
+type DateRange struct {
+	Unit  string `json:"Unit"`
+	Value string `json:"Value"`
+}
+
+type DateTimeRange struct {
+	From string `json:"from"`
+	To   string `json:"to"`
+}
+
+type DeclineInvitationsRequest struct {
+	AccountIds string `json:"AccountIds"`
+}
+
+type DeclineInvitationsResponse struct {
+	UnprocessedAccounts string `json:"UnprocessedAccounts"`
+}
+
+type Definition struct {
+	IamActionDefinition string `json:"IamActionDefinition"`
+	ScpActionDefinition string `json:"ScpActionDefinition"`
+	SsmActionDefinition string `json:"SsmActionDefinition"`
+}
+
+type DeleteActionTargetRequest struct {
+}
+
+type DeleteActionTargetResponse struct {
+	ActionTargetArn string `json:"ActionTargetArn"`
+}
+
+type DeleteAggregationAuthorizationRequest struct {
+	AuthorizedAccountId string `json:"AuthorizedAccountId"`
+	AuthorizedAwsRegion string `json:"AuthorizedAwsRegion"`
 }
 
 type DeleteAnomalyMonitorRequest struct {
@@ -299,6 +4691,49 @@ type DeleteAnomalySubscriptionRequest struct {
 type DeleteAnomalySubscriptionResponse struct {
 }
 
+type DeleteBudgetActionRequest struct {
+	AccountId  string `json:"AccountId"`
+	ActionId   string `json:"ActionId"`
+	BudgetName string `json:"BudgetName"`
+}
+
+type DeleteBudgetActionResponse struct {
+	AccountId  string          `json:"AccountId"`
+	Action     json.RawMessage `json:"Action"`
+	BudgetName string          `json:"BudgetName"`
+}
+
+type DeleteBudgetRequest struct {
+	AccountId  string `json:"AccountId"`
+	BudgetName string `json:"BudgetName"`
+}
+
+type DeleteBudgetResponse struct {
+}
+
+type DeleteChannelRequest struct {
+	Channel string `json:"Channel"`
+}
+
+type DeleteChannelResponse struct {
+}
+
+type DeleteConfigRuleRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+}
+
+type DeleteConfigurationAggregatorRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+}
+
+type DeleteConfigurationRecorderRequest struct {
+	ConfigurationRecorderName string `json:"ConfigurationRecorderName"`
+}
+
+type DeleteConformancePackRequest struct {
+	ConformancePackName string `json:"ConformancePackName"`
+}
+
 type DeleteCostCategoryDefinitionRequest struct {
 	CostCategoryArn string `json:"CostCategoryArn"`
 }
@@ -306,6 +4741,128 @@ type DeleteCostCategoryDefinitionRequest struct {
 type DeleteCostCategoryDefinitionResponse struct {
 	CostCategoryArn string `json:"CostCategoryArn"`
 	EffectiveEnd    string `json:"EffectiveEnd"`
+}
+
+type DeleteDeliveryChannelRequest struct {
+	DeliveryChannelName string `json:"DeliveryChannelName"`
+}
+
+type DeleteEvaluationResultsRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+}
+
+type DeleteEvaluationResultsResponse struct {
+}
+
+type DeleteEventDataStoreRequest struct {
+	EventDataStore string `json:"EventDataStore"`
+}
+
+type DeleteEventDataStoreResponse struct {
+}
+
+type DeleteFindingAggregatorRequest struct {
+}
+
+type DeleteFindingAggregatorResponse struct {
+}
+
+type DeleteInsightRequest struct {
+}
+
+type DeleteInsightResponse struct {
+	InsightArn string `json:"InsightArn"`
+}
+
+type DeleteInvitationsRequest struct {
+	AccountIds string `json:"AccountIds"`
+}
+
+type DeleteInvitationsResponse struct {
+	UnprocessedAccounts string `json:"UnprocessedAccounts"`
+}
+
+type DeleteMembersRequest struct {
+	AccountIds string `json:"AccountIds"`
+}
+
+type DeleteMembersResponse struct {
+	UnprocessedAccounts string `json:"UnprocessedAccounts"`
+}
+
+type DeleteNotificationRequest struct {
+	AccountId    string `json:"AccountId"`
+	BudgetName   string `json:"BudgetName"`
+	Notification string `json:"Notification"`
+}
+
+type DeleteNotificationResponse struct {
+}
+
+type DeleteOrganizationConfigRuleRequest struct {
+	OrganizationConfigRuleName string `json:"OrganizationConfigRuleName"`
+}
+
+type DeleteOrganizationConformancePackRequest struct {
+	OrganizationConformancePackName string `json:"OrganizationConformancePackName"`
+}
+
+type DeletePendingAggregationRequestRequest struct {
+	RequesterAccountId string `json:"RequesterAccountId"`
+	RequesterAwsRegion string `json:"RequesterAwsRegion"`
+}
+
+type DeleteRecommendationPreferencesRequest struct {
+	RecommendationPreferenceNames string `json:"recommendationPreferenceNames"`
+	ResourceType                  string `json:"resourceType"`
+	Scope                         string `json:"scope"`
+}
+
+type DeleteRecommendationPreferencesResponse struct {
+}
+
+type DeleteRemediationConfigurationRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	ResourceType   string `json:"ResourceType"`
+}
+
+type DeleteRemediationConfigurationResponse struct {
+}
+
+type DeleteRemediationExceptionsRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	ResourceKeys   string `json:"ResourceKeys"`
+}
+
+type DeleteRemediationExceptionsResponse struct {
+	FailedBatches string `json:"FailedBatches"`
+}
+
+type DeleteReportDefinitionRequest struct {
+}
+
+type DeleteReportDefinitionResponse struct {
+	ResponseMessage string `json:"ResponseMessage"`
+}
+
+type DeleteReportDefinitionResult struct {
+	ReportId string `json:"reportId"`
+}
+
+type DeleteResourceConfigRequest struct {
+	ResourceId   string `json:"ResourceId"`
+	ResourceType string `json:"ResourceType"`
+}
+
+type DeleteResourcePolicyRequest struct {
+	ResourceArn string `json:"ResourceArn"`
+}
+
+type DeleteResourcePolicyResponse struct {
+}
+
+type DeleteRetentionConfigurationRequest struct {
+	RetentionConfigurationName string `json:"RetentionConfigurationName"`
 }
 
 type DeleteServiceQuotaIncreaseRequestFromTemplateRequest struct {
@@ -317,12 +4874,242 @@ type DeleteServiceQuotaIncreaseRequestFromTemplateRequest struct {
 type DeleteServiceQuotaIncreaseRequestFromTemplateResponse struct {
 }
 
+type DeleteStoredQueryRequest struct {
+	QueryName string `json:"QueryName"`
+}
+
+type DeleteStoredQueryResponse struct {
+}
+
+type DeleteSubscriberRequest struct {
+	AccountId    string `json:"AccountId"`
+	BudgetName   string `json:"BudgetName"`
+	Notification string `json:"Notification"`
+	Subscriber   string `json:"Subscriber"`
+}
+
+type DeleteSubscriberResponse struct {
+}
+
+type DeleteTrailRequest struct {
+	Name string `json:"Name"`
+}
+
+type DeleteTrailResponse struct {
+}
+
+type DeliverConfigSnapshotRequest struct {
+	DeliveryChannelName string `json:"deliveryChannelName"`
+}
+
+type DeliverConfigSnapshotResponse struct {
+	ConfigSnapshotId string `json:"configSnapshotId"`
+}
+
+type DeliveryChannel struct {
+	ConfigSnapshotDeliveryProperties string `json:"configSnapshotDeliveryProperties"`
+	Name                             string `json:"name"`
+	S3BucketName                     string `json:"s3BucketName"`
+	S3KeyPrefix                      string `json:"s3KeyPrefix"`
+	S3KmsKeyArn                      string `json:"s3KmsKeyArn"`
+	SnsTopicARN                      string `json:"snsTopicARN"`
+}
+
+type DeliveryChannelStatus struct {
+	ConfigHistoryDeliveryInfo  string `json:"configHistoryDeliveryInfo"`
+	ConfigSnapshotDeliveryInfo string `json:"configSnapshotDeliveryInfo"`
+	ConfigStreamDeliveryInfo   string `json:"configStreamDeliveryInfo"`
+	Name                       string `json:"name"`
+}
+
+type DeregisterOrganizationDelegatedAdminRequest struct {
+	DelegatedAdminAccountId string `json:"DelegatedAdminAccountId"`
+}
+
+type DeregisterOrganizationDelegatedAdminResponse struct {
+}
+
+type DescribeActionTargetsRequest struct {
+	ActionTargetArns string `json:"ActionTargetArns"`
+	MaxResults       string `json:"MaxResults"`
+	NextToken        string `json:"NextToken"`
+}
+
+type DescribeActionTargetsResponse struct {
+	ActionTargets string `json:"ActionTargets"`
+	NextToken     string `json:"NextToken"`
+}
+
+type DescribeAffectedAccountsForOrganizationRequest struct {
+	EventArn   string `json:"eventArn"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeAffectedAccountsForOrganizationResponse struct {
+	AffectedAccounts string `json:"affectedAccounts"`
+	EventScopeCode   string `json:"eventScopeCode"`
+	NextToken        string `json:"nextToken"`
+}
+
+type DescribeAffectedEntitiesForOrganizationRequest struct {
+	Locale                    string `json:"locale"`
+	MaxResults                string `json:"maxResults"`
+	NextToken                 string `json:"nextToken"`
+	OrganizationEntityFilters string `json:"organizationEntityFilters"`
+}
+
+type DescribeAffectedEntitiesForOrganizationResponse struct {
+	Entities  string `json:"entities"`
+	FailedSet string `json:"failedSet"`
+	NextToken string `json:"nextToken"`
+}
+
+type DescribeAffectedEntitiesRequest struct {
+	Filter     string `json:"filter"`
+	Locale     string `json:"locale"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeAffectedEntitiesResponse struct {
+	Entities  string `json:"entities"`
+	NextToken string `json:"nextToken"`
+}
+
+type DescribeAggregateComplianceByConfigRulesRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Filters                     string `json:"Filters"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type DescribeAggregateComplianceByConfigRulesResponse struct {
+	AggregateComplianceByConfigRules string `json:"AggregateComplianceByConfigRules"`
+	NextToken                        string `json:"NextToken"`
+}
+
+type DescribeAggregateComplianceByConformancePacksRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Filters                     string `json:"Filters"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type DescribeAggregateComplianceByConformancePacksResponse struct {
+	AggregateComplianceByConformancePacks string `json:"AggregateComplianceByConformancePacks"`
+	NextToken                             string `json:"NextToken"`
+}
+
+type DescribeAggregationAuthorizationsRequest struct {
+	Limit     string `json:"Limit"`
+	NextToken string `json:"NextToken"`
+}
+
+type DescribeAggregationAuthorizationsResponse struct {
+	AggregationAuthorizations string `json:"AggregationAuthorizations"`
+	NextToken                 string `json:"NextToken"`
+}
+
 type DescribeAttachmentRequest struct {
 	AttachmentId string `json:"attachmentId"`
 }
 
 type DescribeAttachmentResponse struct {
 	Attachment string `json:"attachment"`
+}
+
+type DescribeBudgetActionHistoriesRequest struct {
+	AccountId  string          `json:"AccountId"`
+	ActionId   string          `json:"ActionId"`
+	BudgetName string          `json:"BudgetName"`
+	MaxResults int             `json:"MaxResults"`
+	NextToken  string          `json:"NextToken"`
+	TimePeriod json.RawMessage `json:"TimePeriod"`
+}
+
+type DescribeBudgetActionHistoriesResponse struct {
+	ActionHistories string `json:"ActionHistories"`
+	NextToken       string `json:"NextToken"`
+}
+
+type DescribeBudgetActionRequest struct {
+	AccountId  string `json:"AccountId"`
+	ActionId   string `json:"ActionId"`
+	BudgetName string `json:"BudgetName"`
+}
+
+type DescribeBudgetActionResponse struct {
+	AccountId  string `json:"AccountId"`
+	Action     string `json:"Action"`
+	BudgetName string `json:"BudgetName"`
+}
+
+type DescribeBudgetActionsForAccountRequest struct {
+	AccountId  string `json:"AccountId"`
+	MaxResults int    `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type DescribeBudgetActionsForAccountResponse struct {
+	Actions   string `json:"Actions"`
+	NextToken string `json:"NextToken"`
+}
+
+type DescribeBudgetActionsForBudgetRequest struct {
+	AccountId  string `json:"AccountId"`
+	BudgetName string `json:"BudgetName"`
+	MaxResults int    `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type DescribeBudgetActionsForBudgetResponse struct {
+	Actions   string `json:"Actions"`
+	NextToken string `json:"NextToken"`
+}
+
+type DescribeBudgetNotificationsForAccountRequest struct {
+	AccountId  string `json:"AccountId"`
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type DescribeBudgetNotificationsForAccountResponse struct {
+	BudgetNotificationsForAccount string `json:"BudgetNotificationsForAccount"`
+	NextToken                     string `json:"NextToken"`
+}
+
+type DescribeBudgetPerformanceHistoryRequest struct {
+	AccountId  string `json:"AccountId"`
+	BudgetName string `json:"BudgetName"`
+	MaxResults int    `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+	TimePeriod string `json:"TimePeriod"`
+}
+
+type DescribeBudgetPerformanceHistoryResponse struct {
+	BudgetPerformanceHistory string `json:"BudgetPerformanceHistory"`
+	NextToken                string `json:"NextToken"`
+}
+
+type DescribeBudgetRequest struct {
+	AccountId  string `json:"AccountId"`
+	BudgetName string `json:"BudgetName"`
+}
+
+type DescribeBudgetResponse struct {
+	Budget string `json:"Budget"`
+}
+
+type DescribeBudgetsRequest struct {
+	AccountId  string `json:"AccountId"`
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type DescribeBudgetsResponse struct {
+	Budgets   string `json:"Budgets"`
+	NextToken string `json:"NextToken"`
 }
 
 type DescribeCasesRequest struct {
@@ -355,6 +5142,130 @@ type DescribeCommunicationsResponse struct {
 	NextToken      string `json:"nextToken"`
 }
 
+type DescribeComplianceByConfigRuleRequest struct {
+	ComplianceTypes string `json:"ComplianceTypes"`
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+	NextToken       string `json:"NextToken"`
+}
+
+type DescribeComplianceByConfigRuleResponse struct {
+	ComplianceByConfigRules string `json:"ComplianceByConfigRules"`
+	NextToken               string `json:"NextToken"`
+}
+
+type DescribeComplianceByResourceRequest struct {
+	ComplianceTypes string `json:"ComplianceTypes"`
+	Limit           string `json:"Limit"`
+	NextToken       string `json:"NextToken"`
+	ResourceId      string `json:"ResourceId"`
+	ResourceType    string `json:"ResourceType"`
+}
+
+type DescribeComplianceByResourceResponse struct {
+	ComplianceByResources string `json:"ComplianceByResources"`
+	NextToken             string `json:"NextToken"`
+}
+
+type DescribeConfigRuleEvaluationStatusRequest struct {
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+	Limit           string `json:"Limit"`
+	NextToken       string `json:"NextToken"`
+}
+
+type DescribeConfigRuleEvaluationStatusResponse struct {
+	ConfigRulesEvaluationStatus string `json:"ConfigRulesEvaluationStatus"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type DescribeConfigRulesFilters struct {
+	EvaluationMode string `json:"EvaluationMode"`
+}
+
+type DescribeConfigRulesRequest struct {
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+	Filters         string `json:"Filters"`
+	NextToken       string `json:"NextToken"`
+}
+
+type DescribeConfigRulesResponse struct {
+	ConfigRules string `json:"ConfigRules"`
+	NextToken   string `json:"NextToken"`
+}
+
+type DescribeConfigurationAggregatorSourcesStatusRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+	UpdateStatus                string `json:"UpdateStatus"`
+}
+
+type DescribeConfigurationAggregatorSourcesStatusResponse struct {
+	AggregatedSourceStatusList string `json:"AggregatedSourceStatusList"`
+	NextToken                  string `json:"NextToken"`
+}
+
+type DescribeConfigurationAggregatorsRequest struct {
+	ConfigurationAggregatorNames string `json:"ConfigurationAggregatorNames"`
+	Limit                        string `json:"Limit"`
+	NextToken                    string `json:"NextToken"`
+}
+
+type DescribeConfigurationAggregatorsResponse struct {
+	ConfigurationAggregators string `json:"ConfigurationAggregators"`
+	NextToken                string `json:"NextToken"`
+}
+
+type DescribeConfigurationRecorderStatusRequest struct {
+	ConfigurationRecorderNames string `json:"ConfigurationRecorderNames"`
+}
+
+type DescribeConfigurationRecorderStatusResponse struct {
+	ConfigurationRecordersStatus string `json:"ConfigurationRecordersStatus"`
+}
+
+type DescribeConfigurationRecordersRequest struct {
+	ConfigurationRecorderNames string `json:"ConfigurationRecorderNames"`
+}
+
+type DescribeConfigurationRecordersResponse struct {
+	ConfigurationRecorders string `json:"ConfigurationRecorders"`
+}
+
+type DescribeConformancePackComplianceRequest struct {
+	ConformancePackName string `json:"ConformancePackName"`
+	Filters             string `json:"Filters"`
+	Limit               string `json:"Limit"`
+	NextToken           string `json:"NextToken"`
+}
+
+type DescribeConformancePackComplianceResponse struct {
+	ConformancePackName               string `json:"ConformancePackName"`
+	ConformancePackRuleComplianceList string `json:"ConformancePackRuleComplianceList"`
+	NextToken                         string `json:"NextToken"`
+}
+
+type DescribeConformancePackStatusRequest struct {
+	ConformancePackNames string `json:"ConformancePackNames"`
+	Limit                string `json:"Limit"`
+	NextToken            string `json:"NextToken"`
+}
+
+type DescribeConformancePackStatusResponse struct {
+	ConformancePackStatusDetails string `json:"ConformancePackStatusDetails"`
+	NextToken                    string `json:"NextToken"`
+}
+
+type DescribeConformancePacksRequest struct {
+	ConformancePackNames string `json:"ConformancePackNames"`
+	Limit                string `json:"Limit"`
+	NextToken            string `json:"NextToken"`
+}
+
+type DescribeConformancePacksResponse struct {
+	ConformancePackDetails string `json:"ConformancePackDetails"`
+	NextToken              string `json:"NextToken"`
+}
+
 type DescribeCostCategoryDefinitionRequest struct {
 	CostCategoryArn string `json:"CostCategoryArn"`
 	EffectiveOn     string `json:"EffectiveOn"`
@@ -362,6 +5273,274 @@ type DescribeCostCategoryDefinitionRequest struct {
 
 type DescribeCostCategoryDefinitionResponse struct {
 	CostCategory json.RawMessage `json:"CostCategory"`
+}
+
+type DescribeDeliveryChannelStatusRequest struct {
+	DeliveryChannelNames string `json:"DeliveryChannelNames"`
+}
+
+type DescribeDeliveryChannelStatusResponse struct {
+	DeliveryChannelsStatus string `json:"DeliveryChannelsStatus"`
+}
+
+type DescribeDeliveryChannelsRequest struct {
+	DeliveryChannelNames string `json:"DeliveryChannelNames"`
+}
+
+type DescribeDeliveryChannelsResponse struct {
+	DeliveryChannels string `json:"DeliveryChannels"`
+}
+
+type DescribeEntityAggregatesRequest struct {
+	EventArns string `json:"eventArns"`
+}
+
+type DescribeEntityAggregatesResponse struct {
+	EntityAggregates string `json:"entityAggregates"`
+}
+
+type DescribeEventAggregatesRequest struct {
+	AggregateField string `json:"aggregateField"`
+	Filter         string `json:"filter"`
+	MaxResults     string `json:"maxResults"`
+	NextToken      string `json:"nextToken"`
+}
+
+type DescribeEventAggregatesResponse struct {
+	EventAggregates string `json:"eventAggregates"`
+	NextToken       string `json:"nextToken"`
+}
+
+type DescribeEventDetailsForOrganizationRequest struct {
+	Locale                         string `json:"locale"`
+	OrganizationEventDetailFilters string `json:"organizationEventDetailFilters"`
+}
+
+type DescribeEventDetailsForOrganizationResponse struct {
+	FailedSet     string `json:"failedSet"`
+	SuccessfulSet string `json:"successfulSet"`
+}
+
+type DescribeEventDetailsRequest struct {
+	EventArns string `json:"eventArns"`
+	Locale    string `json:"locale"`
+}
+
+type DescribeEventDetailsResponse struct {
+	FailedSet     string `json:"failedSet"`
+	SuccessfulSet string `json:"successfulSet"`
+}
+
+type DescribeEventTypesRequest struct {
+	Filter     string `json:"filter"`
+	Locale     string `json:"locale"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeEventTypesResponse struct {
+	EventTypes string `json:"eventTypes"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeEventsForOrganizationRequest struct {
+	Filter     string `json:"filter"`
+	Locale     string `json:"locale"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeEventsForOrganizationResponse struct {
+	Events    string `json:"events"`
+	NextToken string `json:"nextToken"`
+}
+
+type DescribeEventsRequest struct {
+	Filter     string `json:"filter"`
+	Locale     string `json:"locale"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeEventsResponse struct {
+	Events    string `json:"events"`
+	NextToken string `json:"nextToken"`
+}
+
+type DescribeHealthServiceStatusForOrganizationResponse struct {
+	HealthServiceAccessStatusForOrganization string `json:"healthServiceAccessStatusForOrganization"`
+}
+
+type DescribeHubRequest struct {
+}
+
+type DescribeHubResponse struct {
+	AutoEnableControls      string `json:"AutoEnableControls"`
+	ControlFindingGenerator string `json:"ControlFindingGenerator"`
+	HubArn                  string `json:"HubArn"`
+	SubscribedAt            string `json:"SubscribedAt"`
+}
+
+type DescribeNotificationsForBudgetRequest struct {
+	AccountId  string `json:"AccountId"`
+	BudgetName string `json:"BudgetName"`
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type DescribeNotificationsForBudgetResponse struct {
+	NextToken     string `json:"NextToken"`
+	Notifications string `json:"Notifications"`
+}
+
+type DescribeOrganizationConfigRuleStatusesRequest struct {
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+	OrganizationConfigRuleNames string `json:"OrganizationConfigRuleNames"`
+}
+
+type DescribeOrganizationConfigRuleStatusesResponse struct {
+	NextToken                      string `json:"NextToken"`
+	OrganizationConfigRuleStatuses string `json:"OrganizationConfigRuleStatuses"`
+}
+
+type DescribeOrganizationConfigRulesRequest struct {
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+	OrganizationConfigRuleNames string `json:"OrganizationConfigRuleNames"`
+}
+
+type DescribeOrganizationConfigRulesResponse struct {
+	NextToken               string `json:"NextToken"`
+	OrganizationConfigRules string `json:"OrganizationConfigRules"`
+}
+
+type DescribeOrganizationConfigurationRequest struct {
+}
+
+type DescribeOrganizationConfigurationResponse struct {
+	AutoEnable                string `json:"AutoEnable"`
+	AutoEnableStandards       string `json:"AutoEnableStandards"`
+	MemberAccountLimitReached string `json:"MemberAccountLimitReached"`
+}
+
+type DescribeOrganizationConformancePackStatusesRequest struct {
+	Limit                            string `json:"Limit"`
+	NextToken                        string `json:"NextToken"`
+	OrganizationConformancePackNames string `json:"OrganizationConformancePackNames"`
+}
+
+type DescribeOrganizationConformancePackStatusesResponse struct {
+	NextToken                           string `json:"NextToken"`
+	OrganizationConformancePackStatuses string `json:"OrganizationConformancePackStatuses"`
+}
+
+type DescribeOrganizationConformancePacksRequest struct {
+	Limit                            string `json:"Limit"`
+	NextToken                        string `json:"NextToken"`
+	OrganizationConformancePackNames string `json:"OrganizationConformancePackNames"`
+}
+
+type DescribeOrganizationConformancePacksResponse struct {
+	NextToken                    string `json:"NextToken"`
+	OrganizationConformancePacks string `json:"OrganizationConformancePacks"`
+}
+
+type DescribePendingAggregationRequestsRequest struct {
+	Limit     string `json:"Limit"`
+	NextToken string `json:"NextToken"`
+}
+
+type DescribePendingAggregationRequestsResponse struct {
+	NextToken                  string `json:"NextToken"`
+	PendingAggregationRequests string `json:"PendingAggregationRequests"`
+}
+
+type DescribeProductsRequest struct {
+}
+
+type DescribeProductsResponse struct {
+	NextToken string `json:"NextToken"`
+	Products  string `json:"Products"`
+}
+
+type DescribeQueryRequest struct {
+	EventDataStore string `json:"EventDataStore"`
+	QueryId        string `json:"QueryId"`
+}
+
+type DescribeQueryResponse struct {
+	DeliveryS3Uri   string `json:"DeliveryS3Uri"`
+	DeliveryStatus  string `json:"DeliveryStatus"`
+	ErrorMessage    string `json:"ErrorMessage"`
+	QueryId         string `json:"QueryId"`
+	QueryStatistics string `json:"QueryStatistics"`
+	QueryStatus     string `json:"QueryStatus"`
+	QueryString     string `json:"QueryString"`
+}
+
+type DescribeRecommendationExportJobsRequest struct {
+	Filters    string `json:"filters"`
+	JobIds     string `json:"jobIds"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type DescribeRecommendationExportJobsResponse struct {
+	NextToken                string `json:"nextToken"`
+	RecommendationExportJobs string `json:"recommendationExportJobs"`
+}
+
+type DescribeRemediationConfigurationsRequest struct {
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+}
+
+type DescribeRemediationConfigurationsResponse struct {
+	RemediationConfigurations string `json:"RemediationConfigurations"`
+}
+
+type DescribeRemediationExceptionsRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	Limit          string `json:"Limit"`
+	NextToken      string `json:"NextToken"`
+	ResourceKeys   string `json:"ResourceKeys"`
+}
+
+type DescribeRemediationExceptionsResponse struct {
+	NextToken             string `json:"NextToken"`
+	RemediationExceptions string `json:"RemediationExceptions"`
+}
+
+type DescribeRemediationExecutionStatusRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	Limit          string `json:"Limit"`
+	NextToken      string `json:"NextToken"`
+	ResourceKeys   string `json:"ResourceKeys"`
+}
+
+type DescribeRemediationExecutionStatusResponse struct {
+	NextToken                    string `json:"NextToken"`
+	RemediationExecutionStatuses string `json:"RemediationExecutionStatuses"`
+}
+
+type DescribeReportDefinitionsRequest struct {
+	MaxResults int    `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type DescribeReportDefinitionsResponse struct {
+	NextToken         string `json:"NextToken"`
+	ReportDefinitions string `json:"ReportDefinitions"`
+}
+
+type DescribeRetentionConfigurationsRequest struct {
+	NextToken                   string `json:"NextToken"`
+	RetentionConfigurationNames string `json:"RetentionConfigurationNames"`
+}
+
+type DescribeRetentionConfigurationsResponse struct {
+	NextToken               string `json:"NextToken"`
+	RetentionConfigurations string `json:"RetentionConfigurations"`
 }
 
 type DescribeServicesRequest struct {
@@ -379,6 +5558,44 @@ type DescribeSeverityLevelsRequest struct {
 
 type DescribeSeverityLevelsResponse struct {
 	SeverityLevels string `json:"severityLevels"`
+}
+
+type DescribeStandardsControlsRequest struct {
+}
+
+type DescribeStandardsControlsResponse struct {
+	Controls  string `json:"Controls"`
+	NextToken string `json:"NextToken"`
+}
+
+type DescribeStandardsRequest struct {
+}
+
+type DescribeStandardsResponse struct {
+	NextToken string `json:"NextToken"`
+	Standards string `json:"Standards"`
+}
+
+type DescribeSubscribersForNotificationRequest struct {
+	AccountId    string `json:"AccountId"`
+	BudgetName   string `json:"BudgetName"`
+	MaxResults   string `json:"MaxResults"`
+	NextToken    string `json:"NextToken"`
+	Notification string `json:"Notification"`
+}
+
+type DescribeSubscribersForNotificationResponse struct {
+	NextToken   string `json:"NextToken"`
+	Subscribers string `json:"Subscribers"`
+}
+
+type DescribeTrailsRequest struct {
+	IncludeShadowTrails string `json:"includeShadowTrails"`
+	TrailNameList       string `json:"trailNameList"`
+}
+
+type DescribeTrailsResponse struct {
+	TrailList string `json:"trailList"`
 }
 
 type DescribeTrustedAdvisorCheckRefreshStatusesRequest struct {
@@ -414,6 +5631,11 @@ type DescribeTrustedAdvisorChecksResponse struct {
 	Checks string `json:"checks"`
 }
 
+type Destination struct {
+	Location string `json:"Location"`
+	Type     string `json:"Type"`
+}
+
 type DimensionValues struct {
 	Key          string `json:"Key"`
 	MatchOptions string `json:"MatchOptions"`
@@ -423,6 +5645,44 @@ type DimensionValues struct {
 type DimensionValuesWithAttributes struct {
 	Attributes string `json:"Attributes"`
 	Value      string `json:"Value"`
+}
+
+type DisableImportFindingsForProductRequest struct {
+}
+
+type DisableImportFindingsForProductResponse struct {
+}
+
+type DisableOrganizationAdminAccountRequest struct {
+	AdminAccountId string `json:"AdminAccountId"`
+}
+
+type DisableOrganizationAdminAccountResponse struct {
+}
+
+type DisableSecurityHubRequest struct {
+}
+
+type DisableSecurityHubResponse struct {
+}
+
+type DisassociateFromAdministratorAccountRequest struct {
+}
+
+type DisassociateFromAdministratorAccountResponse struct {
+}
+
+type DisassociateFromMasterAccountRequest struct {
+}
+
+type DisassociateFromMasterAccountResponse struct {
+}
+
+type DisassociateMembersRequest struct {
+	AccountIds string `json:"AccountIds"`
+}
+
+type DisassociateMembersResponse struct {
 }
 
 type DisassociateServiceQuotaTemplateRequest struct {
@@ -438,11 +5698,28 @@ type DiskResourceUtilization struct {
 	DiskWriteOpsPerSecond   string `json:"DiskWriteOpsPerSecond"`
 }
 
+type DnsRequestAction struct {
+	Blocked  string `json:"Blocked"`
+	Domain   string `json:"Domain"`
+	Protocol string `json:"Protocol"`
+}
+
+type EBSFilter struct {
+	Name   string `json:"name"`
+	Values string `json:"values"`
+}
+
 type EBSResourceUtilization struct {
 	EbsReadBytesPerSecond  string `json:"EbsReadBytesPerSecond"`
 	EbsReadOpsPerSecond    string `json:"EbsReadOpsPerSecond"`
 	EbsWriteBytesPerSecond string `json:"EbsWriteBytesPerSecond"`
 	EbsWriteOpsPerSecond   string `json:"EbsWriteOpsPerSecond"`
+}
+
+type EBSUtilizationMetric struct {
+	Name      string `json:"name"`
+	Statistic string `json:"statistic"`
+	Value     string `json:"value"`
 }
 
 type EC2InstanceDetails struct {
@@ -481,12 +5758,72 @@ type EC2Specification struct {
 	OfferingClass string `json:"OfferingClass"`
 }
 
+type ECSServiceProjectedMetric struct {
+	LowerBoundValues string `json:"lowerBoundValues"`
+	Name             string `json:"name"`
+	Timestamps       string `json:"timestamps"`
+	UpperBoundValues string `json:"upperBoundValues"`
+}
+
+type ECSServiceProjectedUtilizationMetric struct {
+	LowerBoundValue string `json:"lowerBoundValue"`
+	Name            string `json:"name"`
+	Statistic       string `json:"statistic"`
+	UpperBoundValue string `json:"upperBoundValue"`
+}
+
+type ECSServiceRecommendation struct {
+	AccountId                    string `json:"accountId"`
+	CurrentPerformanceRisk       string `json:"currentPerformanceRisk"`
+	CurrentServiceConfiguration  string `json:"currentServiceConfiguration"`
+	Finding                      string `json:"finding"`
+	FindingReasonCodes           string `json:"findingReasonCodes"`
+	LastRefreshTimestamp         string `json:"lastRefreshTimestamp"`
+	LaunchType                   string `json:"launchType"`
+	LookbackPeriodInDays         string `json:"lookbackPeriodInDays"`
+	ServiceArn                   string `json:"serviceArn"`
+	ServiceRecommendationOptions string `json:"serviceRecommendationOptions"`
+	UtilizationMetrics           string `json:"utilizationMetrics"`
+}
+
+type ECSServiceRecommendationFilter struct {
+	Name   string `json:"name"`
+	Values string `json:"values"`
+}
+
+type ECSServiceRecommendationOption struct {
+	ContainerRecommendations    string          `json:"containerRecommendations"`
+	Cpu                         string          `json:"cpu"`
+	Memory                      string          `json:"memory"`
+	ProjectedUtilizationMetrics string          `json:"projectedUtilizationMetrics"`
+	SavingsOpportunity          json.RawMessage `json:"savingsOpportunity"`
+}
+
+type ECSServiceRecommendedOptionProjectedMetric struct {
+	ProjectedMetrics      string `json:"projectedMetrics"`
+	RecommendedCpuUnits   string `json:"recommendedCpuUnits"`
+	RecommendedMemorySize string `json:"recommendedMemorySize"`
+}
+
+type ECSServiceUtilizationMetric struct {
+	Name      string `json:"name"`
+	Statistic string `json:"statistic"`
+	Value     string `json:"value"`
+}
+
 type ESInstanceDetails struct {
 	CurrentGeneration string `json:"CurrentGeneration"`
 	InstanceClass     string `json:"InstanceClass"`
 	InstanceSize      string `json:"InstanceSize"`
 	Region            string `json:"Region"`
 	SizeFlexEligible  string `json:"SizeFlexEligible"`
+}
+
+type EffectiveRecommendationPreferences struct {
+	CpuVendorArchitectures        string `json:"cpuVendorArchitectures"`
+	EnhancedInfrastructureMetrics string `json:"enhancedInfrastructureMetrics"`
+	ExternalMetricsPreference     string `json:"externalMetricsPreference"`
+	InferredWorkloadTypes         string `json:"inferredWorkloadTypes"`
 }
 
 type ElastiCacheInstanceDetails struct {
@@ -498,9 +5835,282 @@ type ElastiCacheInstanceDetails struct {
 	SizeFlexEligible   string `json:"SizeFlexEligible"`
 }
 
+type EnableImportFindingsForProductRequest struct {
+	ProductArn string `json:"ProductArn"`
+}
+
+type EnableImportFindingsForProductResponse struct {
+	ProductSubscriptionArn string `json:"ProductSubscriptionArn"`
+}
+
+type EnableOrganizationAdminAccountRequest struct {
+	AdminAccountId string `json:"AdminAccountId"`
+}
+
+type EnableOrganizationAdminAccountResponse struct {
+}
+
+type EnableSecurityHubRequest struct {
+	ControlFindingGenerator string `json:"ControlFindingGenerator"`
+	EnableDefaultStandards  string `json:"EnableDefaultStandards"`
+	Tags                    string `json:"Tags"`
+}
+
+type EnableSecurityHubResponse struct {
+}
+
+type EnrollmentFilter struct {
+	Name   string `json:"name"`
+	Values string `json:"values"`
+}
+
+type EntityAggregate struct {
+	Count    string `json:"count"`
+	EventArn string `json:"eventArn"`
+}
+
+type EntityFilter struct {
+	EntityArns       string `json:"entityArns"`
+	EntityValues     string `json:"entityValues"`
+	EventArns        string `json:"eventArns"`
+	LastUpdatedTimes string `json:"lastUpdatedTimes"`
+	StatusCodes      string `json:"statusCodes"`
+	Tags             string `json:"tags"`
+}
+
 type ErrorReason struct {
 	ErrorCode    string `json:"ErrorCode"`
 	ErrorMessage string `json:"ErrorMessage"`
+}
+
+type EstimatedMonthlySavings struct {
+	Currency string `json:"currency"`
+	Value    string `json:"value"`
+}
+
+type Evaluation struct {
+	Annotation             string `json:"Annotation"`
+	ComplianceResourceId   string `json:"ComplianceResourceId"`
+	ComplianceResourceType string `json:"ComplianceResourceType"`
+	ComplianceType         string `json:"ComplianceType"`
+	OrderingTimestamp      string `json:"OrderingTimestamp"`
+}
+
+type EvaluationContext struct {
+	EvaluationContextIdentifier string `json:"EvaluationContextIdentifier"`
+}
+
+type EvaluationModeConfiguration struct {
+	Mode string `json:"Mode"`
+}
+
+type EvaluationResult struct {
+	Annotation                 string `json:"Annotation"`
+	ComplianceType             string `json:"ComplianceType"`
+	ConfigRuleInvokedTime      string `json:"ConfigRuleInvokedTime"`
+	EvaluationResultIdentifier string `json:"EvaluationResultIdentifier"`
+	ResultRecordedTime         string `json:"ResultRecordedTime"`
+	ResultToken                string `json:"ResultToken"`
+}
+
+type EvaluationResultIdentifier struct {
+	EvaluationResultQualifier string `json:"EvaluationResultQualifier"`
+	OrderingTimestamp         string `json:"OrderingTimestamp"`
+	ResourceEvaluationId      string `json:"ResourceEvaluationId"`
+}
+
+type EvaluationResultQualifier struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	EvaluationMode string `json:"EvaluationMode"`
+	ResourceId     string `json:"ResourceId"`
+	ResourceType   string `json:"ResourceType"`
+}
+
+type EvaluationStatus struct {
+	FailureReason string `json:"FailureReason"`
+	Status        string `json:"Status"`
+}
+
+type Event struct {
+	Arn               string `json:"arn"`
+	AvailabilityZone  string `json:"availabilityZone"`
+	EndTime           string `json:"endTime"`
+	EventScopeCode    string `json:"eventScopeCode"`
+	EventTypeCategory string `json:"eventTypeCategory"`
+	EventTypeCode     string `json:"eventTypeCode"`
+	LastUpdatedTime   string `json:"lastUpdatedTime"`
+	Region            string `json:"region"`
+	Service           string `json:"service"`
+	StartTime         string `json:"startTime"`
+	StatusCode        string `json:"statusCode"`
+}
+
+type EventAccountFilter struct {
+	AwsAccountId string `json:"awsAccountId"`
+	EventArn     string `json:"eventArn"`
+}
+
+type EventAggregate struct {
+	AggregateValue string `json:"aggregateValue"`
+	Count          string `json:"count"`
+}
+
+type EventDataStore struct {
+	AdvancedEventSelectors       string `json:"AdvancedEventSelectors"`
+	CreatedTimestamp             string `json:"CreatedTimestamp"`
+	EventDataStoreArn            string `json:"EventDataStoreArn"`
+	MultiRegionEnabled           string `json:"MultiRegionEnabled"`
+	Name                         string `json:"Name"`
+	OrganizationEnabled          string `json:"OrganizationEnabled"`
+	RetentionPeriod              string `json:"RetentionPeriod"`
+	Status                       string `json:"Status"`
+	TerminationProtectionEnabled string `json:"TerminationProtectionEnabled"`
+	UpdatedTimestamp             string `json:"UpdatedTimestamp"`
+}
+
+type EventDescription struct {
+	LatestDescription string `json:"latestDescription"`
+}
+
+type EventDetails struct {
+	Event            string `json:"event"`
+	EventDescription string `json:"eventDescription"`
+	EventMetadata    string `json:"eventMetadata"`
+}
+
+type EventDetailsErrorItem struct {
+	ErrorMessage string `json:"errorMessage"`
+	ErrorName    string `json:"errorName"`
+	EventArn     string `json:"eventArn"`
+}
+
+type EventFilter struct {
+	AvailabilityZones   string `json:"availabilityZones"`
+	EndTimes            string `json:"endTimes"`
+	EntityArns          string `json:"entityArns"`
+	EntityValues        string `json:"entityValues"`
+	EventArns           string `json:"eventArns"`
+	EventStatusCodes    string `json:"eventStatusCodes"`
+	EventTypeCategories string `json:"eventTypeCategories"`
+	EventTypeCodes      string `json:"eventTypeCodes"`
+	LastUpdatedTimes    string `json:"lastUpdatedTimes"`
+	Regions             string `json:"regions"`
+	Services            string `json:"services"`
+	StartTimes          string `json:"startTimes"`
+	Tags                string `json:"tags"`
+}
+
+type EventSelector struct {
+	DataResources                 string `json:"DataResources"`
+	ExcludeManagementEventSources string `json:"ExcludeManagementEventSources"`
+	IncludeManagementEvents       string `json:"IncludeManagementEvents"`
+	ReadWriteType                 string `json:"ReadWriteType"`
+}
+
+type EventType struct {
+	Category string `json:"category"`
+	Code     string `json:"code"`
+	Service  string `json:"service"`
+}
+
+type EventTypeFilter struct {
+	EventTypeCategories string `json:"eventTypeCategories"`
+	EventTypeCodes      string `json:"eventTypeCodes"`
+	Services            string `json:"services"`
+}
+
+type ExecuteBudgetActionRequest struct {
+	AccountId     string `json:"AccountId"`
+	ActionId      string `json:"ActionId"`
+	BudgetName    string `json:"BudgetName"`
+	ExecutionType string `json:"ExecutionType"`
+}
+
+type ExecuteBudgetActionResponse struct {
+	AccountId     string `json:"AccountId"`
+	ActionId      string `json:"ActionId"`
+	BudgetName    string `json:"BudgetName"`
+	ExecutionType string `json:"ExecutionType"`
+}
+
+type ExecutionControls struct {
+	SsmControls string `json:"SsmControls"`
+}
+
+type ExportAutoScalingGroupRecommendationsRequest struct {
+	AccountIds                string `json:"accountIds"`
+	FieldsToExport            string `json:"fieldsToExport"`
+	FileFormat                string `json:"fileFormat"`
+	Filters                   string `json:"filters"`
+	IncludeMemberAccounts     string `json:"includeMemberAccounts"`
+	RecommendationPreferences string `json:"recommendationPreferences"`
+	S3DestinationConfig       string `json:"s3DestinationConfig"`
+}
+
+type ExportAutoScalingGroupRecommendationsResponse struct {
+	JobId         string `json:"jobId"`
+	S3Destination string `json:"s3Destination"`
+}
+
+type ExportDestination struct {
+	S3 string `json:"s3"`
+}
+
+type ExportEBSVolumeRecommendationsRequest struct {
+	AccountIds            string          `json:"accountIds"`
+	FieldsToExport        string          `json:"fieldsToExport"`
+	FileFormat            string          `json:"fileFormat"`
+	Filters               string          `json:"filters"`
+	IncludeMemberAccounts string          `json:"includeMemberAccounts"`
+	S3DestinationConfig   json.RawMessage `json:"s3DestinationConfig"`
+}
+
+type ExportEBSVolumeRecommendationsResponse struct {
+	JobId         string          `json:"jobId"`
+	S3Destination json.RawMessage `json:"s3Destination"`
+}
+
+type ExportEC2InstanceRecommendationsRequest struct {
+	AccountIds                string `json:"accountIds"`
+	FieldsToExport            string `json:"fieldsToExport"`
+	FileFormat                string `json:"fileFormat"`
+	Filters                   string `json:"filters"`
+	IncludeMemberAccounts     string `json:"includeMemberAccounts"`
+	RecommendationPreferences string `json:"recommendationPreferences"`
+	S3DestinationConfig       string `json:"s3DestinationConfig"`
+}
+
+type ExportEC2InstanceRecommendationsResponse struct {
+	JobId         string `json:"jobId"`
+	S3Destination string `json:"s3Destination"`
+}
+
+type ExportECSServiceRecommendationsRequest struct {
+	AccountIds            string          `json:"accountIds"`
+	FieldsToExport        string          `json:"fieldsToExport"`
+	FileFormat            string          `json:"fileFormat"`
+	Filters               string          `json:"filters"`
+	IncludeMemberAccounts string          `json:"includeMemberAccounts"`
+	S3DestinationConfig   json.RawMessage `json:"s3DestinationConfig"`
+}
+
+type ExportECSServiceRecommendationsResponse struct {
+	JobId         string          `json:"jobId"`
+	S3Destination json.RawMessage `json:"s3Destination"`
+}
+
+type ExportLambdaFunctionRecommendationsRequest struct {
+	AccountIds            string          `json:"accountIds"`
+	FieldsToExport        string          `json:"fieldsToExport"`
+	FileFormat            string          `json:"fileFormat"`
+	Filters               string          `json:"filters"`
+	IncludeMemberAccounts string          `json:"includeMemberAccounts"`
+	S3DestinationConfig   json.RawMessage `json:"s3DestinationConfig"`
+}
+
+type ExportLambdaFunctionRecommendationsResponse struct {
+	JobId         string          `json:"jobId"`
+	S3Destination json.RawMessage `json:"s3Destination"`
 }
 
 type Expression struct {
@@ -510,6 +6120,91 @@ type Expression struct {
 	Not            string `json:"Not"`
 	Or             string `json:"Or"`
 	Tags           string `json:"Tags"`
+}
+
+type ExternalEvaluation struct {
+	Annotation             string `json:"Annotation"`
+	ComplianceResourceId   string `json:"ComplianceResourceId"`
+	ComplianceResourceType string `json:"ComplianceResourceType"`
+	ComplianceType         string `json:"ComplianceType"`
+	OrderingTimestamp      string `json:"OrderingTimestamp"`
+}
+
+type ExternalMetricsPreference struct {
+	Source string `json:"source"`
+}
+
+type FailedDeleteRemediationExceptionsBatch struct {
+	FailedItems    string `json:"FailedItems"`
+	FailureMessage string `json:"FailureMessage"`
+}
+
+type FailedRemediationBatch struct {
+	FailedItems    string `json:"FailedItems"`
+	FailureMessage string `json:"FailureMessage"`
+}
+
+type FailedRemediationExceptionBatch struct {
+	FailedItems    string `json:"FailedItems"`
+	FailureMessage string `json:"FailureMessage"`
+}
+
+type FieldInfo struct {
+	Name string `json:"Name"`
+}
+
+type FieldMap struct {
+}
+
+type FilePaths struct {
+	FileName   string `json:"FileName"`
+	FilePath   string `json:"FilePath"`
+	Hash       string `json:"Hash"`
+	ResourceId string `json:"ResourceId"`
+}
+
+type Filter struct {
+	Name   string `json:"name"`
+	Values string `json:"values"`
+}
+
+type FindingAggregator struct {
+	FindingAggregatorArn string `json:"FindingAggregatorArn"`
+}
+
+type FindingProviderFields struct {
+	Confidence      string `json:"Confidence"`
+	Criticality     string `json:"Criticality"`
+	RelatedFindings string `json:"RelatedFindings"`
+	Severity        string `json:"Severity"`
+	Types           string `json:"Types"`
+}
+
+type FindingProviderSeverity struct {
+	Label    string `json:"Label"`
+	Original string `json:"Original"`
+}
+
+type FirewallPolicyDetails struct {
+	StatefulRuleGroupReferences     string `json:"StatefulRuleGroupReferences"`
+	StatelessCustomActions          string `json:"StatelessCustomActions"`
+	StatelessDefaultActions         string `json:"StatelessDefaultActions"`
+	StatelessFragmentDefaultActions string `json:"StatelessFragmentDefaultActions"`
+	StatelessRuleGroupReferences    string `json:"StatelessRuleGroupReferences"`
+}
+
+type FirewallPolicyStatefulRuleGroupReferencesDetails struct {
+	ResourceArn string `json:"ResourceArn"`
+}
+
+type FirewallPolicyStatelessCustomActionsDetails struct {
+	ActionDefinition string `json:"ActionDefinition"`
+	ActionName       string `json:"ActionName"`
+}
+
+type FirewallPolicyStatelessRuleGroupReferencesDetails struct {
+	Priority    string `json:"Priority"`
+	ResourceArn string `json:"ResourceArn"`
 }
 
 type ForecastResult struct {
@@ -527,6 +6222,11 @@ type GenerationSummary struct {
 	RecommendationId         string `json:"RecommendationId"`
 }
 
+type GeoLocation struct {
+	Lat string `json:"Lat"`
+	Lon string `json:"Lon"`
+}
+
 type GetAWSDefaultServiceQuotaRequest struct {
 	QuotaCode   string `json:"QuotaCode"`
 	ServiceCode string `json:"ServiceCode"`
@@ -534,6 +6234,80 @@ type GetAWSDefaultServiceQuotaRequest struct {
 
 type GetAWSDefaultServiceQuotaResponse struct {
 	Quota string `json:"Quota"`
+}
+
+type GetAdministratorAccountRequest struct {
+}
+
+type GetAdministratorAccountResponse struct {
+	Administrator json.RawMessage `json:"Administrator"`
+}
+
+type GetAggregateComplianceDetailsByConfigRuleRequest struct {
+	AccountId                   string `json:"AccountId"`
+	AwsRegion                   string `json:"AwsRegion"`
+	ComplianceType              string `json:"ComplianceType"`
+	ConfigRuleName              string `json:"ConfigRuleName"`
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type GetAggregateComplianceDetailsByConfigRuleResponse struct {
+	AggregateEvaluationResults string `json:"AggregateEvaluationResults"`
+	NextToken                  string `json:"NextToken"`
+}
+
+type GetAggregateConfigRuleComplianceSummaryRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Filters                     string `json:"Filters"`
+	GroupByKey                  string `json:"GroupByKey"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type GetAggregateConfigRuleComplianceSummaryResponse struct {
+	AggregateComplianceCounts string `json:"AggregateComplianceCounts"`
+	GroupByKey                string `json:"GroupByKey"`
+	NextToken                 string `json:"NextToken"`
+}
+
+type GetAggregateConformancePackComplianceSummaryRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Filters                     string `json:"Filters"`
+	GroupByKey                  string `json:"GroupByKey"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type GetAggregateConformancePackComplianceSummaryResponse struct {
+	AggregateConformancePackComplianceSummaries string `json:"AggregateConformancePackComplianceSummaries"`
+	GroupByKey                                  string `json:"GroupByKey"`
+	NextToken                                   string `json:"NextToken"`
+}
+
+type GetAggregateDiscoveredResourceCountsRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Filters                     string `json:"Filters"`
+	GroupByKey                  string `json:"GroupByKey"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type GetAggregateDiscoveredResourceCountsResponse struct {
+	GroupByKey               string `json:"GroupByKey"`
+	GroupedResourceCounts    string `json:"GroupedResourceCounts"`
+	NextToken                string `json:"NextToken"`
+	TotalDiscoveredResources string `json:"TotalDiscoveredResources"`
+}
+
+type GetAggregateResourceConfigRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	ResourceIdentifier          string `json:"ResourceIdentifier"`
+}
+
+type GetAggregateResourceConfigResponse struct {
+	ConfigurationItem string `json:"ConfigurationItem"`
 }
 
 type GetAnomaliesRequest struct {
@@ -578,6 +6352,107 @@ type GetAssociationForServiceQuotaTemplateRequest struct {
 
 type GetAssociationForServiceQuotaTemplateResponse struct {
 	ServiceQuotaTemplateAssociationStatus string `json:"ServiceQuotaTemplateAssociationStatus"`
+}
+
+type GetAttributeValuesRequest struct {
+	AttributeName string `json:"AttributeName"`
+	MaxResults    string `json:"MaxResults"`
+	NextToken     string `json:"NextToken"`
+	ServiceCode   string `json:"ServiceCode"`
+}
+
+type GetAttributeValuesResponse struct {
+	AttributeValues string `json:"AttributeValues"`
+	NextToken       string `json:"NextToken"`
+}
+
+type GetAutoScalingGroupRecommendationsRequest struct {
+	AccountIds                string `json:"accountIds"`
+	AutoScalingGroupArns      string `json:"autoScalingGroupArns"`
+	Filters                   string `json:"filters"`
+	MaxResults                string `json:"maxResults"`
+	NextToken                 string `json:"nextToken"`
+	RecommendationPreferences string `json:"recommendationPreferences"`
+}
+
+type GetAutoScalingGroupRecommendationsResponse struct {
+	AutoScalingGroupRecommendations string `json:"autoScalingGroupRecommendations"`
+	Errors                          string `json:"errors"`
+	NextToken                       string `json:"nextToken"`
+}
+
+type GetChannelRequest struct {
+	Channel string `json:"Channel"`
+}
+
+type GetChannelResponse struct {
+	ChannelArn      string `json:"ChannelArn"`
+	Destinations    string `json:"Destinations"`
+	IngestionStatus string `json:"IngestionStatus"`
+	Name            string `json:"Name"`
+	Source          string `json:"Source"`
+	SourceConfig    string `json:"SourceConfig"`
+}
+
+type GetComplianceDetailsByConfigRuleRequest struct {
+	ComplianceTypes string `json:"ComplianceTypes"`
+	ConfigRuleName  string `json:"ConfigRuleName"`
+	Limit           string `json:"Limit"`
+	NextToken       string `json:"NextToken"`
+}
+
+type GetComplianceDetailsByConfigRuleResponse struct {
+	EvaluationResults string `json:"EvaluationResults"`
+	NextToken         string `json:"NextToken"`
+}
+
+type GetComplianceDetailsByResourceRequest struct {
+	ComplianceTypes      string `json:"ComplianceTypes"`
+	NextToken            string `json:"NextToken"`
+	ResourceEvaluationId string `json:"ResourceEvaluationId"`
+	ResourceId           string `json:"ResourceId"`
+	ResourceType         string `json:"ResourceType"`
+}
+
+type GetComplianceDetailsByResourceResponse struct {
+	EvaluationResults string `json:"EvaluationResults"`
+	NextToken         string `json:"NextToken"`
+}
+
+type GetComplianceSummaryByConfigRuleResponse struct {
+	ComplianceSummary string `json:"ComplianceSummary"`
+}
+
+type GetComplianceSummaryByResourceTypeRequest struct {
+	ResourceTypes string `json:"ResourceTypes"`
+}
+
+type GetComplianceSummaryByResourceTypeResponse struct {
+	ComplianceSummariesByResourceType string `json:"ComplianceSummariesByResourceType"`
+}
+
+type GetConformancePackComplianceDetailsRequest struct {
+	ConformancePackName string `json:"ConformancePackName"`
+	Filters             string `json:"Filters"`
+	Limit               string `json:"Limit"`
+	NextToken           string `json:"NextToken"`
+}
+
+type GetConformancePackComplianceDetailsResponse struct {
+	ConformancePackName                  string `json:"ConformancePackName"`
+	ConformancePackRuleEvaluationResults string `json:"ConformancePackRuleEvaluationResults"`
+	NextToken                            string `json:"NextToken"`
+}
+
+type GetConformancePackComplianceSummaryRequest struct {
+	ConformancePackNames string `json:"ConformancePackNames"`
+	Limit                string `json:"Limit"`
+	NextToken            string `json:"NextToken"`
+}
+
+type GetConformancePackComplianceSummaryResponse struct {
+	ConformancePackComplianceSummaryList string `json:"ConformancePackComplianceSummaryList"`
+	NextToken                            string `json:"NextToken"`
 }
 
 type GetCostAndUsageRequest struct {
@@ -643,6 +6518,14 @@ type GetCostForecastResponse struct {
 	Total                 string `json:"Total"`
 }
 
+type GetCustomRulePolicyRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+}
+
+type GetCustomRulePolicyResponse struct {
+	PolicyText string `json:"PolicyText"`
+}
+
 type GetDimensionValuesRequest struct {
 	Context       string          `json:"Context"`
 	Dimension     string          `json:"Dimension"`
@@ -659,6 +6542,369 @@ type GetDimensionValuesResponse struct {
 	NextPageToken   string `json:"NextPageToken"`
 	ReturnSize      string `json:"ReturnSize"`
 	TotalSize       string `json:"TotalSize"`
+}
+
+type GetDiscoveredResourceCountsRequest struct {
+	Limit         string `json:"limit"`
+	NextToken     string `json:"nextToken"`
+	ResourceTypes string `json:"resourceTypes"`
+}
+
+type GetDiscoveredResourceCountsResponse struct {
+	NextToken                string `json:"nextToken"`
+	ResourceCounts           string `json:"resourceCounts"`
+	TotalDiscoveredResources string `json:"totalDiscoveredResources"`
+}
+
+type GetEBSVolumeRecommendationsRequest struct {
+	AccountIds string `json:"accountIds"`
+	Filters    string `json:"filters"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+	VolumeArns string `json:"volumeArns"`
+}
+
+type GetEBSVolumeRecommendationsResponse struct {
+	Errors                string `json:"errors"`
+	NextToken             string `json:"nextToken"`
+	VolumeRecommendations string `json:"volumeRecommendations"`
+}
+
+type GetEC2InstanceRecommendationsRequest struct {
+	AccountIds                string `json:"accountIds"`
+	Filters                   string `json:"filters"`
+	InstanceArns              string `json:"instanceArns"`
+	MaxResults                string `json:"maxResults"`
+	NextToken                 string `json:"nextToken"`
+	RecommendationPreferences string `json:"recommendationPreferences"`
+}
+
+type GetEC2InstanceRecommendationsResponse struct {
+	Errors                  string `json:"errors"`
+	InstanceRecommendations string `json:"instanceRecommendations"`
+	NextToken               string `json:"nextToken"`
+}
+
+type GetEC2RecommendationProjectedMetricsRequest struct {
+	EndTime                   string `json:"endTime"`
+	InstanceArn               string `json:"instanceArn"`
+	Period                    string `json:"period"`
+	RecommendationPreferences string `json:"recommendationPreferences"`
+	StartTime                 string `json:"startTime"`
+	Stat                      string `json:"stat"`
+}
+
+type GetEC2RecommendationProjectedMetricsResponse struct {
+	RecommendedOptionProjectedMetrics string `json:"recommendedOptionProjectedMetrics"`
+}
+
+type GetECSServiceRecommendationProjectedMetricsRequest struct {
+	EndTime    string `json:"endTime"`
+	Period     string `json:"period"`
+	ServiceArn string `json:"serviceArn"`
+	StartTime  string `json:"startTime"`
+	Stat       string `json:"stat"`
+}
+
+type GetECSServiceRecommendationProjectedMetricsResponse struct {
+	RecommendedOptionProjectedMetrics string `json:"recommendedOptionProjectedMetrics"`
+}
+
+type GetECSServiceRecommendationsRequest struct {
+	AccountIds  string `json:"accountIds"`
+	Filters     string `json:"filters"`
+	MaxResults  string `json:"maxResults"`
+	NextToken   string `json:"nextToken"`
+	ServiceArns string `json:"serviceArns"`
+}
+
+type GetECSServiceRecommendationsResponse struct {
+	EcsServiceRecommendations string `json:"ecsServiceRecommendations"`
+	Errors                    string `json:"errors"`
+	NextToken                 string `json:"nextToken"`
+}
+
+type GetEffectiveRecommendationPreferencesRequest struct {
+	ResourceArn string `json:"resourceArn"`
+}
+
+type GetEffectiveRecommendationPreferencesResponse struct {
+	EnhancedInfrastructureMetrics string `json:"enhancedInfrastructureMetrics"`
+	ExternalMetricsPreference     string `json:"externalMetricsPreference"`
+}
+
+type GetEnabledStandardsRequest struct {
+	MaxResults                string `json:"MaxResults"`
+	NextToken                 string `json:"NextToken"`
+	StandardsSubscriptionArns string `json:"StandardsSubscriptionArns"`
+}
+
+type GetEnabledStandardsResponse struct {
+	NextToken              string `json:"NextToken"`
+	StandardsSubscriptions string `json:"StandardsSubscriptions"`
+}
+
+type GetEnrollmentStatusRequest struct {
+}
+
+type GetEnrollmentStatusResponse struct {
+	LastUpdatedTimestamp          string `json:"lastUpdatedTimestamp"`
+	MemberAccountsEnrolled        string `json:"memberAccountsEnrolled"`
+	NumberOfMemberAccountsOptedIn string `json:"numberOfMemberAccountsOptedIn"`
+	Status                        string `json:"status"`
+	StatusReason                  string `json:"statusReason"`
+}
+
+type GetEnrollmentStatusesForOrganizationRequest struct {
+	Filters    string `json:"filters"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type GetEnrollmentStatusesForOrganizationResponse struct {
+	AccountEnrollmentStatuses string `json:"accountEnrollmentStatuses"`
+	NextToken                 string `json:"nextToken"`
+}
+
+type GetEventDataStoreRequest struct {
+	EventDataStore string `json:"EventDataStore"`
+}
+
+type GetEventDataStoreResponse struct {
+	AdvancedEventSelectors       string `json:"AdvancedEventSelectors"`
+	CreatedTimestamp             string `json:"CreatedTimestamp"`
+	EventDataStoreArn            string `json:"EventDataStoreArn"`
+	KmsKeyId                     string `json:"KmsKeyId"`
+	MultiRegionEnabled           string `json:"MultiRegionEnabled"`
+	Name                         string `json:"Name"`
+	OrganizationEnabled          string `json:"OrganizationEnabled"`
+	RetentionPeriod              string `json:"RetentionPeriod"`
+	Status                       string `json:"Status"`
+	TerminationProtectionEnabled string `json:"TerminationProtectionEnabled"`
+	UpdatedTimestamp             string `json:"UpdatedTimestamp"`
+}
+
+type GetEventSelectorsRequest struct {
+	TrailName string `json:"TrailName"`
+}
+
+type GetEventSelectorsResponse struct {
+	AdvancedEventSelectors string `json:"AdvancedEventSelectors"`
+	EventSelectors         string `json:"EventSelectors"`
+	TrailARN               string `json:"TrailARN"`
+}
+
+type GetFindingAggregatorRequest struct {
+}
+
+type GetFindingAggregatorResponse struct {
+	FindingAggregationRegion string `json:"FindingAggregationRegion"`
+	FindingAggregatorArn     string `json:"FindingAggregatorArn"`
+	RegionLinkingMode        string `json:"RegionLinkingMode"`
+	Regions                  string `json:"Regions"`
+}
+
+type GetFindingsRequest struct {
+	Filters      string `json:"Filters"`
+	MaxResults   string `json:"MaxResults"`
+	NextToken    string `json:"NextToken"`
+	SortCriteria string `json:"SortCriteria"`
+}
+
+type GetFindingsResponse struct {
+	Findings  string `json:"Findings"`
+	NextToken string `json:"NextToken"`
+}
+
+type GetImportRequest struct {
+	ImportId string `json:"ImportId"`
+}
+
+type GetImportResponse struct {
+	CreatedTimestamp string `json:"CreatedTimestamp"`
+	Destinations     string `json:"Destinations"`
+	EndEventTime     string `json:"EndEventTime"`
+	ImportId         string `json:"ImportId"`
+	ImportSource     string `json:"ImportSource"`
+	ImportStatistics string `json:"ImportStatistics"`
+	ImportStatus     string `json:"ImportStatus"`
+	StartEventTime   string `json:"StartEventTime"`
+	UpdatedTimestamp string `json:"UpdatedTimestamp"`
+}
+
+type GetInsightResultsRequest struct {
+}
+
+type GetInsightResultsResponse struct {
+	InsightResults string `json:"InsightResults"`
+}
+
+type GetInsightSelectorsRequest struct {
+	TrailName string `json:"TrailName"`
+}
+
+type GetInsightSelectorsResponse struct {
+	InsightSelectors string `json:"InsightSelectors"`
+	TrailARN         string `json:"TrailARN"`
+}
+
+type GetInsightsRequest struct {
+	InsightArns string `json:"InsightArns"`
+	MaxResults  string `json:"MaxResults"`
+	NextToken   string `json:"NextToken"`
+}
+
+type GetInsightsResponse struct {
+	Insights  string `json:"Insights"`
+	NextToken string `json:"NextToken"`
+}
+
+type GetInvitationsCountRequest struct {
+}
+
+type GetInvitationsCountResponse struct {
+	InvitationsCount string `json:"InvitationsCount"`
+}
+
+type GetLambdaFunctionRecommendationsRequest struct {
+	AccountIds   string `json:"accountIds"`
+	Filters      string `json:"filters"`
+	FunctionArns string `json:"functionArns"`
+	MaxResults   string `json:"maxResults"`
+	NextToken    string `json:"nextToken"`
+}
+
+type GetLambdaFunctionRecommendationsResponse struct {
+	LambdaFunctionRecommendations string `json:"lambdaFunctionRecommendations"`
+	NextToken                     string `json:"nextToken"`
+}
+
+type GetMasterAccountRequest struct {
+}
+
+type GetMasterAccountResponse struct {
+	Master string `json:"Master"`
+}
+
+type GetMembersRequest struct {
+	AccountIds string `json:"AccountIds"`
+}
+
+type GetMembersResponse struct {
+	Members             string `json:"Members"`
+	UnprocessedAccounts string `json:"UnprocessedAccounts"`
+}
+
+type GetOrganizationConfigRuleDetailedStatusRequest struct {
+	Filters                    string `json:"Filters"`
+	Limit                      string `json:"Limit"`
+	NextToken                  string `json:"NextToken"`
+	OrganizationConfigRuleName string `json:"OrganizationConfigRuleName"`
+}
+
+type GetOrganizationConfigRuleDetailedStatusResponse struct {
+	NextToken                            string `json:"NextToken"`
+	OrganizationConfigRuleDetailedStatus string `json:"OrganizationConfigRuleDetailedStatus"`
+}
+
+type GetOrganizationConformancePackDetailedStatusRequest struct {
+	Filters                         string `json:"Filters"`
+	Limit                           string `json:"Limit"`
+	NextToken                       string `json:"NextToken"`
+	OrganizationConformancePackName string `json:"OrganizationConformancePackName"`
+}
+
+type GetOrganizationConformancePackDetailedStatusResponse struct {
+	NextToken                                   string `json:"NextToken"`
+	OrganizationConformancePackDetailedStatuses string `json:"OrganizationConformancePackDetailedStatuses"`
+}
+
+type GetOrganizationCustomRulePolicyRequest struct {
+	OrganizationConfigRuleName string `json:"OrganizationConfigRuleName"`
+}
+
+type GetOrganizationCustomRulePolicyResponse struct {
+	PolicyText string `json:"PolicyText"`
+}
+
+type GetPriceListFileUrlRequest struct {
+	FileFormat   string `json:"FileFormat"`
+	PriceListArn string `json:"PriceListArn"`
+}
+
+type GetPriceListFileUrlResponse struct {
+	Url string `json:"Url"`
+}
+
+type GetProductsRequest struct {
+	Filters       string `json:"Filters"`
+	FormatVersion string `json:"FormatVersion"`
+	MaxResults    string `json:"MaxResults"`
+	NextToken     string `json:"NextToken"`
+	ServiceCode   string `json:"ServiceCode"`
+}
+
+type GetProductsResponse struct {
+	FormatVersion string `json:"FormatVersion"`
+	NextToken     string `json:"NextToken"`
+	PriceList     string `json:"PriceList"`
+}
+
+type GetQueryResultsRequest struct {
+	EventDataStore  string `json:"EventDataStore"`
+	MaxQueryResults string `json:"MaxQueryResults"`
+	NextToken       string `json:"NextToken"`
+	QueryId         string `json:"QueryId"`
+}
+
+type GetQueryResultsResponse struct {
+	ErrorMessage    string `json:"ErrorMessage"`
+	NextToken       string `json:"NextToken"`
+	QueryResultRows string `json:"QueryResultRows"`
+	QueryStatistics string `json:"QueryStatistics"`
+	QueryStatus     string `json:"QueryStatus"`
+}
+
+type GetRecommendationError struct {
+	Code       string `json:"code"`
+	Identifier string `json:"identifier"`
+	Message    string `json:"message"`
+}
+
+type GetRecommendationPreferencesRequest struct {
+	MaxResults   string `json:"maxResults"`
+	NextToken    string `json:"nextToken"`
+	ResourceType string `json:"resourceType"`
+	Scope        string `json:"scope"`
+}
+
+type GetRecommendationPreferencesResponse struct {
+	NextToken                        string `json:"nextToken"`
+	RecommendationPreferencesDetails string `json:"recommendationPreferencesDetails"`
+}
+
+type GetRecommendationSummariesRequest struct {
+	AccountIds string `json:"accountIds"`
+	MaxResults string `json:"maxResults"`
+	NextToken  string `json:"nextToken"`
+}
+
+type GetRecommendationSummariesResponse struct {
+	NextToken               string `json:"nextToken"`
+	RecommendationSummaries string `json:"recommendationSummaries"`
+}
+
+type GetReportDefinitionRequest struct {
+}
+
+type GetReportDefinitionResult struct {
+	CreatedAt             string `json:"createdAt"`
+	DestinationS3Location string `json:"destinationS3Location"`
+	Format                string `json:"format"`
+	LastUpdated           string `json:"lastUpdated"`
+	ReportDescription     string `json:"reportDescription"`
+	ReportFrequency       string `json:"reportFrequency"`
+	ReportId              string `json:"reportId"`
 }
 
 type GetRequestedServiceQuotaChangeRequest struct {
@@ -719,6 +6965,44 @@ type GetReservationUtilizationResponse struct {
 	NextPageToken      string `json:"NextPageToken"`
 	Total              string `json:"Total"`
 	UtilizationsByTime string `json:"UtilizationsByTime"`
+}
+
+type GetResourceConfigHistoryRequest struct {
+	ChronologicalOrder string `json:"chronologicalOrder"`
+	EarlierTime        string `json:"earlierTime"`
+	LaterTime          string `json:"laterTime"`
+	Limit              string `json:"limit"`
+	NextToken          string `json:"nextToken"`
+	ResourceId         string `json:"resourceId"`
+	ResourceType       string `json:"resourceType"`
+}
+
+type GetResourceConfigHistoryResponse struct {
+	ConfigurationItems string `json:"configurationItems"`
+	NextToken          string `json:"nextToken"`
+}
+
+type GetResourceEvaluationSummaryRequest struct {
+	ResourceEvaluationId string `json:"ResourceEvaluationId"`
+}
+
+type GetResourceEvaluationSummaryResponse struct {
+	Compliance               string `json:"Compliance"`
+	EvaluationContext        string `json:"EvaluationContext"`
+	EvaluationMode           string `json:"EvaluationMode"`
+	EvaluationStartTimestamp string `json:"EvaluationStartTimestamp"`
+	EvaluationStatus         string `json:"EvaluationStatus"`
+	ResourceDetails          string `json:"ResourceDetails"`
+	ResourceEvaluationId     string `json:"ResourceEvaluationId"`
+}
+
+type GetResourcePolicyRequest struct {
+	ResourceArn string `json:"ResourceArn"`
+}
+
+type GetResourcePolicyResponse struct {
+	ResourceArn    string `json:"ResourceArn"`
+	ResourcePolicy string `json:"ResourcePolicy"`
 }
 
 type GetRightsizingRecommendationRequest struct {
@@ -817,6 +7101,14 @@ type GetServiceQuotaResponse struct {
 	Quota string `json:"Quota"`
 }
 
+type GetStoredQueryRequest struct {
+	QueryName string `json:"QueryName"`
+}
+
+type GetStoredQueryResponse struct {
+	StoredQuery string `json:"StoredQuery"`
+}
+
 type GetTagsRequest struct {
 	Filter        json.RawMessage `json:"Filter"`
 	MaxResults    string          `json:"MaxResults"`
@@ -832,6 +7124,38 @@ type GetTagsResponse struct {
 	ReturnSize    string `json:"ReturnSize"`
 	Tags          string `json:"Tags"`
 	TotalSize     string `json:"TotalSize"`
+}
+
+type GetTrailRequest struct {
+	Name string `json:"Name"`
+}
+
+type GetTrailResponse struct {
+	Trail json.RawMessage `json:"Trail"`
+}
+
+type GetTrailStatusRequest struct {
+	Name string `json:"Name"`
+}
+
+type GetTrailStatusResponse struct {
+	IsLogging                          string `json:"IsLogging"`
+	LatestCloudWatchLogsDeliveryError  string `json:"LatestCloudWatchLogsDeliveryError"`
+	LatestCloudWatchLogsDeliveryTime   string `json:"LatestCloudWatchLogsDeliveryTime"`
+	LatestDeliveryAttemptSucceeded     string `json:"LatestDeliveryAttemptSucceeded"`
+	LatestDeliveryAttemptTime          string `json:"LatestDeliveryAttemptTime"`
+	LatestDeliveryError                string `json:"LatestDeliveryError"`
+	LatestDeliveryTime                 string `json:"LatestDeliveryTime"`
+	LatestDigestDeliveryError          string `json:"LatestDigestDeliveryError"`
+	LatestDigestDeliveryTime           string `json:"LatestDigestDeliveryTime"`
+	LatestNotificationAttemptSucceeded string `json:"LatestNotificationAttemptSucceeded"`
+	LatestNotificationAttemptTime      string `json:"LatestNotificationAttemptTime"`
+	LatestNotificationError            string `json:"LatestNotificationError"`
+	LatestNotificationTime             string `json:"LatestNotificationTime"`
+	StartLoggingTime                   string `json:"StartLoggingTime"`
+	StopLoggingTime                    string `json:"StopLoggingTime"`
+	TimeLoggingStarted                 string `json:"TimeLoggingStarted"`
+	TimeLoggingStopped                 string `json:"TimeLoggingStopped"`
 }
 
 type GetUsageForecastRequest struct {
@@ -857,6 +7181,28 @@ type GroupDefinition struct {
 	Type string `json:"Type"`
 }
 
+type GroupedResourceCount struct {
+	GroupName     string `json:"GroupName"`
+	ResourceCount string `json:"ResourceCount"`
+}
+
+type HistoricalOptions struct {
+	BudgetAdjustmentPeriod   string `json:"BudgetAdjustmentPeriod"`
+	LookBackAvailablePeriods string `json:"LookBackAvailablePeriods"`
+}
+
+type IamActionDefinition struct {
+	Groups    string `json:"Groups"`
+	PolicyArn string `json:"PolicyArn"`
+	Roles     string `json:"Roles"`
+	Users     string `json:"Users"`
+}
+
+type IcmpTypeCode struct {
+	Code string `json:"Code"`
+	Type string `json:"Type"`
+}
+
 type Impact struct {
 	MaxImpact             string `json:"MaxImpact"`
 	TotalActualSpend      string `json:"TotalActualSpend"`
@@ -865,12 +7211,192 @@ type Impact struct {
 	TotalImpactPercentage string `json:"TotalImpactPercentage"`
 }
 
+type ImportApplicationUsageRequest struct {
+	SourceS3Location string `json:"sourceS3Location"`
+}
+
+type ImportApplicationUsageResult struct {
+	ImportId string `json:"importId"`
+}
+
+type ImportFailureListItem struct {
+	ErrorMessage    string `json:"ErrorMessage"`
+	ErrorType       string `json:"ErrorType"`
+	LastUpdatedTime string `json:"LastUpdatedTime"`
+	Location        string `json:"Location"`
+	Status          string `json:"Status"`
+}
+
+type ImportFindingsError struct {
+	ErrorCode    string `json:"ErrorCode"`
+	ErrorMessage string `json:"ErrorMessage"`
+	Id           string `json:"Id"`
+}
+
+type ImportSource struct {
+	S3 string `json:"S3"`
+}
+
+type ImportStatistics struct {
+	EventsCompleted   string `json:"EventsCompleted"`
+	FailedEntries     string `json:"FailedEntries"`
+	FilesCompleted    string `json:"FilesCompleted"`
+	PrefixesCompleted string `json:"PrefixesCompleted"`
+	PrefixesFound     string `json:"PrefixesFound"`
+}
+
+type ImportsListItem struct {
+	CreatedTimestamp string `json:"CreatedTimestamp"`
+	Destinations     string `json:"Destinations"`
+	ImportId         string `json:"ImportId"`
+	ImportStatus     string `json:"ImportStatus"`
+	UpdatedTimestamp string `json:"UpdatedTimestamp"`
+}
+
+type IngestionStatus struct {
+	LatestIngestionAttemptEventID string `json:"LatestIngestionAttemptEventID"`
+	LatestIngestionAttemptTime    string `json:"LatestIngestionAttemptTime"`
+	LatestIngestionErrorCode      string `json:"LatestIngestionErrorCode"`
+	LatestIngestionSuccessEventID string `json:"LatestIngestionSuccessEventID"`
+	LatestIngestionSuccessTime    string `json:"LatestIngestionSuccessTime"`
+}
+
+type Insight struct {
+	Filters          string `json:"Filters"`
+	GroupByAttribute string `json:"GroupByAttribute"`
+	InsightArn       string `json:"InsightArn"`
+	Name             string `json:"Name"`
+}
+
+type InsightResultValue struct {
+	Count                 string `json:"Count"`
+	GroupByAttributeValue string `json:"GroupByAttributeValue"`
+}
+
+type InsightResults struct {
+	GroupByAttribute string `json:"GroupByAttribute"`
+	InsightArn       string `json:"InsightArn"`
+	ResultValues     string `json:"ResultValues"`
+}
+
+type InsightSelector struct {
+	InsightType string `json:"InsightType"`
+}
+
 type InstanceDetails struct {
 	EC2InstanceDetails         string `json:"EC2InstanceDetails"`
 	ESInstanceDetails          string `json:"ESInstanceDetails"`
 	ElastiCacheInstanceDetails string `json:"ElastiCacheInstanceDetails"`
 	RDSInstanceDetails         string `json:"RDSInstanceDetails"`
 	RedshiftInstanceDetails    string `json:"RedshiftInstanceDetails"`
+}
+
+type InstanceRecommendation struct {
+	AccountId                          string `json:"accountId"`
+	CurrentInstanceType                string `json:"currentInstanceType"`
+	CurrentPerformanceRisk             string `json:"currentPerformanceRisk"`
+	EffectiveRecommendationPreferences string `json:"effectiveRecommendationPreferences"`
+	Finding                            string `json:"finding"`
+	FindingReasonCodes                 string `json:"findingReasonCodes"`
+	InferredWorkloadTypes              string `json:"inferredWorkloadTypes"`
+	InstanceArn                        string `json:"instanceArn"`
+	InstanceName                       string `json:"instanceName"`
+	InstanceState                      string `json:"instanceState"`
+	LastRefreshTimestamp               string `json:"lastRefreshTimestamp"`
+	LookBackPeriodInDays               string `json:"lookBackPeriodInDays"`
+	RecommendationOptions              string `json:"recommendationOptions"`
+	RecommendationSources              string `json:"recommendationSources"`
+	UtilizationMetrics                 string `json:"utilizationMetrics"`
+}
+
+type InstanceRecommendationOption struct {
+	InstanceType                string `json:"instanceType"`
+	MigrationEffort             string `json:"migrationEffort"`
+	PerformanceRisk             string `json:"performanceRisk"`
+	PlatformDifferences         string `json:"platformDifferences"`
+	ProjectedUtilizationMetrics string `json:"projectedUtilizationMetrics"`
+	Rank                        string `json:"rank"`
+	SavingsOpportunity          string `json:"savingsOpportunity"`
+}
+
+type Invitation struct {
+	AccountId    string `json:"AccountId"`
+	InvitationId string `json:"InvitationId"`
+	InvitedAt    string `json:"InvitedAt"`
+	MemberStatus string `json:"MemberStatus"`
+}
+
+type InviteMembersRequest struct {
+	AccountIds string `json:"AccountIds"`
+}
+
+type InviteMembersResponse struct {
+	UnprocessedAccounts string `json:"UnprocessedAccounts"`
+}
+
+type IpFilter struct {
+	Cidr string `json:"Cidr"`
+}
+
+type IpOrganizationDetails struct {
+	Asn    string `json:"Asn"`
+	AsnOrg string `json:"AsnOrg"`
+	Isp    string `json:"Isp"`
+	Org    string `json:"Org"`
+}
+
+type Ipv6CidrBlockAssociation struct {
+	AssociationId  string `json:"AssociationId"`
+	CidrBlockState string `json:"CidrBlockState"`
+	Ipv6CidrBlock  string `json:"Ipv6CidrBlock"`
+}
+
+type JobFilter struct {
+	Name   string `json:"name"`
+	Values string `json:"values"`
+}
+
+type KeywordFilter struct {
+	Value string `json:"Value"`
+}
+
+type LambdaFunctionMemoryProjectedMetric struct {
+	Name      string `json:"name"`
+	Statistic string `json:"statistic"`
+	Value     string `json:"value"`
+}
+
+type LambdaFunctionMemoryRecommendationOption struct {
+	MemorySize                  string `json:"memorySize"`
+	ProjectedUtilizationMetrics string `json:"projectedUtilizationMetrics"`
+	Rank                        string `json:"rank"`
+	SavingsOpportunity          string `json:"savingsOpportunity"`
+}
+
+type LambdaFunctionRecommendation struct {
+	AccountId                       string `json:"accountId"`
+	CurrentMemorySize               string `json:"currentMemorySize"`
+	CurrentPerformanceRisk          string `json:"currentPerformanceRisk"`
+	Finding                         string `json:"finding"`
+	FindingReasonCodes              string `json:"findingReasonCodes"`
+	FunctionArn                     string `json:"functionArn"`
+	FunctionVersion                 string `json:"functionVersion"`
+	LastRefreshTimestamp            string `json:"lastRefreshTimestamp"`
+	LookbackPeriodInDays            string `json:"lookbackPeriodInDays"`
+	MemorySizeRecommendationOptions string `json:"memorySizeRecommendationOptions"`
+	NumberOfInvocations             string `json:"numberOfInvocations"`
+	UtilizationMetrics              string `json:"utilizationMetrics"`
+}
+
+type LambdaFunctionRecommendationFilter struct {
+	Name   string `json:"name"`
+	Values string `json:"values"`
+}
+
+type LambdaFunctionUtilizationMetric struct {
+	Name      string `json:"name"`
+	Statistic string `json:"statistic"`
+	Value     string `json:"value"`
 }
 
 type ListAWSDefaultServiceQuotasRequest struct {
@@ -882,6 +7408,42 @@ type ListAWSDefaultServiceQuotasRequest struct {
 type ListAWSDefaultServiceQuotasResponse struct {
 	NextToken string `json:"NextToken"`
 	Quotas    string `json:"Quotas"`
+}
+
+type ListAggregateDiscoveredResourcesRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Filters                     string `json:"Filters"`
+	Limit                       string `json:"Limit"`
+	NextToken                   string `json:"NextToken"`
+	ResourceType                string `json:"ResourceType"`
+}
+
+type ListAggregateDiscoveredResourcesResponse struct {
+	NextToken           string `json:"NextToken"`
+	ResourceIdentifiers string `json:"ResourceIdentifiers"`
+}
+
+type ListChannelsRequest struct {
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type ListChannelsResponse struct {
+	Channels  string `json:"Channels"`
+	NextToken string `json:"NextToken"`
+}
+
+type ListConformancePackComplianceScoresRequest struct {
+	Filters   string `json:"Filters"`
+	Limit     string `json:"Limit"`
+	NextToken string `json:"NextToken"`
+	SortBy    string `json:"SortBy"`
+	SortOrder string `json:"SortOrder"`
+}
+
+type ListConformancePackComplianceScoresResponse struct {
+	ConformancePackComplianceScores string `json:"ConformancePackComplianceScores"`
+	NextToken                       string `json:"NextToken"`
 }
 
 type ListCostAllocationTagsRequest struct {
@@ -906,6 +7468,140 @@ type ListCostCategoryDefinitionsRequest struct {
 type ListCostCategoryDefinitionsResponse struct {
 	CostCategoryReferences string `json:"CostCategoryReferences"`
 	NextToken              string `json:"NextToken"`
+}
+
+type ListDiscoveredResourcesRequest struct {
+	IncludeDeletedResources string `json:"includeDeletedResources"`
+	Limit                   string `json:"limit"`
+	NextToken               string `json:"nextToken"`
+	ResourceIds             string `json:"resourceIds"`
+	ResourceName            string `json:"resourceName"`
+	ResourceType            string `json:"resourceType"`
+}
+
+type ListDiscoveredResourcesResponse struct {
+	NextToken           string `json:"nextToken"`
+	ResourceIdentifiers string `json:"resourceIdentifiers"`
+}
+
+type ListEnabledProductsForImportRequest struct {
+}
+
+type ListEnabledProductsForImportResponse struct {
+	NextToken            string `json:"NextToken"`
+	ProductSubscriptions string `json:"ProductSubscriptions"`
+}
+
+type ListEventDataStoresRequest struct {
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type ListEventDataStoresResponse struct {
+	EventDataStores string `json:"EventDataStores"`
+	NextToken       string `json:"NextToken"`
+}
+
+type ListFindingAggregatorsRequest struct {
+}
+
+type ListFindingAggregatorsResponse struct {
+	FindingAggregators string `json:"FindingAggregators"`
+	NextToken          string `json:"NextToken"`
+}
+
+type ListImportFailuresRequest struct {
+	ImportId   string `json:"ImportId"`
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type ListImportFailuresResponse struct {
+	Failures  string `json:"Failures"`
+	NextToken string `json:"NextToken"`
+}
+
+type ListImportsRequest struct {
+	Destination  string `json:"Destination"`
+	ImportStatus string `json:"ImportStatus"`
+	MaxResults   string `json:"MaxResults"`
+	NextToken    string `json:"NextToken"`
+}
+
+type ListImportsResponse struct {
+	Imports   string `json:"Imports"`
+	NextToken string `json:"NextToken"`
+}
+
+type ListInvitationsRequest struct {
+}
+
+type ListInvitationsResponse struct {
+	Invitations string `json:"Invitations"`
+	NextToken   string `json:"NextToken"`
+}
+
+type ListMembersRequest struct {
+}
+
+type ListMembersResponse struct {
+	Members   string `json:"Members"`
+	NextToken string `json:"NextToken"`
+}
+
+type ListOrganizationAdminAccountsRequest struct {
+}
+
+type ListOrganizationAdminAccountsResponse struct {
+	AdminAccounts string `json:"AdminAccounts"`
+	NextToken     string `json:"NextToken"`
+}
+
+type ListPriceListsRequest struct {
+	CurrencyCode  string `json:"CurrencyCode"`
+	EffectiveDate string `json:"EffectiveDate"`
+	MaxResults    string `json:"MaxResults"`
+	NextToken     string `json:"NextToken"`
+	RegionCode    string `json:"RegionCode"`
+	ServiceCode   string `json:"ServiceCode"`
+}
+
+type ListPriceListsResponse struct {
+	NextToken  string `json:"NextToken"`
+	PriceLists string `json:"PriceLists"`
+}
+
+type ListPublicKeysRequest struct {
+	EndTime   string `json:"EndTime"`
+	NextToken string `json:"NextToken"`
+	StartTime string `json:"StartTime"`
+}
+
+type ListPublicKeysResponse struct {
+	NextToken     string `json:"NextToken"`
+	PublicKeyList string `json:"PublicKeyList"`
+}
+
+type ListQueriesRequest struct {
+	EndTime        string `json:"EndTime"`
+	EventDataStore string `json:"EventDataStore"`
+	MaxResults     string `json:"MaxResults"`
+	NextToken      string `json:"NextToken"`
+	QueryStatus    string `json:"QueryStatus"`
+	StartTime      string `json:"StartTime"`
+}
+
+type ListQueriesResponse struct {
+	NextToken string `json:"NextToken"`
+	Queries   string `json:"Queries"`
+}
+
+type ListReportDefinitionsRequest struct {
+}
+
+type ListReportDefinitionsResult struct {
+	NextToken         string `json:"nextToken"`
+	ReportDefinitions string `json:"reportDefinitions"`
 }
 
 type ListRequestedServiceQuotaChangeHistoryByQuotaRequest struct {
@@ -933,6 +7629,17 @@ type ListRequestedServiceQuotaChangeHistoryResponse struct {
 	RequestedQuotas string `json:"RequestedQuotas"`
 }
 
+type ListResourceEvaluationsRequest struct {
+	Filters   string `json:"Filters"`
+	Limit     string `json:"Limit"`
+	NextToken string `json:"NextToken"`
+}
+
+type ListResourceEvaluationsResponse struct {
+	NextToken           string `json:"NextToken"`
+	ResourceEvaluations string `json:"ResourceEvaluations"`
+}
+
 type ListSavingsPlansPurchaseRecommendationGenerationRequest struct {
 	GenerationStatus  string `json:"GenerationStatus"`
 	NextPageToken     string `json:"NextPageToken"`
@@ -943,6 +7650,14 @@ type ListSavingsPlansPurchaseRecommendationGenerationRequest struct {
 type ListSavingsPlansPurchaseRecommendationGenerationResponse struct {
 	GenerationSummaryList string `json:"GenerationSummaryList"`
 	NextPageToken         string `json:"NextPageToken"`
+}
+
+type ListSecurityControlDefinitionsRequest struct {
+}
+
+type ListSecurityControlDefinitionsResponse struct {
+	NextToken                  string `json:"NextToken"`
+	SecurityControlDefinitions string `json:"SecurityControlDefinitions"`
 }
 
 type ListServiceQuotaIncreaseRequestsInTemplateRequest struct {
@@ -978,12 +7693,110 @@ type ListServicesResponse struct {
 	Services  string `json:"Services"`
 }
 
+type ListStandardsControlAssociationsRequest struct {
+}
+
+type ListStandardsControlAssociationsResponse struct {
+	NextToken                            string `json:"NextToken"`
+	StandardsControlAssociationSummaries string `json:"StandardsControlAssociationSummaries"`
+}
+
+type ListStoredQueriesRequest struct {
+	MaxResults string `json:"MaxResults"`
+	NextToken  string `json:"NextToken"`
+}
+
+type ListStoredQueriesResponse struct {
+	NextToken           string `json:"NextToken"`
+	StoredQueryMetadata string `json:"StoredQueryMetadata"`
+}
+
 type ListTagsForResourceRequest struct {
 	ResourceARN string `json:"ResourceARN"`
 }
 
 type ListTagsForResourceResponse struct {
 	Tags string `json:"Tags"`
+}
+
+type ListTagsRequest struct {
+	NextToken      string `json:"NextToken"`
+	ResourceIdList string `json:"ResourceIdList"`
+}
+
+type ListTagsResponse struct {
+	NextToken       string `json:"NextToken"`
+	ResourceTagList string `json:"ResourceTagList"`
+}
+
+type ListTrailsRequest struct {
+	NextToken string `json:"NextToken"`
+}
+
+type ListTrailsResponse struct {
+	NextToken string `json:"NextToken"`
+	Trails    string `json:"Trails"`
+}
+
+type LoadBalancerState struct {
+	Code   string `json:"Code"`
+	Reason string `json:"Reason"`
+}
+
+type LookupAttribute struct {
+	AttributeKey   string `json:"AttributeKey"`
+	AttributeValue string `json:"AttributeValue"`
+}
+
+type LookupEventsRequest struct {
+	EndTime          string `json:"EndTime"`
+	EventCategory    string `json:"EventCategory"`
+	LookupAttributes string `json:"LookupAttributes"`
+	MaxResults       string `json:"MaxResults"`
+	NextToken        string `json:"NextToken"`
+	StartTime        string `json:"StartTime"`
+}
+
+type LookupEventsResponse struct {
+	Events    string `json:"Events"`
+	NextToken string `json:"NextToken"`
+}
+
+type Malware struct {
+	Name  string `json:"Name"`
+	Path  string `json:"Path"`
+	State string `json:"State"`
+	Type  string `json:"Type"`
+}
+
+type MapFilter struct {
+	Comparison string `json:"Comparison"`
+	Key        string `json:"Key"`
+	Value      string `json:"Value"`
+}
+
+type Member struct {
+	AccountId       string `json:"AccountId"`
+	AdministratorId string `json:"AdministratorId"`
+	Email           string `json:"Email"`
+	InvitedAt       string `json:"InvitedAt"`
+	MasterId        string `json:"MasterId"`
+	MemberStatus    string `json:"MemberStatus"`
+	UpdatedAt       string `json:"UpdatedAt"`
+}
+
+type MemberAccountStatus struct {
+	AccountId               string `json:"AccountId"`
+	ConfigRuleName          string `json:"ConfigRuleName"`
+	ErrorCode               string `json:"ErrorCode"`
+	ErrorMessage            string `json:"ErrorMessage"`
+	LastUpdateTime          string `json:"LastUpdateTime"`
+	MemberAccountRuleStatus string `json:"MemberAccountRuleStatus"`
+}
+
+type MemorySizeConfiguration struct {
+	Memory            string `json:"memory"`
+	MemoryReservation string `json:"memoryReservation"`
 }
 
 type MetricDimensionsMapDefinition struct {
@@ -1008,11 +7821,340 @@ type ModifyRecommendationDetail struct {
 	TargetInstances string `json:"TargetInstances"`
 }
 
+type ModifyReportDefinitionRequest struct {
+	ReportDefinition json.RawMessage `json:"ReportDefinition"`
+	ReportName       string          `json:"ReportName"`
+}
+
+type ModifyReportDefinitionResponse struct {
+}
+
+type Network struct {
+	DestinationDomain string `json:"DestinationDomain"`
+	DestinationIpV4   string `json:"DestinationIpV4"`
+	DestinationIpV6   string `json:"DestinationIpV6"`
+	DestinationPort   string `json:"DestinationPort"`
+	Direction         string `json:"Direction"`
+	OpenPortRange     string `json:"OpenPortRange"`
+	Protocol          string `json:"Protocol"`
+	SourceDomain      string `json:"SourceDomain"`
+	SourceIpV4        string `json:"SourceIpV4"`
+	SourceIpV6        string `json:"SourceIpV6"`
+	SourceMac         string `json:"SourceMac"`
+	SourcePort        string `json:"SourcePort"`
+}
+
+type NetworkConnectionAction struct {
+	Blocked             string `json:"Blocked"`
+	ConnectionDirection string `json:"ConnectionDirection"`
+	LocalPortDetails    string `json:"LocalPortDetails"`
+	Protocol            string `json:"Protocol"`
+	RemoteIpDetails     string `json:"RemoteIpDetails"`
+	RemotePortDetails   string `json:"RemotePortDetails"`
+}
+
+type NetworkHeader struct {
+	Destination string `json:"Destination"`
+	Protocol    string `json:"Protocol"`
+	Source      string `json:"Source"`
+}
+
+type NetworkPathComponent struct {
+	ComponentId   string `json:"ComponentId"`
+	ComponentType string `json:"ComponentType"`
+	Egress        string `json:"Egress"`
+	Ingress       string `json:"Ingress"`
+}
+
+type NetworkPathComponentDetails struct {
+	Address    string `json:"Address"`
+	PortRanges string `json:"PortRanges"`
+}
+
 type NetworkResourceUtilization struct {
 	NetworkInBytesPerSecond    string `json:"NetworkInBytesPerSecond"`
 	NetworkOutBytesPerSecond   string `json:"NetworkOutBytesPerSecond"`
 	NetworkPacketsInPerSecond  string `json:"NetworkPacketsInPerSecond"`
 	NetworkPacketsOutPerSecond string `json:"NetworkPacketsOutPerSecond"`
+}
+
+type Note struct {
+	Text      string `json:"Text"`
+	UpdatedAt string `json:"UpdatedAt"`
+	UpdatedBy string `json:"UpdatedBy"`
+}
+
+type NoteUpdate struct {
+	Text      string `json:"Text"`
+	UpdatedBy string `json:"UpdatedBy"`
+}
+
+type Notification struct {
+	ComparisonOperator string `json:"ComparisonOperator"`
+	NotificationState  string `json:"NotificationState"`
+	NotificationType   string `json:"NotificationType"`
+	Threshold          string `json:"Threshold"`
+	ThresholdType      string `json:"ThresholdType"`
+}
+
+type NotificationWithSubscribers struct {
+	Notification string `json:"Notification"`
+	Subscribers  string `json:"Subscribers"`
+}
+
+type NumberFilter struct {
+	Eq  string `json:"Eq"`
+	Gte string `json:"Gte"`
+	Lte string `json:"Lte"`
+}
+
+type Occurrences struct {
+	Cells        string `json:"Cells"`
+	LineRanges   string `json:"LineRanges"`
+	OffsetRanges string `json:"OffsetRanges"`
+	Pages        string `json:"Pages"`
+	Records      string `json:"Records"`
+}
+
+type OrganizationAffectedEntitiesErrorItem struct {
+	AwsAccountId string `json:"awsAccountId"`
+	ErrorMessage string `json:"errorMessage"`
+	ErrorName    string `json:"errorName"`
+	EventArn     string `json:"eventArn"`
+}
+
+type OrganizationAggregationSource struct {
+	AllAwsRegions string `json:"AllAwsRegions"`
+	AwsRegions    string `json:"AwsRegions"`
+	RoleArn       string `json:"RoleArn"`
+}
+
+type OrganizationConfigRule struct {
+	ExcludedAccounts                     string `json:"ExcludedAccounts"`
+	LastUpdateTime                       string `json:"LastUpdateTime"`
+	OrganizationConfigRuleArn            string `json:"OrganizationConfigRuleArn"`
+	OrganizationConfigRuleName           string `json:"OrganizationConfigRuleName"`
+	OrganizationCustomPolicyRuleMetadata string `json:"OrganizationCustomPolicyRuleMetadata"`
+	OrganizationCustomRuleMetadata       string `json:"OrganizationCustomRuleMetadata"`
+	OrganizationManagedRuleMetadata      string `json:"OrganizationManagedRuleMetadata"`
+}
+
+type OrganizationConfigRuleStatus struct {
+	ErrorCode                  string `json:"ErrorCode"`
+	ErrorMessage               string `json:"ErrorMessage"`
+	LastUpdateTime             string `json:"LastUpdateTime"`
+	OrganizationConfigRuleName string `json:"OrganizationConfigRuleName"`
+	OrganizationRuleStatus     string `json:"OrganizationRuleStatus"`
+}
+
+type OrganizationConformancePack struct {
+	ConformancePackInputParameters  string `json:"ConformancePackInputParameters"`
+	DeliveryS3Bucket                string `json:"DeliveryS3Bucket"`
+	DeliveryS3KeyPrefix             string `json:"DeliveryS3KeyPrefix"`
+	ExcludedAccounts                string `json:"ExcludedAccounts"`
+	LastUpdateTime                  string `json:"LastUpdateTime"`
+	OrganizationConformancePackArn  string `json:"OrganizationConformancePackArn"`
+	OrganizationConformancePackName string `json:"OrganizationConformancePackName"`
+}
+
+type OrganizationConformancePackDetailedStatus struct {
+	AccountId           string `json:"AccountId"`
+	ConformancePackName string `json:"ConformancePackName"`
+	ErrorCode           string `json:"ErrorCode"`
+	ErrorMessage        string `json:"ErrorMessage"`
+	LastUpdateTime      string `json:"LastUpdateTime"`
+	Status              string `json:"Status"`
+}
+
+type OrganizationConformancePackStatus struct {
+	ErrorCode                       string `json:"ErrorCode"`
+	ErrorMessage                    string `json:"ErrorMessage"`
+	LastUpdateTime                  string `json:"LastUpdateTime"`
+	OrganizationConformancePackName string `json:"OrganizationConformancePackName"`
+	Status                          string `json:"Status"`
+}
+
+type OrganizationCustomPolicyRuleMetadata struct {
+	DebugLogDeliveryAccounts           string `json:"DebugLogDeliveryAccounts"`
+	Description                        string `json:"Description"`
+	InputParameters                    string `json:"InputParameters"`
+	MaximumExecutionFrequency          string `json:"MaximumExecutionFrequency"`
+	OrganizationConfigRuleTriggerTypes string `json:"OrganizationConfigRuleTriggerTypes"`
+	PolicyRuntime                      string `json:"PolicyRuntime"`
+	PolicyText                         string `json:"PolicyText"`
+	ResourceIdScope                    string `json:"ResourceIdScope"`
+	ResourceTypesScope                 string `json:"ResourceTypesScope"`
+	TagKeyScope                        string `json:"TagKeyScope"`
+	TagValueScope                      string `json:"TagValueScope"`
+}
+
+type OrganizationCustomPolicyRuleMetadataNoPolicy struct {
+	DebugLogDeliveryAccounts           string `json:"DebugLogDeliveryAccounts"`
+	Description                        string `json:"Description"`
+	InputParameters                    string `json:"InputParameters"`
+	MaximumExecutionFrequency          string `json:"MaximumExecutionFrequency"`
+	OrganizationConfigRuleTriggerTypes string `json:"OrganizationConfigRuleTriggerTypes"`
+	PolicyRuntime                      string `json:"PolicyRuntime"`
+	ResourceIdScope                    string `json:"ResourceIdScope"`
+	ResourceTypesScope                 string `json:"ResourceTypesScope"`
+	TagKeyScope                        string `json:"TagKeyScope"`
+	TagValueScope                      string `json:"TagValueScope"`
+}
+
+type OrganizationCustomRuleMetadata struct {
+	Description                        string `json:"Description"`
+	InputParameters                    string `json:"InputParameters"`
+	LambdaFunctionArn                  string `json:"LambdaFunctionArn"`
+	MaximumExecutionFrequency          string `json:"MaximumExecutionFrequency"`
+	OrganizationConfigRuleTriggerTypes string `json:"OrganizationConfigRuleTriggerTypes"`
+	ResourceIdScope                    string `json:"ResourceIdScope"`
+	ResourceTypesScope                 string `json:"ResourceTypesScope"`
+	TagKeyScope                        string `json:"TagKeyScope"`
+	TagValueScope                      string `json:"TagValueScope"`
+}
+
+type OrganizationEvent struct {
+	Arn               string `json:"arn"`
+	EndTime           string `json:"endTime"`
+	EventScopeCode    string `json:"eventScopeCode"`
+	EventTypeCategory string `json:"eventTypeCategory"`
+	EventTypeCode     string `json:"eventTypeCode"`
+	LastUpdatedTime   string `json:"lastUpdatedTime"`
+	Region            string `json:"region"`
+	Service           string `json:"service"`
+	StartTime         string `json:"startTime"`
+	StatusCode        string `json:"statusCode"`
+}
+
+type OrganizationEventDetails struct {
+	AwsAccountId     string          `json:"awsAccountId"`
+	Event            json.RawMessage `json:"event"`
+	EventDescription json.RawMessage `json:"eventDescription"`
+	EventMetadata    string          `json:"eventMetadata"`
+}
+
+type OrganizationEventDetailsErrorItem struct {
+	AwsAccountId string `json:"awsAccountId"`
+	ErrorMessage string `json:"errorMessage"`
+	ErrorName    string `json:"errorName"`
+	EventArn     string `json:"eventArn"`
+}
+
+type OrganizationEventFilter struct {
+	AwsAccountIds       string          `json:"awsAccountIds"`
+	EndTime             json.RawMessage `json:"endTime"`
+	EntityArns          string          `json:"entityArns"`
+	EntityValues        string          `json:"entityValues"`
+	EventStatusCodes    string          `json:"eventStatusCodes"`
+	EventTypeCategories string          `json:"eventTypeCategories"`
+	EventTypeCodes      string          `json:"eventTypeCodes"`
+	LastUpdatedTime     json.RawMessage `json:"lastUpdatedTime"`
+	Regions             string          `json:"regions"`
+	Services            string          `json:"services"`
+	StartTime           json.RawMessage `json:"startTime"`
+}
+
+type OrganizationManagedRuleMetadata struct {
+	Description               string `json:"Description"`
+	InputParameters           string `json:"InputParameters"`
+	MaximumExecutionFrequency string `json:"MaximumExecutionFrequency"`
+	ResourceIdScope           string `json:"ResourceIdScope"`
+	ResourceTypesScope        string `json:"ResourceTypesScope"`
+	RuleIdentifier            string `json:"RuleIdentifier"`
+	TagKeyScope               string `json:"TagKeyScope"`
+	TagValueScope             string `json:"TagValueScope"`
+}
+
+type OrganizationResourceDetailedStatusFilters struct {
+	AccountId string `json:"AccountId"`
+	Status    string `json:"Status"`
+}
+
+type Page struct {
+	LineRange   string `json:"LineRange"`
+	OffsetRange string `json:"OffsetRange"`
+	PageNumber  string `json:"PageNumber"`
+}
+
+type PatchSummary struct {
+	FailedCount            string `json:"FailedCount"`
+	Id                     string `json:"Id"`
+	InstalledCount         string `json:"InstalledCount"`
+	InstalledOtherCount    string `json:"InstalledOtherCount"`
+	InstalledPendingReboot string `json:"InstalledPendingReboot"`
+	InstalledRejectedCount string `json:"InstalledRejectedCount"`
+	MissingCount           string `json:"MissingCount"`
+	Operation              string `json:"Operation"`
+	OperationEndTime       string `json:"OperationEndTime"`
+	OperationStartTime     string `json:"OperationStartTime"`
+	RebootOption           string `json:"RebootOption"`
+}
+
+type PendingAggregationRequest struct {
+	RequesterAccountId string `json:"RequesterAccountId"`
+	RequesterAwsRegion string `json:"RequesterAwsRegion"`
+}
+
+type PlannedBudgetLimits struct {
+}
+
+type PortProbeAction struct {
+	Blocked          string `json:"Blocked"`
+	PortProbeDetails string `json:"PortProbeDetails"`
+}
+
+type PortProbeDetail struct {
+	LocalIpDetails   string `json:"LocalIpDetails"`
+	LocalPortDetails string `json:"LocalPortDetails"`
+	RemoteIpDetails  string `json:"RemoteIpDetails"`
+}
+
+type PortRange struct {
+	Begin string `json:"Begin"`
+	End   string `json:"End"`
+}
+
+type PortRangeFromTo struct {
+	From string `json:"From"`
+	To   string `json:"To"`
+}
+
+type PriceList struct {
+	CurrencyCode string `json:"CurrencyCode"`
+	FileFormats  string `json:"FileFormats"`
+	PriceListArn string `json:"PriceListArn"`
+	RegionCode   string `json:"RegionCode"`
+}
+
+type ProcessDetails struct {
+	LaunchedAt   string `json:"LaunchedAt"`
+	Name         string `json:"Name"`
+	ParentPid    string `json:"ParentPid"`
+	Path         string `json:"Path"`
+	Pid          string `json:"Pid"`
+	TerminatedAt string `json:"TerminatedAt"`
+}
+
+type Product struct {
+	ActivationUrl                     string `json:"ActivationUrl"`
+	Categories                        string `json:"Categories"`
+	CompanyName                       string `json:"CompanyName"`
+	Description                       string `json:"Description"`
+	IntegrationTypes                  string `json:"IntegrationTypes"`
+	MarketplaceUrl                    string `json:"MarketplaceUrl"`
+	ProductArn                        string `json:"ProductArn"`
+	ProductName                       string `json:"ProductName"`
+	ProductSubscriptionResourcePolicy string `json:"ProductSubscriptionResourcePolicy"`
+}
+
+type ProjectedMetric struct {
+	Name       string `json:"name"`
+	Timestamps string `json:"timestamps"`
+	Values     string `json:"values"`
+}
+
+type PropagatingVgwSetDetails struct {
+	GatewayId string `json:"GatewayId"`
 }
 
 type ProvideAnomalyFeedbackRequest struct {
@@ -1024,6 +8166,199 @@ type ProvideAnomalyFeedbackResponse struct {
 	AnomalyId string `json:"AnomalyId"`
 }
 
+type PublicKey struct {
+	Fingerprint       string `json:"Fingerprint"`
+	ValidityEndTime   string `json:"ValidityEndTime"`
+	ValidityStartTime string `json:"ValidityStartTime"`
+	Value             string `json:"Value"`
+}
+
+type PutAggregationAuthorizationRequest struct {
+	AuthorizedAccountId string `json:"AuthorizedAccountId"`
+	AuthorizedAwsRegion string `json:"AuthorizedAwsRegion"`
+	Tags                string `json:"Tags"`
+}
+
+type PutAggregationAuthorizationResponse struct {
+	AggregationAuthorization string `json:"AggregationAuthorization"`
+}
+
+type PutConfigRuleRequest struct {
+	ConfigRule string `json:"ConfigRule"`
+	Tags       string `json:"Tags"`
+}
+
+type PutConfigurationAggregatorRequest struct {
+	AccountAggregationSources     string `json:"AccountAggregationSources"`
+	ConfigurationAggregatorName   string `json:"ConfigurationAggregatorName"`
+	OrganizationAggregationSource string `json:"OrganizationAggregationSource"`
+	Tags                          string `json:"Tags"`
+}
+
+type PutConfigurationAggregatorResponse struct {
+	ConfigurationAggregator string `json:"ConfigurationAggregator"`
+}
+
+type PutConfigurationRecorderRequest struct {
+	ConfigurationRecorder string `json:"ConfigurationRecorder"`
+}
+
+type PutConformancePackRequest struct {
+	ConformancePackInputParameters string `json:"ConformancePackInputParameters"`
+	ConformancePackName            string `json:"ConformancePackName"`
+	DeliveryS3Bucket               string `json:"DeliveryS3Bucket"`
+	DeliveryS3KeyPrefix            string `json:"DeliveryS3KeyPrefix"`
+	TemplateBody                   string `json:"TemplateBody"`
+	TemplateS3Uri                  string `json:"TemplateS3Uri"`
+	TemplateSSMDocumentDetails     string `json:"TemplateSSMDocumentDetails"`
+}
+
+type PutConformancePackResponse struct {
+	ConformancePackArn string `json:"ConformancePackArn"`
+}
+
+type PutDeliveryChannelRequest struct {
+	DeliveryChannel string `json:"DeliveryChannel"`
+}
+
+type PutEvaluationsRequest struct {
+	Evaluations string `json:"Evaluations"`
+	ResultToken string `json:"ResultToken"`
+	TestMode    string `json:"TestMode"`
+}
+
+type PutEvaluationsResponse struct {
+	FailedEvaluations string `json:"FailedEvaluations"`
+}
+
+type PutEventSelectorsRequest struct {
+	AdvancedEventSelectors string `json:"AdvancedEventSelectors"`
+	EventSelectors         string `json:"EventSelectors"`
+	TrailName              string `json:"TrailName"`
+}
+
+type PutEventSelectorsResponse struct {
+	AdvancedEventSelectors string `json:"AdvancedEventSelectors"`
+	EventSelectors         string `json:"EventSelectors"`
+	TrailARN               string `json:"TrailARN"`
+}
+
+type PutExternalEvaluationRequest struct {
+	ConfigRuleName     string `json:"ConfigRuleName"`
+	ExternalEvaluation string `json:"ExternalEvaluation"`
+}
+
+type PutExternalEvaluationResponse struct {
+}
+
+type PutInsightSelectorsRequest struct {
+	InsightSelectors string `json:"InsightSelectors"`
+	TrailName        string `json:"TrailName"`
+}
+
+type PutInsightSelectorsResponse struct {
+	InsightSelectors string `json:"InsightSelectors"`
+	TrailARN         string `json:"TrailARN"`
+}
+
+type PutOrganizationConfigRuleRequest struct {
+	ExcludedAccounts                     string `json:"ExcludedAccounts"`
+	OrganizationConfigRuleName           string `json:"OrganizationConfigRuleName"`
+	OrganizationCustomPolicyRuleMetadata string `json:"OrganizationCustomPolicyRuleMetadata"`
+	OrganizationCustomRuleMetadata       string `json:"OrganizationCustomRuleMetadata"`
+	OrganizationManagedRuleMetadata      string `json:"OrganizationManagedRuleMetadata"`
+}
+
+type PutOrganizationConfigRuleResponse struct {
+	OrganizationConfigRuleArn string `json:"OrganizationConfigRuleArn"`
+}
+
+type PutOrganizationConformancePackRequest struct {
+	ConformancePackInputParameters  string `json:"ConformancePackInputParameters"`
+	DeliveryS3Bucket                string `json:"DeliveryS3Bucket"`
+	DeliveryS3KeyPrefix             string `json:"DeliveryS3KeyPrefix"`
+	ExcludedAccounts                string `json:"ExcludedAccounts"`
+	OrganizationConformancePackName string `json:"OrganizationConformancePackName"`
+	TemplateBody                    string `json:"TemplateBody"`
+	TemplateS3Uri                   string `json:"TemplateS3Uri"`
+}
+
+type PutOrganizationConformancePackResponse struct {
+	OrganizationConformancePackArn string `json:"OrganizationConformancePackArn"`
+}
+
+type PutRecommendationPreferencesRequest struct {
+	EnhancedInfrastructureMetrics string `json:"enhancedInfrastructureMetrics"`
+	ExternalMetricsPreference     string `json:"externalMetricsPreference"`
+	InferredWorkloadTypes         string `json:"inferredWorkloadTypes"`
+	ResourceType                  string `json:"resourceType"`
+	Scope                         string `json:"scope"`
+}
+
+type PutRecommendationPreferencesResponse struct {
+}
+
+type PutRemediationConfigurationsRequest struct {
+	RemediationConfigurations string `json:"RemediationConfigurations"`
+}
+
+type PutRemediationConfigurationsResponse struct {
+	FailedBatches string `json:"FailedBatches"`
+}
+
+type PutRemediationExceptionsRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	ExpirationTime string `json:"ExpirationTime"`
+	Message        string `json:"Message"`
+	ResourceKeys   string `json:"ResourceKeys"`
+}
+
+type PutRemediationExceptionsResponse struct {
+	FailedBatches string `json:"FailedBatches"`
+}
+
+type PutReportDefinitionRequest struct {
+	DestinationS3Location string `json:"destinationS3Location"`
+	Format                string `json:"format"`
+	ReportDescription     string `json:"reportDescription"`
+	ReportFrequency       string `json:"reportFrequency"`
+	ReportId              string `json:"reportId"`
+}
+
+type PutReportDefinitionResponse struct {
+}
+
+type PutReportDefinitionResult struct {
+	ReportId string `json:"reportId"`
+}
+
+type PutResourceConfigRequest struct {
+	Configuration   string `json:"Configuration"`
+	ResourceId      string `json:"ResourceId"`
+	ResourceName    string `json:"ResourceName"`
+	ResourceType    string `json:"ResourceType"`
+	SchemaVersionId string `json:"SchemaVersionId"`
+	Tags            string `json:"Tags"`
+}
+
+type PutResourcePolicyRequest struct {
+	ResourceArn    string `json:"ResourceArn"`
+	ResourcePolicy string `json:"ResourcePolicy"`
+}
+
+type PutResourcePolicyResponse struct {
+	ResourceArn    string `json:"ResourceArn"`
+	ResourcePolicy string `json:"ResourcePolicy"`
+}
+
+type PutRetentionConfigurationRequest struct {
+	RetentionPeriodInDays string `json:"RetentionPeriodInDays"`
+}
+
+type PutRetentionConfigurationResponse struct {
+	RetentionConfiguration string `json:"RetentionConfiguration"`
+}
+
 type PutServiceQuotaIncreaseRequestIntoTemplateRequest struct {
 	AwsRegion    string `json:"AwsRegion"`
 	DesiredValue string `json:"DesiredValue"`
@@ -1033,6 +8368,42 @@ type PutServiceQuotaIncreaseRequestIntoTemplateRequest struct {
 
 type PutServiceQuotaIncreaseRequestIntoTemplateResponse struct {
 	ServiceQuotaIncreaseRequestInTemplate string `json:"ServiceQuotaIncreaseRequestInTemplate"`
+}
+
+type PutStoredQueryRequest struct {
+	StoredQuery string `json:"StoredQuery"`
+	Tags        string `json:"Tags"`
+}
+
+type PutStoredQueryResponse struct {
+	QueryArn string `json:"QueryArn"`
+}
+
+type Query struct {
+	CreationTime string `json:"CreationTime"`
+	QueryId      string `json:"QueryId"`
+	QueryStatus  string `json:"QueryStatus"`
+}
+
+type QueryInfo struct {
+	SelectFields string `json:"SelectFields"`
+}
+
+type QueryResultColumn struct {
+}
+
+type QueryStatistics struct {
+	BytesScanned      string `json:"BytesScanned"`
+	ResultsCount      string `json:"ResultsCount"`
+	TotalResultsCount string `json:"TotalResultsCount"`
+}
+
+type QueryStatisticsForDescribeQuery struct {
+	BytesScanned          string `json:"BytesScanned"`
+	CreationTime          string `json:"CreationTime"`
+	EventsMatched         string `json:"EventsMatched"`
+	EventsScanned         string `json:"EventsScanned"`
+	ExecutionTimeInMillis string `json:"ExecutionTimeInMillis"`
 }
 
 type QuotaPeriod struct {
@@ -1052,9 +8423,77 @@ type RDSInstanceDetails struct {
 	SizeFlexEligible  string `json:"SizeFlexEligible"`
 }
 
+type Range struct {
+	End         string `json:"End"`
+	Start       string `json:"Start"`
+	StartColumn string `json:"StartColumn"`
+}
+
+type ReasonCodeSummary struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
 type RecentCaseCommunications struct {
 	Communications string `json:"communications"`
 	NextToken      string `json:"nextToken"`
+}
+
+type Recommendation struct {
+	Text string `json:"Text"`
+	Url  string `json:"Url"`
+}
+
+type RecommendationExportJob struct {
+	CreationTimestamp    string `json:"creationTimestamp"`
+	Destination          string `json:"destination"`
+	FailureReason        string `json:"failureReason"`
+	JobId                string `json:"jobId"`
+	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp"`
+	ResourceType         string `json:"resourceType"`
+	Status               string `json:"status"`
+}
+
+type RecommendationPreferences struct {
+	CpuVendorArchitectures string `json:"cpuVendorArchitectures"`
+}
+
+type RecommendationPreferencesDetail struct {
+	EnhancedInfrastructureMetrics string `json:"enhancedInfrastructureMetrics"`
+	ExternalMetricsPreference     string `json:"externalMetricsPreference"`
+	InferredWorkloadTypes         string `json:"inferredWorkloadTypes"`
+	ResourceType                  string `json:"resourceType"`
+	Scope                         string `json:"scope"`
+}
+
+type RecommendationSource struct {
+	RecommendationSourceArn  string `json:"recommendationSourceArn"`
+	RecommendationSourceType string `json:"recommendationSourceType"`
+}
+
+type RecommendationSummary struct {
+	AccountId                     string `json:"accountId"`
+	CurrentPerformanceRiskRatings string `json:"currentPerformanceRiskRatings"`
+	RecommendationResourceType    string `json:"recommendationResourceType"`
+	SavingsOpportunity            string `json:"savingsOpportunity"`
+	Summaries                     string `json:"summaries"`
+}
+
+type RecommendedOptionProjectedMetric struct {
+	ProjectedMetrics        string `json:"projectedMetrics"`
+	Rank                    string `json:"rank"`
+	RecommendedInstanceType string `json:"recommendedInstanceType"`
+}
+
+type Record struct {
+	JsonPath    string `json:"JsonPath"`
+	RecordIndex string `json:"RecordIndex"`
+}
+
+type RecordingGroup struct {
+	AllSupported               string `json:"allSupported"`
+	IncludeGlobalResourceTypes string `json:"includeGlobalResourceTypes"`
+	ResourceTypes              string `json:"resourceTypes"`
 }
 
 type RedshiftInstanceDetails struct {
@@ -1071,6 +8510,99 @@ type RefreshTrustedAdvisorCheckRequest struct {
 
 type RefreshTrustedAdvisorCheckResponse struct {
 	Status string `json:"status"`
+}
+
+type RegisterOrganizationDelegatedAdminRequest struct {
+	MemberAccountId string `json:"MemberAccountId"`
+}
+
+type RegisterOrganizationDelegatedAdminResponse struct {
+}
+
+type RelatedFinding struct {
+	Id         string `json:"Id"`
+	ProductArn string `json:"ProductArn"`
+}
+
+type Relationship struct {
+	RelationshipName string `json:"relationshipName"`
+	ResourceId       string `json:"resourceId"`
+	ResourceName     string `json:"resourceName"`
+	ResourceType     string `json:"resourceType"`
+}
+
+type Remediation struct {
+	Recommendation string `json:"Recommendation"`
+}
+
+type RemediationConfiguration struct {
+	Arn                      string `json:"Arn"`
+	Automatic                string `json:"Automatic"`
+	ConfigRuleName           string `json:"ConfigRuleName"`
+	CreatedByService         string `json:"CreatedByService"`
+	ExecutionControls        string `json:"ExecutionControls"`
+	MaximumAutomaticAttempts string `json:"MaximumAutomaticAttempts"`
+	Parameters               string `json:"Parameters"`
+	ResourceType             string `json:"ResourceType"`
+	RetryAttemptSeconds      string `json:"RetryAttemptSeconds"`
+	TargetId                 string `json:"TargetId"`
+	TargetType               string `json:"TargetType"`
+	TargetVersion            string `json:"TargetVersion"`
+}
+
+type RemediationException struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	ExpirationTime string `json:"ExpirationTime"`
+	Message        string `json:"Message"`
+	ResourceId     string `json:"ResourceId"`
+	ResourceType   string `json:"ResourceType"`
+}
+
+type RemediationExceptionResourceKey struct {
+	ResourceId   string `json:"ResourceId"`
+	ResourceType string `json:"ResourceType"`
+}
+
+type RemediationExecutionStatus struct {
+	InvocationTime  string          `json:"InvocationTime"`
+	LastUpdatedTime string          `json:"LastUpdatedTime"`
+	ResourceKey     json.RawMessage `json:"ResourceKey"`
+	State           string          `json:"State"`
+	StepDetails     string          `json:"StepDetails"`
+}
+
+type RemediationExecutionStep struct {
+	ErrorMessage string `json:"ErrorMessage"`
+	Name         string `json:"Name"`
+	StartTime    string `json:"StartTime"`
+	State        string `json:"State"`
+	StopTime     string `json:"StopTime"`
+}
+
+type RemediationParameterValue struct {
+	ResourceValue string `json:"ResourceValue"`
+	StaticValue   string `json:"StaticValue"`
+}
+
+type RemediationParameters struct {
+}
+
+type RemoveTagsRequest struct {
+	ResourceId string `json:"ResourceId"`
+	TagsList   string `json:"TagsList"`
+}
+
+type RemoveTagsResponse struct {
+}
+
+type ReportDefinition struct {
+	CreatedAt             string `json:"createdAt"`
+	DestinationS3Location string `json:"destinationS3Location"`
+	Format                string `json:"format"`
+	LastUpdatedAt         string `json:"lastUpdatedAt"`
+	ReportDescription     string `json:"reportDescription"`
+	ReportFrequency       string `json:"reportFrequency"`
+	ReportId              string `json:"reportId"`
 }
 
 type RequestServiceQuotaIncreaseRequest struct {
@@ -1184,8 +8716,55 @@ type ResolveCaseResponse struct {
 	InitialCaseStatus string `json:"initialCaseStatus"`
 }
 
+type Resource struct {
+	ResourceName string `json:"ResourceName"`
+	ResourceType string `json:"ResourceType"`
+}
+
+type ResourceCount struct {
+	Count        string `json:"count"`
+	ResourceType string `json:"resourceType"`
+}
+
+type ResourceCountFilters struct {
+	AccountId    string `json:"AccountId"`
+	Region       string `json:"Region"`
+	ResourceType string `json:"ResourceType"`
+}
+
 type ResourceDetails struct {
 	EC2ResourceDetails string `json:"EC2ResourceDetails"`
+}
+
+type ResourceEvaluation struct {
+	EvaluationMode           string `json:"EvaluationMode"`
+	EvaluationStartTimestamp string `json:"EvaluationStartTimestamp"`
+	ResourceEvaluationId     string `json:"ResourceEvaluationId"`
+}
+
+type ResourceEvaluationFilters struct {
+	EvaluationContextIdentifier string `json:"EvaluationContextIdentifier"`
+	EvaluationMode              string `json:"EvaluationMode"`
+	TimeWindow                  string `json:"TimeWindow"`
+}
+
+type ResourceFilters struct {
+	AccountId    string `json:"AccountId"`
+	Region       string `json:"Region"`
+	ResourceId   string `json:"ResourceId"`
+	ResourceName string `json:"ResourceName"`
+}
+
+type ResourceIdentifier struct {
+	ResourceDeletionTime string `json:"resourceDeletionTime"`
+	ResourceId           string `json:"resourceId"`
+	ResourceName         string `json:"resourceName"`
+	ResourceType         string `json:"resourceType"`
+}
+
+type ResourceKey struct {
+	ResourceId   string `json:"resourceId"`
+	ResourceType string `json:"resourceType"`
 }
 
 type ResourceTag struct {
@@ -1197,11 +8776,43 @@ type ResourceUtilization struct {
 	EC2ResourceUtilization string `json:"EC2ResourceUtilization"`
 }
 
+type ResourceValue struct {
+	Value string `json:"Value"`
+}
+
+type RestoreEventDataStoreRequest struct {
+	EventDataStore string `json:"EventDataStore"`
+}
+
+type RestoreEventDataStoreResponse struct {
+	AdvancedEventSelectors       string `json:"AdvancedEventSelectors"`
+	CreatedTimestamp             string `json:"CreatedTimestamp"`
+	EventDataStoreArn            string `json:"EventDataStoreArn"`
+	KmsKeyId                     string `json:"KmsKeyId"`
+	MultiRegionEnabled           string `json:"MultiRegionEnabled"`
+	Name                         string `json:"Name"`
+	OrganizationEnabled          string `json:"OrganizationEnabled"`
+	RetentionPeriod              string `json:"RetentionPeriod"`
+	Status                       string `json:"Status"`
+	TerminationProtectionEnabled string `json:"TerminationProtectionEnabled"`
+	UpdatedTimestamp             string `json:"UpdatedTimestamp"`
+}
+
+type Result struct {
+	AccountId        string `json:"AccountId"`
+	ProcessingResult string `json:"ProcessingResult"`
+}
+
 type ResultByTime struct {
 	Estimated  string `json:"Estimated"`
 	Groups     string `json:"Groups"`
 	TimePeriod string `json:"TimePeriod"`
 	Total      string `json:"Total"`
+}
+
+type RetentionConfiguration struct {
+	Name                  string `json:"Name"`
+	RetentionPeriodInDays string `json:"RetentionPeriodInDays"`
 }
 
 type RightsizingRecommendation struct {
@@ -1238,6 +8849,155 @@ type RootCause struct {
 	Region            string `json:"Region"`
 	Service           string `json:"Service"`
 	UsageType         string `json:"UsageType"`
+}
+
+type RouteSetDetails struct {
+	CarrierGatewayId            string `json:"CarrierGatewayId"`
+	CoreNetworkArn              string `json:"CoreNetworkArn"`
+	DestinationCidrBlock        string `json:"DestinationCidrBlock"`
+	DestinationIpv6CidrBlock    string `json:"DestinationIpv6CidrBlock"`
+	DestinationPrefixListId     string `json:"DestinationPrefixListId"`
+	EgressOnlyInternetGatewayId string `json:"EgressOnlyInternetGatewayId"`
+	GatewayId                   string `json:"GatewayId"`
+	InstanceId                  string `json:"InstanceId"`
+	InstanceOwnerId             string `json:"InstanceOwnerId"`
+	LocalGatewayId              string `json:"LocalGatewayId"`
+	NatGatewayId                string `json:"NatGatewayId"`
+	NetworkInterfaceId          string `json:"NetworkInterfaceId"`
+	Origin                      string `json:"Origin"`
+	State                       string `json:"State"`
+	TransitGatewayId            string `json:"TransitGatewayId"`
+	VpcPeeringConnectionId      string `json:"VpcPeeringConnectionId"`
+}
+
+type RuleGroupDetails struct {
+	RuleVariables string `json:"RuleVariables"`
+	RulesSource   string `json:"RulesSource"`
+}
+
+type RuleGroupSource struct {
+	RulesSourceList                string `json:"RulesSourceList"`
+	RulesString                    string `json:"RulesString"`
+	StatefulRules                  string `json:"StatefulRules"`
+	StatelessRulesAndCustomActions string `json:"StatelessRulesAndCustomActions"`
+}
+
+type RuleGroupSourceCustomActionsDetails struct {
+	ActionDefinition string `json:"ActionDefinition"`
+	ActionName       string `json:"ActionName"`
+}
+
+type RuleGroupSourceListDetails struct {
+	GeneratedRulesType string `json:"GeneratedRulesType"`
+	TargetTypes        string `json:"TargetTypes"`
+	Targets            string `json:"Targets"`
+}
+
+type RuleGroupSourceStatefulRulesDetails struct {
+	Action      string `json:"Action"`
+	Header      string `json:"Header"`
+	RuleOptions string `json:"RuleOptions"`
+}
+
+type RuleGroupSourceStatefulRulesHeaderDetails struct {
+	Destination     string `json:"Destination"`
+	DestinationPort string `json:"DestinationPort"`
+	Direction       string `json:"Direction"`
+	Protocol        string `json:"Protocol"`
+	Source          string `json:"Source"`
+	SourcePort      string `json:"SourcePort"`
+}
+
+type RuleGroupSourceStatefulRulesOptionsDetails struct {
+	Keyword  string `json:"Keyword"`
+	Settings string `json:"Settings"`
+}
+
+type RuleGroupSourceStatelessRuleDefinition struct {
+	Actions         string `json:"Actions"`
+	MatchAttributes string `json:"MatchAttributes"`
+}
+
+type RuleGroupSourceStatelessRuleMatchAttributes struct {
+	DestinationPorts string `json:"DestinationPorts"`
+	Destinations     string `json:"Destinations"`
+	Protocols        string `json:"Protocols"`
+	SourcePorts      string `json:"SourcePorts"`
+	Sources          string `json:"Sources"`
+	TcpFlags         string `json:"TcpFlags"`
+}
+
+type RuleGroupSourceStatelessRuleMatchAttributesDestinationPorts struct {
+	FromPort string `json:"FromPort"`
+	ToPort   string `json:"ToPort"`
+}
+
+type RuleGroupSourceStatelessRuleMatchAttributesDestinations struct {
+	AddressDefinition string `json:"AddressDefinition"`
+}
+
+type RuleGroupSourceStatelessRuleMatchAttributesSourcePorts struct {
+	FromPort string `json:"FromPort"`
+	ToPort   string `json:"ToPort"`
+}
+
+type RuleGroupSourceStatelessRuleMatchAttributesSources struct {
+	AddressDefinition string `json:"AddressDefinition"`
+}
+
+type RuleGroupSourceStatelessRuleMatchAttributesTcpFlags struct {
+	Flags string `json:"Flags"`
+	Masks string `json:"Masks"`
+}
+
+type RuleGroupSourceStatelessRulesAndCustomActionsDetails struct {
+	CustomActions  string `json:"CustomActions"`
+	StatelessRules string `json:"StatelessRules"`
+}
+
+type RuleGroupSourceStatelessRulesDetails struct {
+	Priority       string `json:"Priority"`
+	RuleDefinition string `json:"RuleDefinition"`
+}
+
+type RuleGroupVariables struct {
+	IpSets   string `json:"IpSets"`
+	PortSets string `json:"PortSets"`
+}
+
+type RuleGroupVariablesIpSetsDetails struct {
+	Definition string `json:"Definition"`
+}
+
+type RuleGroupVariablesPortSetsDetails struct {
+	Definition string `json:"Definition"`
+}
+
+type S3Destination struct {
+	Bucket      string `json:"bucket"`
+	Key         string `json:"key"`
+	MetadataKey string `json:"metadataKey"`
+}
+
+type S3DestinationConfig struct {
+	Bucket    string `json:"bucket"`
+	KeyPrefix string `json:"keyPrefix"`
+}
+
+type S3ImportSource struct {
+	S3BucketAccessRoleArn string `json:"S3BucketAccessRoleArn"`
+	S3BucketRegion        string `json:"S3BucketRegion"`
+	S3LocationUri         string `json:"S3LocationUri"`
+}
+
+type S3Location struct {
+	Bucket string `json:"bucket"`
+	Prefix string `json:"prefix"`
+}
+
+type SavingsOpportunity struct {
+	EstimatedMonthlySavings      string `json:"estimatedMonthlySavings"`
+	SavingsOpportunityPercentage string `json:"savingsOpportunityPercentage"`
 }
 
 type SavingsPlansAmortizedCommitment struct {
@@ -1347,10 +9107,85 @@ type SavingsPlansUtilizationDetail struct {
 	Utilization         string `json:"Utilization"`
 }
 
+type Scope struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type ScpActionDefinition struct {
+	PolicyId  string `json:"PolicyId"`
+	TargetIds string `json:"TargetIds"`
+}
+
+type SecurityControl struct {
+	Description           string `json:"Description"`
+	RemediationUrl        string `json:"RemediationUrl"`
+	SecurityControlArn    string `json:"SecurityControlArn"`
+	SecurityControlId     string `json:"SecurityControlId"`
+	SecurityControlStatus string `json:"SecurityControlStatus"`
+	SeverityRating        string `json:"SeverityRating"`
+	Title                 string `json:"Title"`
+}
+
+type SecurityControlDefinition struct {
+	CurrentRegionAvailability string `json:"CurrentRegionAvailability"`
+	Description               string `json:"Description"`
+	RemediationUrl            string `json:"RemediationUrl"`
+	SecurityControlId         string `json:"SecurityControlId"`
+	SeverityRating            string `json:"SeverityRating"`
+	Title                     string `json:"Title"`
+}
+
+type SelectAggregateResourceConfigRequest struct {
+	ConfigurationAggregatorName string `json:"ConfigurationAggregatorName"`
+	Expression                  string `json:"Expression"`
+	Limit                       string `json:"Limit"`
+	MaxResults                  string `json:"MaxResults"`
+	NextToken                   string `json:"NextToken"`
+}
+
+type SelectAggregateResourceConfigResponse struct {
+	NextToken string          `json:"NextToken"`
+	QueryInfo json.RawMessage `json:"QueryInfo"`
+	Results   string          `json:"Results"`
+}
+
+type SelectResourceConfigRequest struct {
+	Expression string `json:"Expression"`
+	Limit      string `json:"Limit"`
+	NextToken  string `json:"NextToken"`
+}
+
+type SelectResourceConfigResponse struct {
+	NextToken string `json:"NextToken"`
+	QueryInfo string `json:"QueryInfo"`
+	Results   string `json:"Results"`
+}
+
+type SensitiveDataDetections struct {
+	Count       string `json:"Count"`
+	Occurrences string `json:"Occurrences"`
+	Type        string `json:"Type"`
+}
+
+type SensitiveDataResult struct {
+	Category   string `json:"Category"`
+	Detections string `json:"Detections"`
+	TotalCount string `json:"TotalCount"`
+}
+
 type Service struct {
 	Categories string `json:"categories"`
 	Code       string `json:"code"`
 	Name       string `json:"name"`
+}
+
+type ServiceConfiguration struct {
+	AutoScalingConfiguration string `json:"autoScalingConfiguration"`
+	ContainerConfigurations  string `json:"containerConfigurations"`
+	Cpu                      string `json:"cpu"`
+	Memory                   string `json:"memory"`
+	TaskDefinitionArn        string `json:"taskDefinitionArn"`
 }
 
 type ServiceInfo struct {
@@ -1388,14 +9223,237 @@ type ServiceSpecification struct {
 	EC2Specification string `json:"EC2Specification"`
 }
 
+type Severity struct {
+	Label      string `json:"Label"`
+	Normalized string `json:"Normalized"`
+	Original   string `json:"Original"`
+	Product    string `json:"Product"`
+}
+
 type SeverityLevel struct {
 	Code string `json:"code"`
 	Name string `json:"name"`
 }
 
+type SeverityUpdate struct {
+	Label      string `json:"Label"`
+	Normalized string `json:"Normalized"`
+	Product    string `json:"Product"`
+}
+
+type SoftwarePackage struct {
+	Architecture    string `json:"Architecture"`
+	Epoch           string `json:"Epoch"`
+	FilePath        string `json:"FilePath"`
+	FixedInVersion  string `json:"FixedInVersion"`
+	Name            string `json:"Name"`
+	PackageManager  string `json:"PackageManager"`
+	Release         string `json:"Release"`
+	Remediation     string `json:"Remediation"`
+	SourceLayerArn  string `json:"SourceLayerArn"`
+	SourceLayerHash string `json:"SourceLayerHash"`
+	Version         string `json:"Version"`
+}
+
+type SortCriterion struct {
+	Field     string `json:"Field"`
+	SortOrder string `json:"SortOrder"`
+}
+
 type SortDefinition struct {
 	Key       string `json:"Key"`
 	SortOrder string `json:"SortOrder"`
+}
+
+type Source struct {
+	CustomPolicyDetails string `json:"CustomPolicyDetails"`
+	Owner               string `json:"Owner"`
+	SourceDetails       string `json:"SourceDetails"`
+	SourceIdentifier    string `json:"SourceIdentifier"`
+}
+
+type SourceConfig struct {
+	AdvancedEventSelectors string `json:"AdvancedEventSelectors"`
+	ApplyToAllRegions      string `json:"ApplyToAllRegions"`
+}
+
+type SourceDetail struct {
+	EventSource               string `json:"EventSource"`
+	MaximumExecutionFrequency string `json:"MaximumExecutionFrequency"`
+	MessageType               string `json:"MessageType"`
+}
+
+type SourceS3Location struct {
+	Bucket string `json:"bucket"`
+	Key    string `json:"key"`
+	Region string `json:"region"`
+}
+
+type Spend struct {
+	Amount string `json:"Amount"`
+	Unit   string `json:"Unit"`
+}
+
+type SsmActionDefinition struct {
+	ActionSubType string `json:"ActionSubType"`
+	InstanceIds   string `json:"InstanceIds"`
+	Region        string `json:"Region"`
+}
+
+type SsmControls struct {
+	ConcurrentExecutionRatePercentage string `json:"ConcurrentExecutionRatePercentage"`
+	ErrorPercentage                   string `json:"ErrorPercentage"`
+}
+
+type Standard struct {
+	Description        string `json:"Description"`
+	EnabledByDefault   string `json:"EnabledByDefault"`
+	Name               string `json:"Name"`
+	StandardsArn       string `json:"StandardsArn"`
+	StandardsManagedBy string `json:"StandardsManagedBy"`
+}
+
+type StandardsControl struct {
+	ControlId              string `json:"ControlId"`
+	ControlStatus          string `json:"ControlStatus"`
+	ControlStatusUpdatedAt string `json:"ControlStatusUpdatedAt"`
+	Description            string `json:"Description"`
+	DisabledReason         string `json:"DisabledReason"`
+	RelatedRequirements    string `json:"RelatedRequirements"`
+	RemediationUrl         string `json:"RemediationUrl"`
+	SeverityRating         string `json:"SeverityRating"`
+	StandardsControlArn    string `json:"StandardsControlArn"`
+	Title                  string `json:"Title"`
+}
+
+type StandardsControlAssociationDetail struct {
+	AssociationStatus           string `json:"AssociationStatus"`
+	RelatedRequirements         string `json:"RelatedRequirements"`
+	SecurityControlArn          string `json:"SecurityControlArn"`
+	SecurityControlId           string `json:"SecurityControlId"`
+	StandardsArn                string `json:"StandardsArn"`
+	StandardsControlArns        string `json:"StandardsControlArns"`
+	StandardsControlDescription string `json:"StandardsControlDescription"`
+	StandardsControlTitle       string `json:"StandardsControlTitle"`
+	UpdatedAt                   string `json:"UpdatedAt"`
+	UpdatedReason               string `json:"UpdatedReason"`
+}
+
+type StandardsControlAssociationId struct {
+	SecurityControlId string `json:"SecurityControlId"`
+	StandardsArn      string `json:"StandardsArn"`
+}
+
+type StandardsControlAssociationSummary struct {
+	AssociationStatus           string `json:"AssociationStatus"`
+	RelatedRequirements         string `json:"RelatedRequirements"`
+	SecurityControlArn          string `json:"SecurityControlArn"`
+	SecurityControlId           string `json:"SecurityControlId"`
+	StandardsArn                string `json:"StandardsArn"`
+	StandardsControlDescription string `json:"StandardsControlDescription"`
+	StandardsControlTitle       string `json:"StandardsControlTitle"`
+	UpdatedAt                   string `json:"UpdatedAt"`
+	UpdatedReason               string `json:"UpdatedReason"`
+}
+
+type StandardsControlAssociationUpdate struct {
+	AssociationStatus string `json:"AssociationStatus"`
+	SecurityControlId string `json:"SecurityControlId"`
+	StandardsArn      string `json:"StandardsArn"`
+	UpdatedReason     string `json:"UpdatedReason"`
+}
+
+type StandardsInputParameterMap struct {
+}
+
+type StandardsManagedBy struct {
+	Company string `json:"Company"`
+	Product string `json:"Product"`
+}
+
+type StandardsStatusReason struct {
+	StatusReasonCode string `json:"StatusReasonCode"`
+}
+
+type StandardsSubscription struct {
+	StandardsArn             string `json:"StandardsArn"`
+	StandardsInput           string `json:"StandardsInput"`
+	StandardsStatus          string `json:"StandardsStatus"`
+	StandardsStatusReason    string `json:"StandardsStatusReason"`
+	StandardsSubscriptionArn string `json:"StandardsSubscriptionArn"`
+}
+
+type StandardsSubscriptionRequest struct {
+	StandardsArn   string `json:"StandardsArn"`
+	StandardsInput string `json:"StandardsInput"`
+}
+
+type StartConfigRulesEvaluationRequest struct {
+	ConfigRuleNames string `json:"ConfigRuleNames"`
+}
+
+type StartConfigRulesEvaluationResponse struct {
+}
+
+type StartConfigurationRecorderRequest struct {
+	ConfigurationRecorderName string `json:"ConfigurationRecorderName"`
+}
+
+type StartImportRequest struct {
+	Destinations   string `json:"Destinations"`
+	EndEventTime   string `json:"EndEventTime"`
+	ImportId       string `json:"ImportId"`
+	ImportSource   string `json:"ImportSource"`
+	StartEventTime string `json:"StartEventTime"`
+}
+
+type StartImportResponse struct {
+	CreatedTimestamp string `json:"CreatedTimestamp"`
+	Destinations     string `json:"Destinations"`
+	EndEventTime     string `json:"EndEventTime"`
+	ImportId         string `json:"ImportId"`
+	ImportSource     string `json:"ImportSource"`
+	ImportStatus     string `json:"ImportStatus"`
+	StartEventTime   string `json:"StartEventTime"`
+	UpdatedTimestamp string `json:"UpdatedTimestamp"`
+}
+
+type StartLoggingRequest struct {
+	Name string `json:"Name"`
+}
+
+type StartLoggingResponse struct {
+}
+
+type StartQueryRequest struct {
+	DeliveryS3Uri  string `json:"DeliveryS3Uri"`
+	QueryStatement string `json:"QueryStatement"`
+}
+
+type StartQueryResponse struct {
+	QueryId string `json:"QueryId"`
+}
+
+type StartRemediationExecutionRequest struct {
+	ConfigRuleName string `json:"ConfigRuleName"`
+	ResourceKeys   string `json:"ResourceKeys"`
+}
+
+type StartRemediationExecutionResponse struct {
+	FailedItems    string `json:"FailedItems"`
+	FailureMessage string `json:"FailureMessage"`
+}
+
+type StartResourceEvaluationRequest struct {
+	ClientToken       string `json:"ClientToken"`
+	EvaluationContext string `json:"EvaluationContext"`
+	EvaluationMode    string `json:"EvaluationMode"`
+	EvaluationTimeout string `json:"EvaluationTimeout"`
+	ResourceDetails   string `json:"ResourceDetails"`
+}
+
+type StartResourceEvaluationResponse struct {
+	ResourceEvaluationId string `json:"ResourceEvaluationId"`
 }
 
 type StartSavingsPlansPurchaseRecommendationGenerationRequest struct {
@@ -1407,15 +9465,100 @@ type StartSavingsPlansPurchaseRecommendationGenerationResponse struct {
 	RecommendationId        string `json:"RecommendationId"`
 }
 
+type StatelessCustomActionDefinition struct {
+	PublishMetricAction string `json:"PublishMetricAction"`
+}
+
+type StatelessCustomPublishMetricAction struct {
+	Dimensions string `json:"Dimensions"`
+}
+
+type StatelessCustomPublishMetricActionDimension struct {
+	Value string `json:"Value"`
+}
+
+type StaticValue struct {
+	Values string `json:"Values"`
+}
+
+type StatusDetailFilters struct {
+	AccountId               string `json:"AccountId"`
+	MemberAccountRuleStatus string `json:"MemberAccountRuleStatus"`
+}
+
+type StatusReason struct {
+	Description string `json:"Description"`
+	ReasonCode  string `json:"ReasonCode"`
+}
+
+type StopConfigurationRecorderRequest struct {
+	ConfigurationRecorderName string `json:"ConfigurationRecorderName"`
+}
+
+type StopImportRequest struct {
+	ImportId string `json:"ImportId"`
+}
+
+type StopImportResponse struct {
+	CreatedTimestamp string `json:"CreatedTimestamp"`
+	Destinations     string `json:"Destinations"`
+	EndEventTime     string `json:"EndEventTime"`
+	ImportId         string `json:"ImportId"`
+	ImportSource     string `json:"ImportSource"`
+	ImportStatistics string `json:"ImportStatistics"`
+	ImportStatus     string `json:"ImportStatus"`
+	StartEventTime   string `json:"StartEventTime"`
+	UpdatedTimestamp string `json:"UpdatedTimestamp"`
+}
+
+type StopLoggingRequest struct {
+	Name string `json:"Name"`
+}
+
+type StopLoggingResponse struct {
+}
+
+type StoredQuery struct {
+	Description string `json:"Description"`
+	Expression  string `json:"Expression"`
+	QueryArn    string `json:"QueryArn"`
+	QueryId     string `json:"QueryId"`
+	QueryName   string `json:"QueryName"`
+}
+
+type StoredQueryMetadata struct {
+	Description string `json:"Description"`
+	QueryArn    string `json:"QueryArn"`
+	QueryId     string `json:"QueryId"`
+	QueryName   string `json:"QueryName"`
+}
+
+type StringFilter struct {
+	Comparison string `json:"Comparison"`
+	Value      string `json:"Value"`
+}
+
 type Subscriber struct {
 	Address string `json:"Address"`
 	Status  string `json:"Status"`
 	Type    string `json:"Type"`
 }
 
+type Summary struct {
+	Name                string `json:"name"`
+	ReasonCodeSummaries string `json:"reasonCodeSummaries"`
+	Value               string `json:"value"`
+}
+
+type SupplementaryConfiguration struct {
+}
+
 type Tag struct {
 	Key   string `json:"Key"`
 	Value string `json:"Value"`
+}
+
+type TagMap struct {
 }
 
 type TagResourceRequest struct {
@@ -1432,6 +9575,9 @@ type TagValues struct {
 	Values       string `json:"Values"`
 }
 
+type Tags struct {
+}
+
 type TargetInstance struct {
 	CurrencyCode                string `json:"CurrencyCode"`
 	DefaultTargetInstance       string `json:"DefaultTargetInstance"`
@@ -1442,15 +9588,71 @@ type TargetInstance struct {
 	ResourceDetails             string `json:"ResourceDetails"`
 }
 
+type TemplateSSMDocumentDetails struct {
+	DocumentName    string `json:"DocumentName"`
+	DocumentVersion string `json:"DocumentVersion"`
+}
+
 type TerminateRecommendationDetail struct {
 	CurrencyCode            string `json:"CurrencyCode"`
 	EstimatedMonthlySavings string `json:"EstimatedMonthlySavings"`
+}
+
+type Threat struct {
+	FilePaths string `json:"FilePaths"`
+	ItemCount string `json:"ItemCount"`
+	Name      string `json:"Name"`
+	Severity  string `json:"Severity"`
+}
+
+type ThreatIntelIndicator struct {
+	Category       string `json:"Category"`
+	LastObservedAt string `json:"LastObservedAt"`
+	Source         string `json:"Source"`
+	SourceUrl      string `json:"SourceUrl"`
+	Type           string `json:"Type"`
+	Value          string `json:"Value"`
+}
+
+type TimePeriod struct {
+	End   string `json:"End"`
+	Start string `json:"Start"`
+}
+
+type TimeWindow struct {
+	EndTime   string `json:"EndTime"`
+	StartTime string `json:"StartTime"`
 }
 
 type TotalImpactFilter struct {
 	EndValue        string `json:"EndValue"`
 	NumericOperator string `json:"NumericOperator"`
 	StartValue      string `json:"StartValue"`
+}
+
+type Trail struct {
+	CloudWatchLogsLogGroupArn  string `json:"CloudWatchLogsLogGroupArn"`
+	CloudWatchLogsRoleArn      string `json:"CloudWatchLogsRoleArn"`
+	HasCustomEventSelectors    string `json:"HasCustomEventSelectors"`
+	HasInsightSelectors        string `json:"HasInsightSelectors"`
+	HomeRegion                 string `json:"HomeRegion"`
+	IncludeGlobalServiceEvents string `json:"IncludeGlobalServiceEvents"`
+	IsMultiRegionTrail         string `json:"IsMultiRegionTrail"`
+	IsOrganizationTrail        string `json:"IsOrganizationTrail"`
+	KmsKeyId                   string `json:"KmsKeyId"`
+	LogFileValidationEnabled   string `json:"LogFileValidationEnabled"`
+	Name                       string `json:"Name"`
+	S3BucketName               string `json:"S3BucketName"`
+	S3KeyPrefix                string `json:"S3KeyPrefix"`
+	SnsTopicARN                string `json:"SnsTopicARN"`
+	SnsTopicName               string `json:"SnsTopicName"`
+	TrailARN                   string `json:"TrailARN"`
+}
+
+type TrailInfo struct {
+	HomeRegion string `json:"HomeRegion"`
+	Name       string `json:"Name"`
+	TrailARN   string `json:"TrailARN"`
 }
 
 type TrustedAdvisorCategorySpecificSummary struct {
@@ -1509,12 +9711,38 @@ type TrustedAdvisorResourcesSummary struct {
 	ResourcesSuppressed string `json:"resourcesSuppressed"`
 }
 
+type UnprocessedSecurityControl struct {
+	ErrorCode         string `json:"ErrorCode"`
+	ErrorReason       string `json:"ErrorReason"`
+	SecurityControlId string `json:"SecurityControlId"`
+}
+
+type UnprocessedStandardsControlAssociation struct {
+	ErrorCode                     string `json:"ErrorCode"`
+	ErrorReason                   string `json:"ErrorReason"`
+	StandardsControlAssociationId string `json:"StandardsControlAssociationId"`
+}
+
+type UnprocessedStandardsControlAssociationUpdate struct {
+	ErrorCode                         string `json:"ErrorCode"`
+	ErrorReason                       string `json:"ErrorReason"`
+	StandardsControlAssociationUpdate string `json:"StandardsControlAssociationUpdate"`
+}
+
 type UntagResourceRequest struct {
 	ResourceARN string `json:"ResourceARN"`
 	TagKeys     string `json:"TagKeys"`
 }
 
 type UntagResourceResponse struct {
+}
+
+type UpdateActionTargetRequest struct {
+	Description string `json:"Description"`
+	Name        string `json:"Name"`
+}
+
+type UpdateActionTargetResponse struct {
 }
 
 type UpdateAnomalyMonitorRequest struct {
@@ -1538,6 +9766,46 @@ type UpdateAnomalySubscriptionRequest struct {
 
 type UpdateAnomalySubscriptionResponse struct {
 	SubscriptionArn string `json:"SubscriptionArn"`
+}
+
+type UpdateBudgetActionRequest struct {
+	AccountId        string          `json:"AccountId"`
+	ActionId         string          `json:"ActionId"`
+	ActionThreshold  json.RawMessage `json:"ActionThreshold"`
+	ApprovalModel    string          `json:"ApprovalModel"`
+	BudgetName       string          `json:"BudgetName"`
+	Definition       json.RawMessage `json:"Definition"`
+	ExecutionRoleArn string          `json:"ExecutionRoleArn"`
+	NotificationType string          `json:"NotificationType"`
+	Subscribers      json.RawMessage `json:"Subscribers"`
+}
+
+type UpdateBudgetActionResponse struct {
+	AccountId  string `json:"AccountId"`
+	BudgetName string `json:"BudgetName"`
+	NewAction  string `json:"NewAction"`
+	OldAction  string `json:"OldAction"`
+}
+
+type UpdateBudgetRequest struct {
+	AccountId string `json:"AccountId"`
+	NewBudget string `json:"NewBudget"`
+}
+
+type UpdateBudgetResponse struct {
+}
+
+type UpdateChannelRequest struct {
+	Channel      string `json:"Channel"`
+	Destinations string `json:"Destinations"`
+	Name         string `json:"Name"`
+}
+
+type UpdateChannelResponse struct {
+	ChannelArn   string `json:"ChannelArn"`
+	Destinations string `json:"Destinations"`
+	Name         string `json:"Name"`
+	Source       string `json:"Source"`
 }
 
 type UpdateCostAllocationTagsStatusError struct {
@@ -1568,10 +9836,321 @@ type UpdateCostCategoryDefinitionResponse struct {
 	EffectiveStart  string `json:"EffectiveStart"`
 }
 
+type UpdateEnrollmentStatusRequest struct {
+	IncludeMemberAccounts string `json:"includeMemberAccounts"`
+	Status                string `json:"status"`
+}
+
+type UpdateEnrollmentStatusResponse struct {
+	Status       string `json:"status"`
+	StatusReason string `json:"statusReason"`
+}
+
+type UpdateEventDataStoreRequest struct {
+	AdvancedEventSelectors       string `json:"AdvancedEventSelectors"`
+	EventDataStore               string `json:"EventDataStore"`
+	KmsKeyId                     string `json:"KmsKeyId"`
+	MultiRegionEnabled           string `json:"MultiRegionEnabled"`
+	Name                         string `json:"Name"`
+	OrganizationEnabled          string `json:"OrganizationEnabled"`
+	RetentionPeriod              string `json:"RetentionPeriod"`
+	TerminationProtectionEnabled string `json:"TerminationProtectionEnabled"`
+}
+
+type UpdateEventDataStoreResponse struct {
+	AdvancedEventSelectors       string `json:"AdvancedEventSelectors"`
+	CreatedTimestamp             string `json:"CreatedTimestamp"`
+	EventDataStoreArn            string `json:"EventDataStoreArn"`
+	KmsKeyId                     string `json:"KmsKeyId"`
+	MultiRegionEnabled           string `json:"MultiRegionEnabled"`
+	Name                         string `json:"Name"`
+	OrganizationEnabled          string `json:"OrganizationEnabled"`
+	RetentionPeriod              string `json:"RetentionPeriod"`
+	Status                       string `json:"Status"`
+	TerminationProtectionEnabled string `json:"TerminationProtectionEnabled"`
+	UpdatedTimestamp             string `json:"UpdatedTimestamp"`
+}
+
+type UpdateFindingAggregatorRequest struct {
+	FindingAggregatorArn string `json:"FindingAggregatorArn"`
+	RegionLinkingMode    string `json:"RegionLinkingMode"`
+	Regions              string `json:"Regions"`
+}
+
+type UpdateFindingAggregatorResponse struct {
+	FindingAggregationRegion string `json:"FindingAggregationRegion"`
+	FindingAggregatorArn     string `json:"FindingAggregatorArn"`
+	RegionLinkingMode        string `json:"RegionLinkingMode"`
+	Regions                  string `json:"Regions"`
+}
+
+type UpdateFindingsRequest struct {
+	Filters     string `json:"Filters"`
+	Note        string `json:"Note"`
+	RecordState string `json:"RecordState"`
+}
+
+type UpdateFindingsResponse struct {
+}
+
+type UpdateInsightRequest struct {
+	Filters          string `json:"Filters"`
+	GroupByAttribute string `json:"GroupByAttribute"`
+	Name             string `json:"Name"`
+}
+
+type UpdateInsightResponse struct {
+}
+
+type UpdateNotificationRequest struct {
+	AccountId       string `json:"AccountId"`
+	BudgetName      string `json:"BudgetName"`
+	NewNotification string `json:"NewNotification"`
+	OldNotification string `json:"OldNotification"`
+}
+
+type UpdateNotificationResponse struct {
+}
+
+type UpdateOrganizationConfigurationRequest struct {
+	AutoEnable          string `json:"AutoEnable"`
+	AutoEnableStandards string `json:"AutoEnableStandards"`
+}
+
+type UpdateOrganizationConfigurationResponse struct {
+}
+
+type UpdateReportDefinitionRequest struct {
+	DestinationS3Location string `json:"destinationS3Location"`
+	Format                string `json:"format"`
+	ReportDescription     string `json:"reportDescription"`
+	ReportFrequency       string `json:"reportFrequency"`
+}
+
+type UpdateReportDefinitionResult struct {
+	ReportId string `json:"reportId"`
+}
+
+type UpdateSecurityHubConfigurationRequest struct {
+	AutoEnableControls      string `json:"AutoEnableControls"`
+	ControlFindingGenerator string `json:"ControlFindingGenerator"`
+}
+
+type UpdateSecurityHubConfigurationResponse struct {
+}
+
+type UpdateStandardsControlRequest struct {
+	ControlStatus  string `json:"ControlStatus"`
+	DisabledReason string `json:"DisabledReason"`
+}
+
+type UpdateStandardsControlResponse struct {
+}
+
+type UpdateSubscriberRequest struct {
+	AccountId     string `json:"AccountId"`
+	BudgetName    string `json:"BudgetName"`
+	NewSubscriber string `json:"NewSubscriber"`
+	Notification  string `json:"Notification"`
+	OldSubscriber string `json:"OldSubscriber"`
+}
+
+type UpdateSubscriberResponse struct {
+}
+
+type UpdateTrailRequest struct {
+	CloudWatchLogsLogGroupArn  string `json:"CloudWatchLogsLogGroupArn"`
+	CloudWatchLogsRoleArn      string `json:"CloudWatchLogsRoleArn"`
+	EnableLogFileValidation    string `json:"EnableLogFileValidation"`
+	IncludeGlobalServiceEvents string `json:"IncludeGlobalServiceEvents"`
+	IsMultiRegionTrail         string `json:"IsMultiRegionTrail"`
+	IsOrganizationTrail        string `json:"IsOrganizationTrail"`
+	KmsKeyId                   string `json:"KmsKeyId"`
+	Name                       string `json:"Name"`
+	S3BucketName               string `json:"S3BucketName"`
+	S3KeyPrefix                string `json:"S3KeyPrefix"`
+	SnsTopicName               string `json:"SnsTopicName"`
+}
+
+type UpdateTrailResponse struct {
+	CloudWatchLogsLogGroupArn  string `json:"CloudWatchLogsLogGroupArn"`
+	CloudWatchLogsRoleArn      string `json:"CloudWatchLogsRoleArn"`
+	IncludeGlobalServiceEvents string `json:"IncludeGlobalServiceEvents"`
+	IsMultiRegionTrail         string `json:"IsMultiRegionTrail"`
+	IsOrganizationTrail        string `json:"IsOrganizationTrail"`
+	KmsKeyId                   string `json:"KmsKeyId"`
+	LogFileValidationEnabled   string `json:"LogFileValidationEnabled"`
+	Name                       string `json:"Name"`
+	S3BucketName               string `json:"S3BucketName"`
+	S3KeyPrefix                string `json:"S3KeyPrefix"`
+	SnsTopicARN                string `json:"SnsTopicARN"`
+	SnsTopicName               string `json:"SnsTopicName"`
+	TrailARN                   string `json:"TrailARN"`
+}
+
 type UtilizationByTime struct {
 	Groups     string `json:"Groups"`
 	TimePeriod string `json:"TimePeriod"`
 	Total      string `json:"Total"`
+}
+
+type UtilizationMetric struct {
+	Name      string `json:"name"`
+	Statistic string `json:"statistic"`
+	Value     string `json:"value"`
+}
+
+type VolumeConfiguration struct {
+	RootVolume               string `json:"rootVolume"`
+	VolumeBaselineIOPS       string `json:"volumeBaselineIOPS"`
+	VolumeBaselineThroughput string `json:"volumeBaselineThroughput"`
+	VolumeBurstIOPS          string `json:"volumeBurstIOPS"`
+	VolumeBurstThroughput    string `json:"volumeBurstThroughput"`
+	VolumeSize               string `json:"volumeSize"`
+	VolumeType               string `json:"volumeType"`
+}
+
+type VolumeMount struct {
+	MountPath string `json:"MountPath"`
+	Name      string `json:"Name"`
+}
+
+type VolumeRecommendation struct {
+	AccountId                   string `json:"accountId"`
+	CurrentConfiguration        string `json:"currentConfiguration"`
+	CurrentPerformanceRisk      string `json:"currentPerformanceRisk"`
+	Finding                     string `json:"finding"`
+	LastRefreshTimestamp        string `json:"lastRefreshTimestamp"`
+	LookBackPeriodInDays        string `json:"lookBackPeriodInDays"`
+	UtilizationMetrics          string `json:"utilizationMetrics"`
+	VolumeArn                   string `json:"volumeArn"`
+	VolumeRecommendationOptions string `json:"volumeRecommendationOptions"`
+}
+
+type VolumeRecommendationOption struct {
+	Configuration      string `json:"configuration"`
+	PerformanceRisk    string `json:"performanceRisk"`
+	Rank               string `json:"rank"`
+	SavingsOpportunity string `json:"savingsOpportunity"`
+}
+
+type VpcInfoCidrBlockSetDetails struct {
+	CidrBlock string `json:"CidrBlock"`
+}
+
+type VpcInfoIpv6CidrBlockSetDetails struct {
+	Ipv6CidrBlock string `json:"Ipv6CidrBlock"`
+}
+
+type VpcInfoPeeringOptionsDetails struct {
+	AllowDnsResolutionFromRemoteVpc            string `json:"AllowDnsResolutionFromRemoteVpc"`
+	AllowEgressFromLocalClassicLinkToRemoteVpc string `json:"AllowEgressFromLocalClassicLinkToRemoteVpc"`
+	AllowEgressFromLocalVpcToRemoteClassicLink string `json:"AllowEgressFromLocalVpcToRemoteClassicLink"`
+}
+
+type Vulnerability struct {
+	Cvss                   string `json:"Cvss"`
+	FixAvailable           string `json:"FixAvailable"`
+	Id                     string `json:"Id"`
+	ReferenceUrls          string `json:"ReferenceUrls"`
+	RelatedVulnerabilities string `json:"RelatedVulnerabilities"`
+	Vendor                 string `json:"Vendor"`
+	VulnerablePackages     string `json:"VulnerablePackages"`
+}
+
+type VulnerabilityVendor struct {
+	Name            string `json:"Name"`
+	Url             string `json:"Url"`
+	VendorCreatedAt string `json:"VendorCreatedAt"`
+	VendorSeverity  string `json:"VendorSeverity"`
+	VendorUpdatedAt string `json:"VendorUpdatedAt"`
+}
+
+type WafAction struct {
+	Type string `json:"Type"`
+}
+
+type WafExcludedRule struct {
+	RuleId string `json:"RuleId"`
+}
+
+type WafOverrideAction struct {
+	Type string `json:"Type"`
+}
+
+type Workflow struct {
+	Status string `json:"Status"`
+}
+
+type WorkflowUpdate struct {
+	Status string `json:"Status"`
+}
+
+type aws_budgets_Subscriber struct {
+	Address          string `json:"Address"`
+	SubscriptionType string `json:"SubscriptionType"`
+}
+
+type aws_cloudtrail_Event struct {
+	AccessKeyId     string `json:"AccessKeyId"`
+	CloudTrailEvent string `json:"CloudTrailEvent"`
+	EventId         string `json:"EventId"`
+	EventName       string `json:"EventName"`
+	EventSource     string `json:"EventSource"`
+	EventTime       string `json:"EventTime"`
+	ReadOnly        string `json:"ReadOnly"`
+	Resources       string `json:"Resources"`
+	Username        string `json:"Username"`
+}
+
+type aws_cloudtrail_ResourceTag struct {
+	ResourceId string `json:"ResourceId"`
+	TagsList   string `json:"TagsList"`
+}
+
+type aws_cloudtrail_Tag struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type aws_config_ListTagsForResourceRequest struct {
+	Limit       string `json:"Limit"`
+	NextToken   string `json:"NextToken"`
+	ResourceArn string `json:"ResourceArn"`
+}
+
+type aws_config_ListTagsForResourceResponse struct {
+	NextToken string `json:"NextToken"`
+	Tags      string `json:"Tags"`
+}
+
+type aws_config_ResourceDetails struct {
+	ResourceConfiguration           string `json:"ResourceConfiguration"`
+	ResourceConfigurationSchemaType string `json:"ResourceConfigurationSchemaType"`
+	ResourceId                      string `json:"ResourceId"`
+	ResourceType                    string `json:"ResourceType"`
+}
+
+type aws_config_Scope struct {
+	ComplianceResourceId    string `json:"ComplianceResourceId"`
+	ComplianceResourceTypes string `json:"ComplianceResourceTypes"`
+	TagKey                  string `json:"TagKey"`
+	TagValue                string `json:"TagValue"`
+}
+
+type aws_config_Tag struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type aws_config_TagResourceRequest struct {
+	ResourceArn string `json:"ResourceArn"`
+	Tags        string `json:"Tags"`
+}
+
+type aws_config_UntagResourceRequest struct {
+	ResourceArn string `json:"ResourceArn"`
+	TagKeys     string `json:"TagKeys"`
 }
 
 type aws_cost_explorer_ListTagsForResourceRequest struct {
@@ -1596,4 +10175,191 @@ type aws_cost_explorer_UntagResourceRequest struct {
 }
 
 type aws_cost_explorer_UntagResourceResponse struct {
+}
+
+type aws_cost_usage_DeleteReportDefinitionRequest struct {
+	ReportName string `json:"ReportName"`
+}
+
+type aws_cost_usage_PutReportDefinitionRequest struct {
+	ReportDefinition string `json:"ReportDefinition"`
+}
+
+type aws_cost_usage_ReportDefinition struct {
+	AdditionalArtifacts      string `json:"AdditionalArtifacts"`
+	AdditionalSchemaElements string `json:"AdditionalSchemaElements"`
+	BillingViewArn           string `json:"BillingViewArn"`
+	Compression              string `json:"Compression"`
+	Format                   string `json:"Format"`
+	RefreshClosedReports     string `json:"RefreshClosedReports"`
+	ReportName               string `json:"ReportName"`
+	ReportVersioning         string `json:"ReportVersioning"`
+	S3Bucket                 string `json:"S3Bucket"`
+	S3Prefix                 string `json:"S3Prefix"`
+	S3Region                 string `json:"S3Region"`
+	TimeUnit                 string `json:"TimeUnit"`
+}
+
+type aws_price_list_DescribeServicesRequest struct {
+	FormatVersion string `json:"FormatVersion"`
+	MaxResults    string `json:"MaxResults"`
+	NextToken     string `json:"NextToken"`
+	ServiceCode   string `json:"ServiceCode"`
+}
+
+type aws_price_list_DescribeServicesResponse struct {
+	FormatVersion string `json:"FormatVersion"`
+	NextToken     string `json:"NextToken"`
+	Services      string `json:"Services"`
+}
+
+type aws_price_list_Filter struct {
+	Field string `json:"Field"`
+	Type  string `json:"Type"`
+	Value string `json:"Value"`
+}
+
+type aws_price_list_Service struct {
+	AttributeNames string `json:"AttributeNames"`
+	ServiceCode    string `json:"ServiceCode"`
+}
+
+type aws_securityhub_Action struct {
+	ActionType              string `json:"ActionType"`
+	AwsApiCallAction        string `json:"AwsApiCallAction"`
+	DnsRequestAction        string `json:"DnsRequestAction"`
+	NetworkConnectionAction string `json:"NetworkConnectionAction"`
+	PortProbeAction         string `json:"PortProbeAction"`
+}
+
+type aws_securityhub_Compliance struct {
+	AssociatedStandards string `json:"AssociatedStandards"`
+	RelatedRequirements string `json:"RelatedRequirements"`
+	SecurityControlId   string `json:"SecurityControlId"`
+	Status              string `json:"Status"`
+	StatusReasons       string `json:"StatusReasons"`
+}
+
+type aws_securityhub_ListTagsForResourceRequest struct {
+}
+
+type aws_securityhub_ListTagsForResourceResponse struct {
+	Tags string `json:"Tags"`
+}
+
+type aws_securityhub_Resource struct {
+	DataClassification string `json:"DataClassification"`
+	Details            string `json:"Details"`
+	Id                 string `json:"Id"`
+	Partition          string `json:"Partition"`
+	Region             string `json:"Region"`
+	ResourceRole       string `json:"ResourceRole"`
+	Tags               string `json:"Tags"`
+	Type               string `json:"Type"`
+}
+
+type aws_securityhub_ResourceDetails struct {
+	AwsApiGatewayRestApi              string          `json:"AwsApiGatewayRestApi"`
+	AwsApiGatewayStage                string          `json:"AwsApiGatewayStage"`
+	AwsApiGatewayV2Api                string          `json:"AwsApiGatewayV2Api"`
+	AwsApiGatewayV2Stage              string          `json:"AwsApiGatewayV2Stage"`
+	AwsAutoScalingAutoScalingGroup    string          `json:"AwsAutoScalingAutoScalingGroup"`
+	AwsAutoScalingLaunchConfiguration string          `json:"AwsAutoScalingLaunchConfiguration"`
+	AwsBackupBackupPlan               string          `json:"AwsBackupBackupPlan"`
+	AwsBackupBackupVault              string          `json:"AwsBackupBackupVault"`
+	AwsBackupRecoveryPoint            string          `json:"AwsBackupRecoveryPoint"`
+	AwsCertificateManagerCertificate  string          `json:"AwsCertificateManagerCertificate"`
+	AwsCloudFormationStack            string          `json:"AwsCloudFormationStack"`
+	AwsCloudFrontDistribution         string          `json:"AwsCloudFrontDistribution"`
+	AwsCloudTrailTrail                string          `json:"AwsCloudTrailTrail"`
+	AwsCloudWatchAlarm                string          `json:"AwsCloudWatchAlarm"`
+	AwsCodeBuildProject               string          `json:"AwsCodeBuildProject"`
+	AwsDynamoDbTable                  string          `json:"AwsDynamoDbTable"`
+	AwsEc2Eip                         string          `json:"AwsEc2Eip"`
+	AwsEc2Instance                    string          `json:"AwsEc2Instance"`
+	AwsEc2LaunchTemplate              json.RawMessage `json:"AwsEc2LaunchTemplate"`
+	AwsEc2NetworkAcl                  string          `json:"AwsEc2NetworkAcl"`
+	AwsEc2NetworkInterface            string          `json:"AwsEc2NetworkInterface"`
+	AwsEc2RouteTable                  string          `json:"AwsEc2RouteTable"`
+	AwsEc2SecurityGroup               string          `json:"AwsEc2SecurityGroup"`
+	AwsEc2Subnet                      string          `json:"AwsEc2Subnet"`
+	AwsEc2TransitGateway              string          `json:"AwsEc2TransitGateway"`
+	AwsEc2Volume                      string          `json:"AwsEc2Volume"`
+	AwsEc2Vpc                         string          `json:"AwsEc2Vpc"`
+	AwsEc2VpcEndpointService          string          `json:"AwsEc2VpcEndpointService"`
+	AwsEc2VpcPeeringConnection        string          `json:"AwsEc2VpcPeeringConnection"`
+	AwsEc2VpnConnection               string          `json:"AwsEc2VpnConnection"`
+	AwsEcrContainerImage              string          `json:"AwsEcrContainerImage"`
+	AwsEcrRepository                  string          `json:"AwsEcrRepository"`
+	AwsEcsCluster                     string          `json:"AwsEcsCluster"`
+	AwsEcsContainer                   string          `json:"AwsEcsContainer"`
+	AwsEcsService                     string          `json:"AwsEcsService"`
+	AwsEcsTask                        string          `json:"AwsEcsTask"`
+	AwsEcsTaskDefinition              string          `json:"AwsEcsTaskDefinition"`
+	AwsEfsAccessPoint                 string          `json:"AwsEfsAccessPoint"`
+	AwsEksCluster                     string          `json:"AwsEksCluster"`
+	AwsElasticBeanstalkEnvironment    string          `json:"AwsElasticBeanstalkEnvironment"`
+	AwsElasticsearchDomain            string          `json:"AwsElasticsearchDomain"`
+	AwsElbLoadBalancer                string          `json:"AwsElbLoadBalancer"`
+	AwsElbv2LoadBalancer              string          `json:"AwsElbv2LoadBalancer"`
+	AwsIamAccessKey                   string          `json:"AwsIamAccessKey"`
+	AwsIamGroup                       string          `json:"AwsIamGroup"`
+	AwsIamPolicy                      string          `json:"AwsIamPolicy"`
+	AwsIamRole                        string          `json:"AwsIamRole"`
+	AwsIamUser                        string          `json:"AwsIamUser"`
+	AwsKinesisStream                  string          `json:"AwsKinesisStream"`
+	AwsKmsKey                         string          `json:"AwsKmsKey"`
+	AwsLambdaFunction                 string          `json:"AwsLambdaFunction"`
+	AwsLambdaLayerVersion             string          `json:"AwsLambdaLayerVersion"`
+	AwsNetworkFirewallFirewall        string          `json:"AwsNetworkFirewallFirewall"`
+	AwsNetworkFirewallFirewallPolicy  string          `json:"AwsNetworkFirewallFirewallPolicy"`
+	AwsNetworkFirewallRuleGroup       string          `json:"AwsNetworkFirewallRuleGroup"`
+	AwsOpenSearchServiceDomain        string          `json:"AwsOpenSearchServiceDomain"`
+	AwsRdsDbCluster                   string          `json:"AwsRdsDbCluster"`
+	AwsRdsDbClusterSnapshot           string          `json:"AwsRdsDbClusterSnapshot"`
+	AwsRdsDbInstance                  string          `json:"AwsRdsDbInstance"`
+	AwsRdsDbSecurityGroup             string          `json:"AwsRdsDbSecurityGroup"`
+	AwsRdsDbSnapshot                  string          `json:"AwsRdsDbSnapshot"`
+	AwsRdsEventSubscription           string          `json:"AwsRdsEventSubscription"`
+	AwsRedshiftCluster                string          `json:"AwsRedshiftCluster"`
+	AwsS3AccountPublicAccessBlock     string          `json:"AwsS3AccountPublicAccessBlock"`
+	AwsS3Bucket                       string          `json:"AwsS3Bucket"`
+	AwsS3Object                       string          `json:"AwsS3Object"`
+	AwsSageMakerNotebookInstance      json.RawMessage `json:"AwsSageMakerNotebookInstance"`
+	AwsSecretsManagerSecret           string          `json:"AwsSecretsManagerSecret"`
+	AwsSnsTopic                       string          `json:"AwsSnsTopic"`
+	AwsSqsQueue                       string          `json:"AwsSqsQueue"`
+	AwsSsmPatchCompliance             string          `json:"AwsSsmPatchCompliance"`
+	AwsWafRateBasedRule               string          `json:"AwsWafRateBasedRule"`
+	AwsWafRegionalRateBasedRule       string          `json:"AwsWafRegionalRateBasedRule"`
+	AwsWafRegionalRule                string          `json:"AwsWafRegionalRule"`
+	AwsWafRegionalRuleGroup           string          `json:"AwsWafRegionalRuleGroup"`
+	AwsWafRegionalWebAcl              string          `json:"AwsWafRegionalWebAcl"`
+	AwsWafRule                        string          `json:"AwsWafRule"`
+	AwsWafRuleGroup                   string          `json:"AwsWafRuleGroup"`
+	AwsWafWebAcl                      string          `json:"AwsWafWebAcl"`
+	AwsWafv2RuleGroup                 json.RawMessage `json:"AwsWafv2RuleGroup"`
+	AwsWafv2WebAcl                    json.RawMessage `json:"AwsWafv2WebAcl"`
+	AwsXrayEncryptionConfig           string          `json:"AwsXrayEncryptionConfig"`
+	Container                         string          `json:"Container"`
+	Other                             string          `json:"Other"`
+}
+
+type aws_securityhub_TagResourceRequest struct {
+	Tags string `json:"Tags"`
+}
+
+type aws_securityhub_TagResourceResponse struct {
+}
+
+type aws_securityhub_UntagResourceRequest struct {
+}
+
+type aws_securityhub_UntagResourceResponse struct {
+}
+
+type eventMetadata struct {
+}
+
+type tagSet struct {
 }

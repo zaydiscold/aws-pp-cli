@@ -600,7 +600,7 @@ type paginationDefaults struct {
 func determinePaginationDefaults() paginationDefaults {
 	return paginationDefaults{
 		cursorParam: "after",
-		limitParam:  "limit",
+		limitParam:  "Limit",
 		limit:       100,
 	}
 }
@@ -891,6 +891,36 @@ func upsertSingleObject(db *store.Store, resource string, data json.RawMessage) 
 	}
 
 	switch resource {
+	case "accounts":
+		return db.UpsertAccounts(data)
+	case "action-targets":
+		return db.UpsertActionTargets(data)
+	case "associations":
+		return db.UpsertAssociations(data)
+	case "finding-aggregator":
+		return db.UpsertFindingAggregator(data)
+	case "findings":
+		return db.UpsertFindings(data)
+	case "insights":
+		return db.UpsertInsights(data)
+	case "invitations":
+		return db.UpsertInvitations(data)
+	case "master":
+		return db.UpsertMaster(data)
+	case "members":
+		return db.UpsertMembers(data)
+	case "organization":
+		return db.UpsertOrganization(data)
+	case "product-subscriptions":
+		return db.UpsertProductSubscriptions(data)
+	case "report-definition":
+		return db.UpsertReportDefinition(data)
+	case "security-controls":
+		return db.UpsertSecurityControls(data)
+	case "standards":
+		return db.UpsertStandards(data)
+	case "tags":
+		return db.UpsertTags(data)
 	case "x-amz-target-awsinsights-index-service-get-cost-categories":
 		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetCostCategories(data)
 	case "x-amz-target-awsinsights-index-service-get-reservation-purchase-recommendation":
@@ -903,8 +933,44 @@ func upsertSingleObject(db *store.Store, resource string, data json.RawMessage) 
 		return db.UpsertXAmzTargetAwsinsightsIndexServiceGetTags(data)
 	case "x-amz-target-awsinsights-index-service-list-tags-for-resource":
 		return db.UpsertXAmzTargetAwsinsightsIndexServiceListTagsForResource(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-channel":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateChannel(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-event-data-store":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateEventDataStore(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-create-trail":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101CreateTrail(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-describe-query":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101DescribeQuery(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-channel":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetChannel(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-event-data-store":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetEventDataStore(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-import":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetImport(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-query-results":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetQueryResults(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-get-trail-status":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101GetTrailStatus(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-restore-event-data-store":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101RestoreEventDataStore(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-start-import":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StartImport(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-stop-import":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101StopImport(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-channel":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateChannel(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-event-data-store":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateEventDataStore(data)
+	case "x-amz-target-com-amazonaws-cloudtrail-v20131101-cloud-trail-20131101-update-trail":
+		return db.UpsertXAmzTargetComAmazonawsCloudtrailV20131101CloudTrail20131101UpdateTrail(data)
+	case "x-amz-target-compute-optimizer-service-get-enrollment-status":
+		return db.UpsertXAmzTargetComputeOptimizerServiceGetEnrollmentStatus(data)
 	case "x-amz-target-service-quotas-v20190624-list-tags-for-resource":
 		return db.UpsertXAmzTargetServiceQuotasV20190624ListTagsForResource(data)
+	case "x-amz-target-starling-dove-service-get-resource-evaluation-summary":
+		return db.UpsertXAmzTargetStarlingDoveServiceGetResourceEvaluationSummary(data)
+	case "x-amz-target-starling-dove-service-list-tags-for-resource":
+		return db.UpsertXAmzTargetStarlingDoveServiceListTagsForResource(data)
 	default:
 		return db.Upsert(resource, id, data)
 	}
@@ -940,7 +1006,22 @@ func parseSinceDuration(s string) (time.Time, error) {
 }
 
 func defaultSyncResources() []string {
-	return []string{}
+	return []string{
+		"accounts",
+		"administrator",
+		"finding-aggregator",
+		"invitations",
+		"invitations-count",
+		"master",
+		"members",
+		"organization",
+		"organization-configuration",
+		"product-subscriptions",
+		"products",
+		"report-definition",
+		"security-controls",
+		"standards",
+	}
 }
 
 // knownSyncResourceNames returns every resource name sync will accept —
@@ -955,7 +1036,22 @@ func knownSyncResourceNames() []string {
 // For REST APIs this is typically "/<resource>". For non-REST APIs (e.g., Steam)
 // this preserves the actual endpoint path like "/ISteamApps/GetAppList/v2".
 func syncResourcePath(resource string) (string, error) {
-	paths := map[string]string{}
+	paths := map[string]string{
+		"accounts":                   "/accounts",
+		"administrator":              "/administrator",
+		"finding-aggregator":         "/findingAggregator/list",
+		"invitations":                "/invitations",
+		"invitations-count":          "/invitations/count",
+		"master":                     "/master",
+		"members":                    "/members",
+		"organization":               "/organization/admin",
+		"organization-configuration": "/organization/configuration",
+		"product-subscriptions":      "/productSubscriptions",
+		"products":                   "/products",
+		"report-definition":          "/reportDefinition",
+		"security-controls":          "/securityControls/definitions",
+		"standards":                  "/standards",
+	}
 	if p, ok := paths[resource]; ok {
 		return p, nil
 	}
